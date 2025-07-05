@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		072E94532E18DAC30051F9AB /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 072E94522E18DAC30051F9AB /* OpenAL.framework */; };
+		072E94D02E19373B0051F9AB /* asciiroids.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 072E94CB2E19373A0051F9AB /* asciiroids.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,27 +28,24 @@
 		072E94522E18DAC30051F9AB /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		072E94542E18DC4A0051F9AB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		072E946A2E1911010051F9AB /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		072E947F2E1914B70051F9AB /* fetch-dependencies.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "fetch-dependencies.py"; sourceTree = "<group>"; };
-		072E948C2E1917B10051F9AB /* dependencies */ = {isa = PBXFileReference; lastKnownFileType = text; path = dependencies; sourceTree = "<group>"; };
-		072E94932E191D790051F9AB /* build-macos.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-macos.yml"; path = ".github/workflows/build-macos.yml"; sourceTree = "<group>"; };
-		072E94942E191D790051F9AB /* build-ubuntu.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-ubuntu.yml"; path = ".github/workflows/build-ubuntu.yml"; sourceTree = "<group>"; };
-		072E94952E191D790051F9AB /* build-windows.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-windows.yml"; path = ".github/workflows/build-windows.yml"; sourceTree = "<group>"; };
-		072E94A02E19298D0051F9AB /* build.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = build.bat; path = Asciiroids/build.bat; sourceTree = "<group>"; };
-		072E94A12E19298D0051F9AB /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = build.sh; path = Asciiroids/build.sh; sourceTree = "<group>"; };
-		072E94A22E19298D0051F9AB /* run.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = run.bat; path = Asciiroids/run.bat; sourceTree = "<group>"; };
-		072E94A32E19298D0051F9AB /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = run.sh; path = Asciiroids/run.sh; sourceTree = "<group>"; };
-		072E94B62E19323F0051F9AB /* setup_and_build.bat */ = {isa = PBXFileReference; lastKnownFileType = text; path = setup_and_build.bat; sourceTree = "<group>"; };
-		072E94B72E19323F0051F9AB /* setup_and_build_debian.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = setup_and_build_debian.sh; sourceTree = "<group>"; };
-		072E94B82E19323F0051F9AB /* setup_and_build_macos.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = setup_and_build_macos.sh; sourceTree = "<group>"; };
+		072E947F2E1914B70051F9AB /* fetch-dependencies.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; name = "fetch-dependencies.py"; path = "../fetch-dependencies.py"; sourceTree = "<group>"; };
+		072E948C2E1917B10051F9AB /* dependencies */ = {isa = PBXFileReference; lastKnownFileType = text; name = dependencies; path = ../dependencies; sourceTree = "<group>"; };
+		072E94932E191D790051F9AB /* build-macos.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-macos.yml"; path = "../.github/workflows/build-macos.yml"; sourceTree = "<group>"; };
+		072E94942E191D790051F9AB /* build-ubuntu.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-ubuntu.yml"; path = "../.github/workflows/build-ubuntu.yml"; sourceTree = "<group>"; };
+		072E94952E191D790051F9AB /* build-windows.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-windows.yml"; path = "../.github/workflows/build-windows.yml"; sourceTree = "<group>"; };
+		072E94A02E19298D0051F9AB /* build.bat */ = {isa = PBXFileReference; lastKnownFileType = text; path = build.bat; sourceTree = "<group>"; };
+		072E94A12E19298D0051F9AB /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
+		072E94A22E19298D0051F9AB /* run.bat */ = {isa = PBXFileReference; lastKnownFileType = text; path = run.bat; sourceTree = "<group>"; };
+		072E94A32E19298D0051F9AB /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
+		072E94B62E19323F0051F9AB /* setup_and_build.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = setup_and_build.bat; path = ../setup_and_build.bat; sourceTree = "<group>"; };
+		072E94B72E19323F0051F9AB /* setup_and_build_debian.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = setup_and_build_debian.sh; path = ../setup_and_build_debian.sh; sourceTree = "<group>"; };
+		072E94B82E19323F0051F9AB /* setup_and_build_macos.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = setup_and_build_macos.sh; path = ../setup_and_build_macos.sh; sourceTree = "<group>"; };
+		072E94CB2E19373A0051F9AB /* asciiroids.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = asciiroids.cpp; sourceTree = "<group>"; };
+		072E94CC2E19373A0051F9AB /* Enums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
+		072E94CD2E19373A0051F9AB /* InstructionsScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstructionsScreen.h; sourceTree = "<group>"; };
+		072E94CE2E19373A0051F9AB /* Keyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keyboard.h; sourceTree = "<group>"; };
+		072E94CF2E19373A0051F9AB /* TitleScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TitleScreen.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		072E94412E18CCD00051F9AB /* Asciiroids */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Asciiroids;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		072E943C2E18CCD00051F9AB /* Frameworks */ = {
@@ -76,9 +74,7 @@
 			children = (
 				072E946A2E1911010051F9AB /* LICENSE */,
 				072E94542E18DC4A0051F9AB /* README.md */,
-				076D86722D05CA96003BF28D /* scripts */,
-				0709B9C22C97111B00A43834 /* workflows */,
-				072E94412E18CCD00051F9AB /* Asciiroids */,
+				07844E4028FDEBAA00B30C0D /* Asciiroids */,
 				072E94512E18DAC20051F9AB /* Frameworks */,
 				072E94402E18CCD00051F9AB /* Products */,
 			);
@@ -116,6 +112,20 @@
 			name = scripts;
 			sourceTree = "<group>";
 		};
+		07844E4028FDEBAA00B30C0D /* Asciiroids */ = {
+			isa = PBXGroup;
+			children = (
+				076D86722D05CA96003BF28D /* scripts */,
+				0709B9C22C97111B00A43834 /* workflows */,
+				072E94CB2E19373A0051F9AB /* asciiroids.cpp */,
+				072E94CC2E19373A0051F9AB /* Enums.h */,
+				072E94CD2E19373A0051F9AB /* InstructionsScreen.h */,
+				072E94CE2E19373A0051F9AB /* Keyboard.h */,
+				072E94CF2E19373A0051F9AB /* TitleScreen.h */,
+			);
+			path = Asciiroids;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -130,9 +140,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				072E94412E18CCD00051F9AB /* Asciiroids */,
 			);
 			name = Asciiroids;
 			packageProductDependencies = (
@@ -179,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				072E94D02E19373B0051F9AB /* asciiroids.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
