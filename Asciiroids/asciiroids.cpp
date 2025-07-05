@@ -90,7 +90,7 @@ private:
 
   virtual void update() override
   {
-    Key curr_special_key = register_keypresses(kpdp);
+    Key curr_special_key [[maybe_unused]] = register_keypresses(kpdp);
     
     //update_ship_controls(sh, src_fx_0, wave_gen, kpdp, curr_special_key,
     //                         get_sim_dt_s());
