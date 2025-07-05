@@ -32,6 +32,10 @@
 		072E94932E191D790051F9AB /* build-macos.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-macos.yml"; path = ".github/workflows/build-macos.yml"; sourceTree = "<group>"; };
 		072E94942E191D790051F9AB /* build-ubuntu.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-ubuntu.yml"; path = ".github/workflows/build-ubuntu.yml"; sourceTree = "<group>"; };
 		072E94952E191D790051F9AB /* build-windows.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-windows.yml"; path = ".github/workflows/build-windows.yml"; sourceTree = "<group>"; };
+		072E94A02E19298D0051F9AB /* build.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = build.bat; path = Asciiroids/build.bat; sourceTree = "<group>"; };
+		072E94A12E19298D0051F9AB /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = build.sh; path = Asciiroids/build.sh; sourceTree = "<group>"; };
+		072E94A22E19298D0051F9AB /* run.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = run.bat; path = Asciiroids/run.bat; sourceTree = "<group>"; };
+		072E94A32E19298D0051F9AB /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = run.sh; path = Asciiroids/run.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -98,6 +102,10 @@
 			children = (
 				072E947F2E1914B70051F9AB /* fetch-dependencies.py */,
 				072E948C2E1917B10051F9AB /* dependencies */,
+				072E94A02E19298D0051F9AB /* build.bat */,
+				072E94A12E19298D0051F9AB /* build.sh */,
+				072E94A22E19298D0051F9AB /* run.bat */,
+				072E94A32E19298D0051F9AB /* run.sh */,
 			);
 			name = scripts;
 			sourceTree = "<group>";
