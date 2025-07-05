@@ -36,7 +36,7 @@ jobs:
       # Step 4: Change to the correct directory and build
       - name: Build project
         run: |
-          cd Pilot_Episode
+          cd Asciiroids
           ./build.sh
         continue-on-error: false # Ensure errors are not bypassed
   
@@ -44,8 +44,8 @@ jobs:
       - name: Run program
         if: false
         run: |
-             cd Pilot_Episode
-             ./bin/pilot_episode
+             cd Asciiroids
+             ./bin/asciiroids
 
   build-program-with-locked-dependencies:
     runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
       - name: Fetch dependencies
         run: |
           cd ..
-          ./Pilot_Episode/fetch-dependencies.py Pilot_Episode/dependencies -y
+          ./Asciiroids/fetch-dependencies.py Asciiroids/dependencies -y
 
       # Step 3: Install OpenAL
       - name: Install OpenAL
@@ -68,7 +68,7 @@ jobs:
       # Step 4: Change to the correct directory and build
       - name: Build project
         run: |
-          cd Pilot_Episode
+          cd Asciiroids
           ./build.sh
         continue-on-error: false # Ensure errors are not bypassed
 
