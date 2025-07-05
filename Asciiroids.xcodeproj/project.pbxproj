@@ -27,6 +27,8 @@
 		072E94522E18DAC30051F9AB /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		072E94542E18DC4A0051F9AB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		072E946A2E1911010051F9AB /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		072E947F2E1914B70051F9AB /* fetch-dependencies.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "fetch-dependencies.py"; sourceTree = "<group>"; };
+		072E948C2E1917B10051F9AB /* dependencies */ = {isa = PBXFileReference; lastKnownFileType = text; path = dependencies; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -54,6 +56,7 @@
 			children = (
 				072E946A2E1911010051F9AB /* LICENSE */,
 				072E94542E18DC4A0051F9AB /* README.md */,
+				076D86722D05CA96003BF28D /* scripts */,
 				072E94412E18CCD00051F9AB /* Asciiroids */,
 				072E94512E18DAC20051F9AB /* Frameworks */,
 				072E94402E18CCD00051F9AB /* Products */,
@@ -74,6 +77,15 @@
 				072E94522E18DAC30051F9AB /* OpenAL.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		076D86722D05CA96003BF28D /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				072E947F2E1914B70051F9AB /* fetch-dependencies.py */,
+				072E948C2E1917B10051F9AB /* dependencies */,
+			);
+			name = scripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
