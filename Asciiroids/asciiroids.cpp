@@ -151,8 +151,8 @@ private:
 int main(int argc, char** argv)
 {
   GameEngineParams params;
-  params.screen_bg_color_default = Color::Blue;
-  params.screen_bg_color_title = Color::Blue;
+  params.screen_bg_color_default = Color::Black;
+  params.screen_bg_color_title = Color::Black;
   params.screen_bg_color_instructions = Color::Black;
   
   Game game(argc, argv, params);
