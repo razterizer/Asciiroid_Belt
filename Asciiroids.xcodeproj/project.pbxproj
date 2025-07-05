@@ -29,6 +29,9 @@
 		072E946A2E1911010051F9AB /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		072E947F2E1914B70051F9AB /* fetch-dependencies.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "fetch-dependencies.py"; sourceTree = "<group>"; };
 		072E948C2E1917B10051F9AB /* dependencies */ = {isa = PBXFileReference; lastKnownFileType = text; path = dependencies; sourceTree = "<group>"; };
+		072E94932E191D790051F9AB /* build-macos.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-macos.yml"; path = ".github/workflows/build-macos.yml"; sourceTree = "<group>"; };
+		072E94942E191D790051F9AB /* build-ubuntu.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-ubuntu.yml"; path = ".github/workflows/build-ubuntu.yml"; sourceTree = "<group>"; };
+		072E94952E191D790051F9AB /* build-windows.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "build-windows.yml"; path = ".github/workflows/build-windows.yml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -51,6 +54,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0709B9C22C97111B00A43834 /* workflows */ = {
+			isa = PBXGroup;
+			children = (
+				072E94932E191D790051F9AB /* build-macos.yml */,
+				072E94942E191D790051F9AB /* build-ubuntu.yml */,
+				072E94952E191D790051F9AB /* build-windows.yml */,
+			);
+			name = workflows;
+			sourceTree = "<group>";
+		};
 		072E94362E18CCD00051F9AB = {
 			isa = PBXGroup;
 			children = (
@@ -80,13 +93,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-                0709B9C22C97111B00A43834 /* workflows */ = {
-                        isa = PBXGroup;
-                        children = (
-                        );
-                        name = workflows;
-                        sourceTree = "<group>";
-                };
 		076D86722D05CA96003BF28D /* scripts */ = {
 			isa = PBXGroup;
 			children = (
