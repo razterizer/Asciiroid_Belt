@@ -26,6 +26,7 @@
 		072E943F2E18CCD00051F9AB /* Asciiroids */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Asciiroids; sourceTree = BUILT_PRODUCTS_DIR; };
 		072E94522E18DAC30051F9AB /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		072E94542E18DC4A0051F9AB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		072E946A2E1911010051F9AB /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -51,6 +52,7 @@
 		072E94362E18CCD00051F9AB = {
 			isa = PBXGroup;
 			children = (
+				072E946A2E1911010051F9AB /* LICENSE */,
 				072E94542E18DC4A0051F9AB /* README.md */,
 				072E94412E18CCD00051F9AB /* Asciiroids */,
 				072E94512E18DAC20051F9AB /* Frameworks */,
