@@ -24,10 +24,10 @@ Key register_keypresses(const keyboard::KeyPressDataPair& kpdp)
     curr_special_key = Key::Left;
   else if (str::to_lower(key_held) == 'd' || special_key == keyboard::SpecialKey::Right)
     curr_special_key = Key::Right;
-  else if (str::to_lower(key_held) == 's' || special_key == keyboard::SpecialKey::Down)
-    curr_special_key = Key::Down;
   else if (str::to_lower(key_held) == 'w' || special_key == keyboard::SpecialKey::Up)
-    curr_special_key = Key::Up;
+    curr_special_key = Key::Thrust;
+  else if (str::to_lower(key_held) == 'h' || special_key == keyboard::SpecialKey::Enter)
+    curr_special_key = Key::Hyperspace;
 
   return curr_special_key;
 }
