@@ -36,6 +36,9 @@
 		072E94A12E19298D0051F9AB /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = build.sh; path = Asciiroids/build.sh; sourceTree = "<group>"; };
 		072E94A22E19298D0051F9AB /* run.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = run.bat; path = Asciiroids/run.bat; sourceTree = "<group>"; };
 		072E94A32E19298D0051F9AB /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = run.sh; path = Asciiroids/run.sh; sourceTree = "<group>"; };
+		072E94B62E19323F0051F9AB /* setup_and_build.bat */ = {isa = PBXFileReference; lastKnownFileType = text; path = setup_and_build.bat; sourceTree = "<group>"; };
+		072E94B72E19323F0051F9AB /* setup_and_build_debian.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = setup_and_build_debian.sh; sourceTree = "<group>"; };
+		072E94B82E19323F0051F9AB /* setup_and_build_macos.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = setup_and_build_macos.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -100,6 +103,9 @@
 		076D86722D05CA96003BF28D /* scripts */ = {
 			isa = PBXGroup;
 			children = (
+				072E94B62E19323F0051F9AB /* setup_and_build.bat */,
+				072E94B72E19323F0051F9AB /* setup_and_build_debian.sh */,
+				072E94B82E19323F0051F9AB /* setup_and_build_macos.sh */,
 				072E947F2E1914B70051F9AB /* fetch-dependencies.py */,
 				072E948C2E1917B10051F9AB /* dependencies */,
 				072E94A02E19298D0051F9AB /* build.bat */,
