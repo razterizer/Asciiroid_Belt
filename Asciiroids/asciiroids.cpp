@@ -84,16 +84,70 @@ public:
     cs1.internal.bg_color = Color::Black;
     
     font_data = ASCII_Fonts::load_font_data(font_data_path);
+    
+    sprite_spaceship = sprh.create_vector_sprite("spaceship");
+    sprite_spaceship->layer_id = 2;
+    sprite_spaceship->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_spaceship->add_line_segment(0, { 1, 1 }, { -1, 0 }, 'o', { Color::Yellow, Color::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(0, { -1, 0 }, { 1, -1 }, 'o', { Color::Yellow, Color::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(0, { 1, -1 }, { 1, 1 }, '.', { Color::Yellow, Color::Transparent2 }, 1);
+    sprite_spaceship->set_rotation(0.f);
+    sprite_spaceship->finalize_topology(0);
+    sprite_spaceship->set_aspect_ratio(2.f);
+    auto* frame = sprite_spaceship->get_curr_local_frame(0);
+    frame->fill_closed_polylines = false;
+    frame->fill_char = '#';
+    frame->fill_style = { Color::LightGray, Color::DarkGray };
+    rb_spaceship = dyn_sys.add_rigid_body(sprite_spaceship, 4.f, std::nullopt, {}, {}, spaceship_rot_vel);
+    rb_spaceship->set_orig_dir({ -1.f, 0.f });
   }
   
 private:
 
   virtual void update() override
   {
-    Key curr_special_key [[maybe_unused]] = register_keypresses(kpdp);
+    int anim_frame = GameEngine::get_anim_count(0);
+    Key curr_game_key = register_keypresses(kpdp);
     
     //update_ship_controls(sh, src_fx_0, wave_gen, kpdp, curr_special_key,
     //                         get_sim_dt_s());
+    
+    // Auto-break velocities
+    if (curr_game_key != Key::Left && curr_game_key != Key::Right)
+      spaceship_rot_vel *= 0.8f;
+    if (curr_game_key != Key::Thrust)
+      spaceship_fwd_force = 0.f;
+      
+    switch (curr_game_key)
+    {
+      case Key::None:
+        break;
+      case Key::Left:
+        spaceship_rot_vel = +1.5f;
+        break;
+      case Key::Right:
+        spaceship_rot_vel = -1.5f;
+        break;
+      case Key::Thrust:
+        spaceship_fwd_force = 1.5f;
+        break;
+      case Key::Fire:
+        break;
+      case Key::Hyperspace:
+        break;
+    }
+    
+    // Simple Euler stepping scheme.
+    auto dt = GameEngine::get_sim_dt_s();
+    rb_spaceship->set_curr_ang_vel(spaceship_rot_vel);
+    //spaceship_rot_ang += spaceship_rot_vel * dt;
+    //sprite_spaceship->set_rotation(math::rad2deg(spaceship_rot_ang));
+    spaceship_dir = rb_spaceship->get_curr_dir();
+    spaceship_force += spaceship_fwd_force * spaceship_dir * dt;
+    rb_spaceship->set_curr_lin_force(spaceship_force);
+    
+    dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
+    coll_handler.update();
     
     //draw_hud(sh, ...);
     
@@ -108,6 +162,19 @@ private:
     // Game logic.
     
     // Draw stuff.
+    
+    if (dbg_draw_rigid_bodies)
+      dyn_sys.draw_dbg(sh);
+    if (dbg_draw_sprites)
+      sprh.draw_dbg_pts(sh, anim_frame);
+    if (dbg_draw_narrow_phase)
+      coll_handler.draw_dbg_narrow_phase(sh);
+    if (draw_sprites)
+      sprh.draw(sh, anim_frame);
+    if (dbg_draw_sprites)
+      sprh.draw_dbg_bb(sh, anim_frame);
+    if (dbg_draw_broad_phase)
+      coll_handler.draw_dbg_broad_phase(sh, 0);
   }
   
   virtual void on_quit() override
@@ -131,8 +198,6 @@ private:
   }
 
   //////////////////////////////////////////////////////////////////////////
-    
-  int num_lives = 3;
   
   audio::AudioSourceHandler audio;
   audio::WaveformGeneration wave_gen;
@@ -144,6 +209,26 @@ private:
   
   std::vector<ASCII_Fonts::ColorScheme> color_schemes;
   ASCII_Fonts::FontDataColl font_data;
+  
+  SpriteHandler sprh;
+  dynamics::DynamicsSystem dyn_sys;
+  dynamics::CollisionHandler coll_handler;
+  bool dbg_draw_rigid_bodies = false;
+  bool dbg_draw_sprites = false;
+  bool dbg_draw_narrow_phase = false;
+  bool dbg_draw_broad_phase = false;
+  bool draw_sprites = true;
+  
+  int num_lives = 3;
+  
+  VectorSprite* sprite_spaceship = nullptr;
+  dynamics::RigidBody* rb_spaceship = nullptr;
+  
+  float spaceship_rot_vel = 0.f;
+  //float spaceship_rot_ang = 0.f;
+  float spaceship_fwd_force = 0.f;
+  Vec2 spaceship_force { 0.f, 0.f };
+  Vec2 spaceship_dir { -1.f, 0.f };
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -154,6 +239,8 @@ int main(int argc, char** argv)
   params.screen_bg_color_default = Color::Black;
   params.screen_bg_color_title = Color::Black;
   params.screen_bg_color_instructions = Color::Black;
+  params.enable_title_screen = false;
+  params.enable_instructions_screen = false;
   
   Game game(argc, argv, params);
 
