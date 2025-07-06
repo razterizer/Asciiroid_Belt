@@ -20,7 +20,7 @@
 
 ///////////////////////////////
 
-class Game : public GameEngine<>
+class Game : public GameEngine<40, 100>
 {
 public:
   Game(int argc, char** argv, const GameEngineParams& params)
