@@ -97,7 +97,7 @@ private:
     
     //draw_hud(sh, ...);
     
-    draw_frame(sh, Color::DarkBlue);
+    draw_frame(sh, Color::LightGray);
     
     if (num_lives < 0)
       num_lives = 0;
