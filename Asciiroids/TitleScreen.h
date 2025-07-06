@@ -259,7 +259,7 @@ void draw_title(ScreenHandler<NR, NC>& sh, const ASCII_Fonts::FontDataColl& font
   sh.write_buffer("_'`~~", 24, 2, Color::DarkGray, Color::LightGray);
   sh.write_buffer("____ ", 24, 7, Color::Black, Color::LightGray);
   
-  ASCII_Fonts::draw_text(sh, font_data, font_colors, "Pilot Episode", 24, 6, ASCII_Fonts::Font::Avatar);
+  ASCII_Fonts::draw_text(sh, font_data, font_colors, "Asciiroids", 24, 6, ASCII_Fonts::Font::Avatar);
   //sh.replace_bg_color(Color::Yellow, ttl::Rectangle { 25, 6, 69, 4 });
   sh.replace_bg_color(Color::Yellow, ttl::Rectangle { 25, 6, 4, 28 });
   sh.replace_bg_color(Color::Yellow, ttl::Rectangle { 25, 36, 4, 39 });
