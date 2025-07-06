@@ -98,7 +98,11 @@ public:
     frame->fill_closed_polylines = false;
     frame->fill_char = '#';
     frame->fill_style = { Color::LightGray, Color::DarkGray };
-    rb_spaceship = dyn_sys.add_rigid_body(sprite_spaceship, 4.f, std::nullopt, {}, {}, spaceship_rot_vel);
+    rb_spaceship = dyn_sys.add_rigid_body(sprite_spaceship, 4.f,
+      std::nullopt, {}, {},
+      spaceship_rot_vel, 0.f,
+      0.f, 0.f,
+      crit_vel_r, crit_vel_c);
     rb_spaceship->set_orig_dir({ -1.f, 0.f });
   }
   
@@ -255,6 +259,8 @@ private:
   float spaceship_fwd_force = 0.f;
   Vec2 spaceship_force { 0.f, 0.f };
   Vec2 spaceship_dir { -1.f, 0.f };
+  float crit_vel_c = 50.f;
+  float crit_vel_r = crit_vel_c/1.5f;
 };
 
 //////////////////////////////////////////////////////////////////////////
