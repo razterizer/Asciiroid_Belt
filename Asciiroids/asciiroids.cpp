@@ -118,7 +118,7 @@ private:
     
     // Auto-break velocities
     if (curr_game_key != Key::Left && curr_game_key != Key::Right)
-      spaceship_rot_vel *= 0.8f;
+      spaceship_rot_vel *= 0.5f;
     if (curr_game_key != Key::Thrust)
       spaceship_fwd_force = 0.f;
       
