@@ -146,6 +146,32 @@ private:
     spaceship_force += spaceship_fwd_force * spaceship_dir * dt;
     rb_spaceship->set_curr_lin_force(spaceship_force);
     
+    // Toroidal geometry update
+    auto cm = rb_spaceship->get_curr_cm();
+    bool warp = false;
+    if (cm.r > sh.num_rows())
+    {
+      cm.r = 0;
+      warp = true;
+    }
+    else if (cm.r < 0)
+    {
+      cm.r = sh.num_rows() - 1;
+      warp = true;
+    }
+    else if (cm.c > sh.num_cols())
+    {
+      cm.c = 0;
+      warp = true;
+    }
+    else if (cm.c < 0)
+    {
+      cm.c = sh.num_cols() - 1;
+      warp = true;
+    }
+    if (warp)
+      rb_spaceship->set_curr_cm(cm);
+    
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
     coll_handler.update();
     
