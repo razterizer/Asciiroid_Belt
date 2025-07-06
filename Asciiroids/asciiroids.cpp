@@ -143,7 +143,7 @@ private:
     //spaceship_rot_ang += spaceship_rot_vel * dt;
     //sprite_spaceship->set_rotation(math::rad2deg(spaceship_rot_ang));
     spaceship_dir = rb_spaceship->get_curr_dir();
-    spaceship_force += spaceship_fwd_force * spaceship_dir * dt;
+    spaceship_force = spaceship_fwd_force * spaceship_dir;
     rb_spaceship->set_curr_lin_force(spaceship_force);
     
     // Toroidal geometry update
