@@ -264,7 +264,7 @@ void draw_title(ScreenHandler<NR, NC>& sh, const ASCII_Fonts::FontDataColl& font
   sh.replace_bg_color(Color::Yellow, ttl::Rectangle { 25, 6, 4, 28 });
   sh.replace_bg_color(Color::Yellow, ttl::Rectangle { 25, 36, 4, 39 });
 
-  sh.write_buffer("(c) 2022 - 2024", 29, 64, Color::White);
+  sh.write_buffer("(c) 2025", 29, 64, Color::White);
   
   sh.write_buffer("Press space-bar to continue...", 29, 25, Color::White);
 }
