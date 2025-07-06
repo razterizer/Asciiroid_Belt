@@ -91,18 +91,26 @@ public:
     sprite_spaceship->add_line_segment(0, { 1, 1 }, { -1, 0 }, 'o', { Color::White, Color::Transparent2 }, 1);
     sprite_spaceship->add_line_segment(0, { -1, 0 }, { 1, -1 }, 'o', { Color::White, Color::Transparent2 }, 1);
     sprite_spaceship->add_line_segment(0, { 0.7f, -1.f }, { 0.7f, 1.f }, '.', { Color::White, Color::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(0, { 1, -1 }, { 0.7f, -1.f }, '.', { Color::White, Color::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(0, { 1, 1 }, { 0.7f, 1.f }, '.', { Color::White, Color::Transparent2 }, 1);
+    
     sprite_spaceship->add_line_segment(1, { 1.71f, 0 }, { 1.71f, 0 }, '*', { Color::White, Color::Transparent2 }, 2);
     sprite_spaceship->add_line_segment(1, { 1, 1 }, { -1, 0 }, 'o', { Color::White, Color::Transparent2 }, 1);
     sprite_spaceship->add_line_segment(1, { -1, 0 }, { 1, -1 }, 'o', { Color::White, Color::Transparent2 }, 1);
     sprite_spaceship->add_line_segment(1, { 0.7f, -1.f }, { 0.7f, 1.f }, '.', { Color::White, Color::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(1, { 1, -1 }, { 0.7f, -1.f }, '.', { Color::White, Color::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(1, { 1, 1 }, { 0.7f, 1.f }, '.', { Color::White, Color::Transparent2 }, 1);
     sprite_spaceship->func_calc_anim_frame = [&](int sim_frame) { return spaceship_fwd_force > 0.f ? sim_frame % 2 : 0; };
     sprite_spaceship->set_rotation(0.f);
-    sprite_spaceship->finalize_topology(0);
     sprite_spaceship->set_aspect_ratio(2.f);
-    auto* frame = sprite_spaceship->get_curr_local_frame(0);
-    frame->fill_closed_polylines = false;
-    frame->fill_char = '#';
-    frame->fill_style = { Color::LightGray, Color::DarkGray };
+    for (int frame_id = 0; frame_id < 2; ++frame_id)
+    {
+      sprite_spaceship->finalize_topology(frame_id);
+      auto* frame = sprite_spaceship->get_curr_local_frame(frame_id);
+      frame->fill_closed_polylines = false;
+      frame->fill_char = '#';
+      frame->fill_style = { Color::LightGray, Color::DarkGray };
+    }
     rb_spaceship = dyn_sys.add_rigid_body(sprite_spaceship, 4.f,
       std::nullopt, {}, {},
       spaceship_rot_vel, 0.f,
