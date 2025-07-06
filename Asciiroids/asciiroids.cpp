@@ -153,6 +153,7 @@ private:
     // Toroidal geometry update
     auto cm = rb_spaceship->get_curr_cm();
     bool warp = false;
+    const int c_offs = 1;
     if (cm.r > sh.num_rows())
     {
       cm.r = 0;
@@ -163,14 +164,14 @@ private:
       cm.r = sh.num_rows() - 1;
       warp = true;
     }
-    else if (cm.c > sh.num_cols())
+    else if (cm.c > sh.num_cols() + c_offs)
     {
-      cm.c = 0;
+      cm.c = -c_offs;
       warp = true;
     }
-    else if (cm.c < 0)
+    else if (cm.c < -c_offs)
     {
-      cm.c = sh.num_cols() - 1;
+      cm.c = sh.num_cols() - 1 + c_offs;
       warp = true;
     }
     if (warp)
