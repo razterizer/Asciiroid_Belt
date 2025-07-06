@@ -133,7 +133,7 @@ private:
         spaceship_rot_vel = -1.5f;
         break;
       case Key::Thrust:
-        spaceship_fwd_force = 1.5f;
+        spaceship_fwd_force = 7.f;
         break;
       case Key::Fire:
         break;
