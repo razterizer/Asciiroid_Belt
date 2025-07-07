@@ -45,6 +45,7 @@
 		072E94CD2E19373A0051F9AB /* InstructionsScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstructionsScreen.h; sourceTree = "<group>"; };
 		072E94CE2E19373A0051F9AB /* Keyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keyboard.h; sourceTree = "<group>"; };
 		072E94CF2E19373A0051F9AB /* TitleScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TitleScreen.h; sourceTree = "<group>"; };
+		072E94E32E1B6F750051F9AB /* music.ct */ = {isa = PBXFileReference; lastKnownFileType = text; path = music.ct; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +123,7 @@
 				072E94CD2E19373A0051F9AB /* InstructionsScreen.h */,
 				072E94CE2E19373A0051F9AB /* Keyboard.h */,
 				072E94CF2E19373A0051F9AB /* TitleScreen.h */,
+				072E94E32E1B6F750051F9AB /* music.ct */,
 			);
 			path = Asciiroids;
 			sourceTree = "<group>";
