@@ -126,6 +126,8 @@ private:
     int anim_frame = GameEngine::get_anim_count(0);
     Key curr_game_key = register_keypresses(kpdp);
     
+    // Game logic.
+    
     //update_ship_controls(sh, src_fx_0, wave_gen, kpdp, curr_special_key,
     //                         get_sim_dt_s());
     
@@ -193,19 +195,17 @@ private:
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
     coll_handler.update();
     
-    //draw_hud(sh, ...);
-    
-    draw_frame(sh, Color::LightGray);
-    
     if (num_lives < 0)
       num_lives = 0;
     
     if (num_lives == 0)
       GameEngine::set_state_game_over();
     
-    // Game logic.
-    
     // Draw stuff.
+    
+    //draw_hud(sh, ...);
+    
+    draw_frame(sh, Color::LightGray);
     
     if (dbg_draw_rigid_bodies)
       dyn_sys.draw_dbg(sh);
