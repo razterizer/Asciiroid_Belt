@@ -26,6 +26,8 @@
 // [ ] Hyperspace.
 // [ ] Large UFO.
 // [ ] Small UFO.
+// [ ] UFOs shoot at spaceship.
+// [ ] Spaceship can shoot at UFOs.
 // [ ] SFX.
 // [ ] Music.
 // ////////////////////////////
