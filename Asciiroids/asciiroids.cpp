@@ -420,6 +420,12 @@ private:
       if (toroidal_wrap(sh, pos, 0, 0))
         shot.pos = to_Vec2(pos);
     }
+    for (auto& asteroid : asteroids_vec)
+    {
+      auto a_cm = to_RC_round(asteroid.rb->get_curr_cm());
+      if (toroidal_wrap(sh, a_cm, 0, 0))
+        asteroid.rb->set_curr_cm(to_Vec2(a_cm));
+    }
     
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
     coll_handler.update();
