@@ -117,6 +117,171 @@ public:
       0.f, 0.f,
       crit_vel_r, crit_vel_c);
     rb_spaceship->set_orig_dir({ -1.f, 0.f });
+    
+    //   ._  ___
+    //  /  \/  /
+    // '       \
+    // |       /
+    //  \___,-'
+    //
+    //  /\/"/
+    // (    \
+    //  \___/
+    //
+    // ,^.^
+    // (__<
+    sprite_asteroid_0_big = sprh.create_bitmap_sprite("asteroid 0 big");
+    sprite_asteroid_0_big->layer_id = 1;
+    sprite_asteroid_0_big->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_asteroid_0_big->init(5, 9);
+    sprite_asteroid_0_big->create_frame(0);
+    sprite_asteroid_0_big->set_sprite_chars_from_strings(0,
+        "  ._  ___",
+        " /  \\/  /",
+        "'       \\",
+        "|       /",
+        " \\___,-' "
+      );
+    sprite_asteroid_0_big->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_0_big->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_asteroid_0_big->enabled = false;
+    
+    sprite_asteroid_0_small = sprh.create_bitmap_sprite("asteroid 0 small");
+    sprite_asteroid_0_small->layer_id = 1;
+    sprite_asteroid_0_small->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_asteroid_0_small->init(3, 6);
+    sprite_asteroid_0_small->create_frame(0);
+    sprite_asteroid_0_small->set_sprite_chars_from_strings(0,
+        " /\\/\"/",
+        "(    \\",
+        " \\___/"
+      );
+    sprite_asteroid_0_small->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_0_small->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_asteroid_0_small->enabled = false;
+    
+    sprite_asteroid_0_tiny = sprh.create_bitmap_sprite("asteroid 0 tiny");
+    sprite_asteroid_0_tiny->layer_id = 1;
+    sprite_asteroid_0_tiny->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_asteroid_0_tiny->init(2, 4);
+    sprite_asteroid_0_tiny->create_frame(0);
+    sprite_asteroid_0_tiny->set_sprite_chars_from_strings(0,
+        ",^.^",
+        "(__<"
+      );
+    sprite_asteroid_0_tiny->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_0_tiny->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_asteroid_0_tiny->enabled = false;
+    
+    //  ,_____
+    // /      \
+    // \       |
+    // ,  _    |
+    // \./ |__/
+    //
+    //  ,--.
+    // (    \
+    // /_/|_/
+    //
+    // ,-.
+    // Z,_)
+    sprite_asteroid_1_big = sprh.create_bitmap_sprite("asteroid 1 big");
+    sprite_asteroid_1_big->layer_id = 1;
+    sprite_asteroid_1_big->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_asteroid_1_big->init(5, 9);
+    sprite_asteroid_1_big->create_frame(0);
+    sprite_asteroid_1_big->set_sprite_chars_from_strings(0,
+        " ,_____  ",
+        "/      \\ ",
+        "\\       |",
+        ",  _    |",
+        "\\./ |__/ "
+      );
+    sprite_asteroid_1_big->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_1_big->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_asteroid_1_big->enabled = false;
+    
+    sprite_asteroid_1_small = sprh.create_bitmap_sprite("asteroid 1 small");
+    sprite_asteroid_1_small->layer_id = 1;
+    sprite_asteroid_1_small->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_asteroid_1_small->init(3, 6);
+    sprite_asteroid_1_small->create_frame(0);
+    sprite_asteroid_1_small->set_sprite_chars_from_strings(0,
+        " ,--. ",
+        "(    \\",
+        "/_/|_/"
+      );
+    sprite_asteroid_1_small->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_1_small->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_asteroid_1_small->enabled = false;
+    
+    sprite_asteroid_1_tiny = sprh.create_bitmap_sprite("asteroid 1 tiny");
+    sprite_asteroid_1_tiny->layer_id = 1;
+    sprite_asteroid_1_tiny->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_asteroid_1_tiny->init(2, 4);
+    sprite_asteroid_1_tiny->create_frame(0);
+    sprite_asteroid_1_tiny->set_sprite_chars_from_strings(0,
+        ",-. ",
+        "Z,_)"
+      );
+    sprite_asteroid_1_tiny->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_1_tiny->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_asteroid_1_tiny->enabled = false;
+    
+    //  -._ _.-
+    // /   "  _\
+    // \      \
+    // /  .-._ /
+    // \_/    '
+    //
+    //  -.-.
+    // (    /
+    // \_\._/
+    //
+    // ,v.
+    // V',)
+    sprite_asteroid_2_big = sprh.create_bitmap_sprite("asteroid 2 big");
+    sprite_asteroid_2_big->layer_id = 1;
+    sprite_asteroid_2_big->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_asteroid_2_big->init(5, 9);
+    sprite_asteroid_2_big->create_frame(0);
+    sprite_asteroid_2_big->set_sprite_chars_from_strings(0,
+        " -._ _.- ",
+        "/   \"  _\\",
+        "\\      \\ ",
+        "/  .-._ /",
+        "\\_/    ' "
+      );
+    sprite_asteroid_2_big->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_2_big->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_asteroid_2_big->enabled = false;
+    
+    sprite_asteroid_2_small = sprh.create_bitmap_sprite("asteroid 2 small");
+    sprite_asteroid_2_small->layer_id = 1;
+    sprite_asteroid_2_small->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_asteroid_2_small->init(3, 6);
+    sprite_asteroid_2_small->create_frame(0);
+    sprite_asteroid_2_small->set_sprite_chars_from_strings(0,
+        " -.-. ",
+        "(    /",
+        "\\_\\._/"
+      );
+    sprite_asteroid_2_small->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_2_small->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_asteroid_2_small->enabled = false;
+    
+    sprite_asteroid_2_tiny = sprh.create_bitmap_sprite("asteroid 2 tiny");
+    sprite_asteroid_2_tiny->layer_id = 1;
+    sprite_asteroid_2_tiny->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_asteroid_2_tiny->init(2, 4);
+    sprite_asteroid_2_tiny->create_frame(0);
+    sprite_asteroid_2_tiny->set_sprite_chars_from_strings(0,
+        ",v. ",
+        "V',)"
+      );
+    sprite_asteroid_2_tiny->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_2_tiny->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_asteroid_2_tiny->enabled = false;
   }
   
 private:
@@ -317,6 +482,16 @@ private:
     float time_0 = 0.f;
   };
   std::vector<Shot> shots_vec;
+  
+  BitmapSprite* sprite_asteroid_0_big = nullptr;
+  BitmapSprite* sprite_asteroid_1_big = nullptr;
+  BitmapSprite* sprite_asteroid_2_big = nullptr;
+  BitmapSprite* sprite_asteroid_0_small = nullptr;
+  BitmapSprite* sprite_asteroid_1_small = nullptr;
+  BitmapSprite* sprite_asteroid_2_small = nullptr;
+  BitmapSprite* sprite_asteroid_0_tiny = nullptr;
+  BitmapSprite* sprite_asteroid_1_tiny = nullptr;
+  BitmapSprite* sprite_asteroid_2_tiny = nullptr;
 };
 
 //////////////////////////////////////////////////////////////////////////
