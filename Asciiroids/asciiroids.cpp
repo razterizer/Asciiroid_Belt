@@ -65,7 +65,7 @@ public:
 #ifndef _WIN32
       const char* xcode_env = std::getenv("RUNNING_FROM_XCODE");
       if (xcode_env != nullptr)
-        tune_path = "../../../../../../../../Documents/xcode/Pilot_Episode/Pilot_Episode/"; // #FIXME: Find a better solution!
+        tune_path = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroids/"; // #FIXME: Find a better solution!
 #endif
     
       if (chip_tune.load_tune(folder::join_path({ tune_path, "music.ct" })))
