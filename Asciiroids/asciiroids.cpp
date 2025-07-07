@@ -151,6 +151,13 @@ private:
         spaceship_fwd_force = 7.f;
         break;
       case Key::Fire:
+        {
+          Shot shot;
+          shot.dir = spaceship_dir;
+          shot.pos = rb_spaceship->get_curr_cm() + spaceship_dir * 1.f;
+          shot.time_0 = GameEngine::get_sim_time_s();
+          shots_vec.emplace_back(shot);
+        }
         break;
       case Key::Hyperspace:
         break;
@@ -164,6 +171,13 @@ private:
     spaceship_dir = rb_spaceship->get_curr_dir();
     spaceship_force = spaceship_fwd_force * spaceship_dir;
     rb_spaceship->set_curr_lin_force(spaceship_force);
+    
+    auto t = GameEngine::get_sim_time_s();
+    stlutils::erase_if(shots_vec, [&](const Shot& shot) {
+      return t - shot.time_0 > shot_lifetime || shot.hit;
+    });
+    for (auto& shot : shots_vec)
+      shot.pos += shot.dir * shot_speed * dt;
     
     // Toroidal geometry update
     auto cm = rb_spaceship->get_curr_cm();
@@ -219,6 +233,9 @@ private:
       sprh.draw_dbg_bb(sh, anim_frame);
     if (dbg_draw_broad_phase)
       coll_handler.draw_dbg_broad_phase(sh, 0);
+      
+    for (const auto& shot : shots_vec)
+      sh.write_buffer(".", std::round(shot.pos.r), std::round(shot.pos.c), Color::White);
   }
   
   virtual void on_quit() override
@@ -275,6 +292,18 @@ private:
   Vec2 spaceship_dir { -1.f, 0.f };
   float crit_vel_c = 50.f;
   float crit_vel_r = crit_vel_c/1.5f;
+  
+  float shot_speed = 10.f;
+  float shot_lifetime = 2.f;
+  float shot_min_time_interval = 0.1f; // Minimum time allowed between shots.
+  struct Shot
+  {
+    Vec2 dir;
+    Vec2 pos;
+    bool hit = false;
+    float time_0 = 0.f;
+  };
+  std::vector<Shot> shots_vec;
 };
 
 //////////////////////////////////////////////////////////////////////////
