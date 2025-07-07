@@ -353,6 +353,19 @@ private:
     coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
     coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ast");
   }
+  
+  template<int NR, int NC>
+  void draw_hud(ScreenHandler<NR, NC>& sh)
+  {
+    sh.write_buffer(str::adjust_str(std::to_string(score), str::Adjustment::Right, 6), 1, 8, Color::White);
+  
+    for (int life_idx = 0; life_idx < std::min(num_lives, 10); ++life_idx)
+    {
+      sh.write_buffer("A", 2, 10 + life_idx, Color::White);
+    }
+  }
+  
+  // ///////
 
   virtual void update() override
   {
@@ -463,7 +476,7 @@ private:
     
     // Draw stuff.
     
-    //draw_hud(sh, ...);
+    draw_hud(sh);
     
     draw_frame(sh, Color::LightGray);
     
@@ -526,7 +539,8 @@ private:
   bool dbg_draw_broad_phase = false;
   bool draw_sprites = true;
   
-  int num_lives = 10;
+  int num_lives = 3; // max visible lives : 10, but more lives can be stored. You gain an extra life for every 10'000 points gained.
+  int score = 0; // max score : 999990
   
   VectorSprite* sprite_spaceship = nullptr;
   dynamics::RigidBody* rb_spaceship = nullptr;
