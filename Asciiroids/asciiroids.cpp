@@ -282,6 +282,8 @@ public:
     sprite_asteroid_2_tiny->fill_sprite_fg_colors(0, Color::White);
     sprite_asteroid_2_tiny->fill_sprite_bg_colors(0, Color::Transparent2);
     sprite_asteroid_2_tiny->enabled = false;
+    
+    generate_big_asteroids(4);
   }
   
 private:
@@ -310,6 +312,33 @@ private:
       return true;
     }
     return false;
+  }
+  
+  void cleanup_asteroids()
+  {
+    for (auto& asteroid : asteroids_vec)
+    {
+      sprh.remove_sprite(asteroid.sprite);
+      dyn_sys.remove_rigid_body(asteroid.rb);
+    }
+    asteroids_vec.clear();
+  }
+  
+  void generate_big_asteroids(int num_asteroids)
+  {
+    for (int a_idx = 0; a_idx < num_asteroids; ++a_idx)
+    {
+      Asteroid asteroid;
+      std::string sprite_src_name = "asteroid " + std::to_string(rnd::rand_int(0, 2)) + " big";
+      asteroid.sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("asteroid big id:" + std::to_string(a_idx), sprite_src_name));
+      std::cout << asteroid.sprite->get_name() << " : " << sprite_src_name << std::endl;
+      asteroid.sprite->enabled = true;
+      asteroid.rb = dyn_sys.add_rigid_body(asteroid.sprite, 20.f, // mass
+        Vec2 { rnd::rand_float(0.f, sh.num_rows()), rnd::rand_float(0.f, sh.num_cols()) }, // pos
+        Vec2 { rnd::randn(0.f, 5.f), rnd::randn(0.f, 5.f) } // vel
+      );
+      asteroids_vec.emplace_back(asteroid);
+    }
   }
 
   virtual void update() override
@@ -385,6 +414,13 @@ private:
     
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
     coll_handler.update();
+    
+    if (!stlutils::contains_if(asteroids_vec, [](const auto& a) { return !a.hit; }))
+    {
+      level++;
+      cleanup_asteroids();
+      generate_big_asteroids(level*2);
+    }
     
     if (num_lives < 0)
       num_lives = 0;
@@ -500,8 +536,11 @@ private:
     Asteroid* child_A = nullptr;
     Asteroid* child_B = nullptr;
     int level = 0; // 0 : big, 1 : small, 2 : tiny.
+    bool hit = false;
   };
   std::vector<Asteroid> asteroids_vec;
+  
+  int level = 2;
 };
 
 //////////////////////////////////////////////////////////////////////////
