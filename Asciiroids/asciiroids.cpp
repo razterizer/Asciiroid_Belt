@@ -300,11 +300,11 @@ private:
   float spaceship_fwd_force = 0.f;
   Vec2 spaceship_force { 0.f, 0.f };
   Vec2 spaceship_dir { -1.f, 0.f };
-  float crit_vel_c = 50.f;
+  float crit_vel_c = 30.f;
   float crit_vel_r = crit_vel_c/1.5f;
   
-  float shot_speed = 10.f;
-  float shot_lifetime = 4.f;
+  float shot_speed = 31.f;
+  float shot_lifetime = 2.f;
   float shot_min_time_interval = 0.1f; // Minimum time allowed between shots.
   struct Shot
   {
