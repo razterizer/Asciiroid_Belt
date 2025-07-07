@@ -492,6 +492,16 @@ private:
   BitmapSprite* sprite_asteroid_0_tiny = nullptr;
   BitmapSprite* sprite_asteroid_1_tiny = nullptr;
   BitmapSprite* sprite_asteroid_2_tiny = nullptr;
+  
+  struct Asteroid
+  {
+    BitmapSprite* sprite = nullptr;
+    dynamics::RigidBody* rb = nullptr;
+    Asteroid* child_A = nullptr;
+    Asteroid* child_B = nullptr;
+    int level = 0; // 0 : big, 1 : small, 2 : tiny.
+  };
+  std::vector<Asteroid> asteroids_vec;
 };
 
 //////////////////////////////////////////////////////////////////////////
