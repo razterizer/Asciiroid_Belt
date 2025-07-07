@@ -121,6 +121,32 @@ public:
   
 private:
 
+  template<int NR, int NC>
+  bool toroidal_wrap(const ScreenHandler<NR, NC>& sh, RC& pos, int c_offs, int r_offs)
+  {
+    if (pos.r > sh.num_rows() + r_offs)
+    {
+      pos.r = -r_offs;
+      return true;
+    }
+    else if (pos.r < -r_offs)
+    {
+      pos.r = sh.num_rows() - 1 + r_offs;
+      return true;
+    }
+    else if (pos.c > sh.num_cols() + c_offs)
+    {
+      pos.c = -c_offs;
+      return true;
+    }
+    else if (pos.c < -c_offs)
+    {
+      pos.c = sh.num_cols() - 1 + c_offs;
+      return true;
+    }
+    return false;
+  }
+
   virtual void update() override
   {
     int anim_frame = GameEngine::get_anim_count(0);
@@ -180,31 +206,15 @@ private:
       shot.pos += shot.dir * shot_speed * dt;
     
     // Toroidal geometry update
-    auto cm = rb_spaceship->get_curr_cm();
-    bool warp = false;
-    const int c_offs = 1;
-    if (cm.r > sh.num_rows())
+    auto cm = to_RC_round(rb_spaceship->get_curr_cm());
+    if (toroidal_wrap(sh, cm, 0, 1))
+      rb_spaceship->set_curr_cm(to_Vec2(cm));
+    for (auto& shot : shots_vec)
     {
-      cm.r = 0;
-      warp = true;
+      auto pos = to_RC_round(shot.pos);
+      if (toroidal_wrap(sh, pos, 0, 0))
+        shot.pos = to_Vec2(pos);
     }
-    else if (cm.r < 0)
-    {
-      cm.r = sh.num_rows() - 1;
-      warp = true;
-    }
-    else if (cm.c > sh.num_cols() + c_offs)
-    {
-      cm.c = -c_offs;
-      warp = true;
-    }
-    else if (cm.c < -c_offs)
-    {
-      cm.c = sh.num_cols() - 1 + c_offs;
-      warp = true;
-    }
-    if (warp)
-      rb_spaceship->set_curr_cm(cm);
     
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
     coll_handler.update();
