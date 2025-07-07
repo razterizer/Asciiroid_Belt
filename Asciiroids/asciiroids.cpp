@@ -348,6 +348,8 @@ private:
       );
       asteroids_vec.emplace_back(asteroid);
     }
+    coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
+    coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ast");
   }
 
   virtual void update() override
