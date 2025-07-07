@@ -151,6 +151,7 @@ private:
   {
     int anim_frame = GameEngine::get_anim_count(0);
     Key curr_game_key = register_keypresses(kpdp);
+    auto t = GameEngine::get_sim_time_s();
     
     // Game logic.
     
@@ -177,12 +178,14 @@ private:
         spaceship_fwd_force = 7.f;
         break;
       case Key::Fire:
+        if (t - shot_timestamp > shot_min_time_interval)
         {
           Shot shot;
           shot.dir = spaceship_dir;
           shot.pos = rb_spaceship->get_curr_cm() + spaceship_dir * 1.f;
           shot.time_0 = GameEngine::get_sim_time_s();
           shots_vec.emplace_back(shot);
+          shot_timestamp = t;
         }
         break;
       case Key::Hyperspace:
@@ -198,7 +201,6 @@ private:
     spaceship_force = spaceship_fwd_force * spaceship_dir;
     rb_spaceship->set_curr_lin_force(spaceship_force);
     
-    auto t = GameEngine::get_sim_time_s();
     stlutils::erase_if(shots_vec, [&](const Shot& shot) {
       return t - shot.time_0 > shot_lifetime || shot.hit;
     });
@@ -306,6 +308,7 @@ private:
   float shot_speed = 31.f;
   float shot_lifetime = 2.f;
   float shot_min_time_interval = 0.1f; // Minimum time allowed between shots.
+  float shot_timestamp = 0.f;
   struct Shot
   {
     Vec2 dir;
