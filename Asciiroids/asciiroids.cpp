@@ -457,7 +457,7 @@ private:
   bool dbg_draw_broad_phase = false;
   bool draw_sprites = true;
   
-  int num_lives = 3;
+  int num_lives = 10;
   
   VectorSprite* sprite_spaceship = nullptr;
   dynamics::RigidBody* rb_spaceship = nullptr;
