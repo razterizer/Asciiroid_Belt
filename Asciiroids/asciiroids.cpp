@@ -403,8 +403,6 @@ private:
     // Simple Euler stepping scheme.
     auto dt = GameEngine::get_sim_dt_s();
     rb_spaceship->set_curr_ang_vel(spaceship_rot_vel);
-    //spaceship_rot_ang += spaceship_rot_vel * dt;
-    //sprite_spaceship->set_rotation(math::rad2deg(spaceship_rot_ang));
     spaceship_dir = rb_spaceship->get_curr_dir();
     spaceship_force = spaceship_fwd_force * spaceship_dir;
     rb_spaceship->set_curr_lin_force(spaceship_force);
@@ -535,7 +533,6 @@ private:
   
   const float spaceship_ar = 2.f;
   float spaceship_rot_vel = 0.f;
-  //float spaceship_rot_ang = 0.f;
   float spaceship_fwd_force = 0.f;
   Vec2 spaceship_force { 0.f, 0.f };
   Vec2 spaceship_dir { -1.f, 0.f };
