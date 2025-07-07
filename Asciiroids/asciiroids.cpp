@@ -430,7 +430,22 @@ private:
     }
     
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
-    coll_handler.update();
+    auto narrow_phase_coll_data = coll_handler.update();
+    
+    if (stlutils::contains_if(narrow_phase_coll_data, [&](const auto& coll_pair) { return coll_pair.node_A->rigid_body == rb_spaceship || coll_pair.node_B->rigid_body == rb_spaceship; }))
+    {
+      sprite_spaceship->enabled = false;
+      coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+      spaceship_explosion = true;
+      num_lives--;
+    }
+    
+    if (spaceship_explosion)
+    {
+      // Fill
+      coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
+      coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ast");
+    }
     
     if (!stlutils::contains_if(asteroids_vec, [](const auto& a) { return !a.hit; }))
     {
@@ -522,6 +537,7 @@ private:
   Vec2 spaceship_dir { -1.f, 0.f };
   float crit_vel_c = 30.f;
   float crit_vel_r = crit_vel_c/1.5f;
+  bool spaceship_explosion = false;
   
   float shot_speed = 31.f;
   float shot_lifetime = 2.f;
