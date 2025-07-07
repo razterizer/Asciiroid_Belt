@@ -102,7 +102,7 @@ public:
     sprite_spaceship->add_line_segment(1, { 1, 1 }, { 0.7f, 1.f }, '.', { Color::White, Color::Transparent2 }, 1);
     sprite_spaceship->func_calc_anim_frame = [&](int sim_frame) { return spaceship_fwd_force > 0.f ? sim_frame % 2 : 0; };
     sprite_spaceship->set_rotation(0.f);
-    sprite_spaceship->set_aspect_ratio(2.f);
+    sprite_spaceship->set_aspect_ratio(spaceship_ar);
     for (int frame_id = 0; frame_id < 2; ++frame_id)
     {
       sprite_spaceship->finalize_topology(frame_id);
@@ -388,7 +388,8 @@ private:
         if (t - shot_timestamp > shot_min_time_interval)
         {
           Shot shot;
-          shot.dir = spaceship_dir;
+          shot.dir = Vec2 { spaceship_dir.r / spaceship_ar, spaceship_dir.c };
+          shot.dir = math::normalize(shot.dir);
           shot.pos = rb_spaceship->get_curr_cm() + spaceship_dir * 1.f;
           shot.time_0 = GameEngine::get_sim_time_s();
           shots_vec.emplace_back(shot);
@@ -532,6 +533,7 @@ private:
   VectorSprite* sprite_spaceship = nullptr;
   dynamics::RigidBody* rb_spaceship = nullptr;
   
+  const float spaceship_ar = 2.f;
   float spaceship_rot_vel = 0.f;
   //float spaceship_rot_ang = 0.f;
   float spaceship_fwd_force = 0.f;
