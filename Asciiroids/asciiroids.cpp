@@ -18,7 +18,17 @@
 #include <8Beat/AudioSourceHandler.h>
 #include <8Beat/ChipTuneEngine.h>
 
-///////////////////////////////
+// ////////////////////////////
+// [ ] Explosion sprites.
+// [ ] Spaceship collision logic (explosion + reappearance, etc).
+// [ ] Score counting.
+// [ ] Shots should split larger asteroids into two smaller ones which travel faster than the original.
+// [ ] Hyperspace.
+// [ ] Large UFO.
+// [ ] Small UFO.
+// [ ] SFX.
+// [ ] Music.
+// ////////////////////////////
 
 class Game : public GameEngine<40, 100>
 {
