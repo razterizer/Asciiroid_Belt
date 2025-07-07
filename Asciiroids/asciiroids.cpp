@@ -41,7 +41,7 @@ public:
   //#ifndef _WIN32
     GameEngine::set_real_fps(15);
     GameEngine::set_sim_delay_us(50'000);
-    GameEngine::set_anim_rate(0, 5); // Spaceship
+    GameEngine::set_anim_rate(0, 4); // Explosion
     GameEngine::set_anim_rate(1, 3); // Asteroids
     GameEngine::set_anim_rate(2, 5); // UFO AI
   //#endif
@@ -307,6 +307,83 @@ public:
     sprite_asteroid_2_tiny->enabled = false;
     
     generate_big_asteroids(4);
+    
+    sprite_explosion = sprh.create_bitmap_sprite("explosion");
+    sprite_explosion->layer_id = 3;
+    sprite_explosion->pos = { sh.num_rows()/2, sh.num_cols()/2 };
+    sprite_explosion->init(5, 9);
+    sprite_explosion->enabled = false;
+    sprite_explosion->create_frame(0);
+    sprite_explosion->set_sprite_chars_from_strings(0,
+        "         ",
+        "         ",
+        "    .    ",
+        "         ",
+        "         "
+      );
+    sprite_explosion->fill_sprite_fg_colors(0, Color::White);
+    sprite_explosion->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_explosion->create_frame(1);
+    sprite_explosion->set_sprite_chars_from_strings(1,
+        "         ",
+        "    ..   ",
+        "   . ..  ",
+        "    .    ",
+        "         "
+      );
+    sprite_explosion->fill_sprite_fg_colors(1, Color::White);
+    sprite_explosion->fill_sprite_bg_colors(1, Color::Transparent2);
+    sprite_explosion->create_frame(2);
+    sprite_explosion->set_sprite_chars_from_strings(2,
+        "    . .  ",
+        "  .  . . ",
+        " . .  .  ",
+        "  .    . ",
+        "    .    "
+      );
+    sprite_explosion->fill_sprite_fg_colors(2, Color::White);
+    sprite_explosion->fill_sprite_bg_colors(2, Color::Transparent2);
+    sprite_explosion->create_frame(3);
+    sprite_explosion->set_sprite_chars_from_strings(3,
+        " . .. .  ",
+        "  .  . . ",
+        " ..    . ",
+        "  .   .  ",
+        " .  .   ."
+      );
+    sprite_explosion->fill_sprite_fg_colors(3, Color::White);
+    sprite_explosion->fill_sprite_bg_colors(3, Color::Transparent2);
+    sprite_explosion->create_frame(4);
+    sprite_explosion->set_sprite_chars_from_strings(4,
+        ".   .  . ",
+        " .     . ",
+        ".       .",
+        "         ",
+        " .  .   ."
+      );
+    sprite_explosion->fill_sprite_fg_colors(4, Color::White);
+    sprite_explosion->fill_sprite_bg_colors(4, Color::Transparent2);
+    sprite_explosion->create_frame(5);
+    sprite_explosion->set_sprite_chars_from_strings(5,
+        "         ",
+        "         ",
+        ".        ",
+        "         ",
+        "     .   "
+      );
+    sprite_explosion->fill_sprite_fg_colors(5, Color::White);
+    sprite_explosion->fill_sprite_bg_colors(5, Color::Transparent2);
+    sprite_explosion->create_frame(6);
+    sprite_explosion->set_sprite_chars_from_strings(6,
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         "
+      );
+    sprite_explosion->fill_sprite_fg_colors(6, Color::White);
+    sprite_explosion->fill_sprite_bg_colors(6, Color::Transparent2);
+    sprite_explosion->func_calc_anim_frame = [&](int sim_frame) { return spaceship_explosion_anim_ctr; };
   }
   
 private:
@@ -457,21 +534,30 @@ private:
     
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
     auto narrow_phase_coll_data = coll_handler.update();
+    // #FIXME: Make dynamic explosions (sprites + SFX) out of this vector.
+    const auto& isect_world_positions = coll_handler.get_isect_world_positions();
     
-    if (stlutils::contains_if(narrow_phase_coll_data, [&](const auto& coll_pair) { return coll_pair.node_A->rigid_body == rb_spaceship || coll_pair.node_B->rigid_body == rb_spaceship; }))
+    auto coll_it = stlutils::find_if(narrow_phase_coll_data, [&](const auto& coll_pair) { return coll_pair.node_A->rigid_body == rb_spaceship || coll_pair.node_B->rigid_body == rb_spaceship; });
+    if (coll_it != narrow_phase_coll_data.end())
     {
       sprite_spaceship->enabled = false;
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
       spaceship_explosion = true;
+      sprite_explosion->enabled = true;
+      sprite_explosion->pos = to_RC_round(isect_world_positions.back()) - sprite_explosion->get_size() / 2;
       num_lives--;
     }
     
     if (spaceship_explosion)
     {
-      // Fill
-      coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
-      coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ast");
+      spaceship_explosion_timestamp = GameEngine::get_anim_count(0);
+      spaceship_explosion_anim_ctr = 0;
+      spaceship_explosion = false;
     }
+    else if (spaceship_explosion_anim_ctr < 6)
+      spaceship_explosion_anim_ctr = GameEngine::get_anim_count(0) - spaceship_explosion_timestamp;
+    else
+      sprite_explosion->enabled = false;
     
     if (!stlutils::contains_if(asteroids_vec, [](const auto& a) { return !a.hit; }))
     {
@@ -565,6 +651,8 @@ private:
   float crit_vel_c = 30.f;
   float crit_vel_r = crit_vel_c/1.5f;
   bool spaceship_explosion = false;
+  int spaceship_explosion_timestamp = 0;
+  int spaceship_explosion_anim_ctr = 0;
   
   float shot_speed = 31.f;
   float shot_lifetime = 2.f;
@@ -603,6 +691,9 @@ private:
   std::vector<Asteroid> asteroids_vec;
   
   int level = 2;
+  
+  BitmapSprite* sprite_explosion = nullptr;
+  VectorSprite* sprite_broken_ship = nullptr;
 };
 
 //////////////////////////////////////////////////////////////////////////
