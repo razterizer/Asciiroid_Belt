@@ -536,6 +536,11 @@ private:
     
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
     coll_handler.update();
+    
+    // Handle collisions and generate explosions:
+    //  * asteroid <-> spaceship
+    //  * small ufo <-> spaceship
+    //  * large ufo <-> spaceship
     auto isect_data = coll_handler.get_isect_world_positions();
     for (const auto& id : isect_data)
     {
@@ -552,13 +557,28 @@ private:
       }
     }
     
+    // If spaceship collided with something then lose a life and make the ship disappear and reappear in a safe zone.
     auto id_it = stlutils::find_if(isect_data, [&](const auto& id) { return id.node_A->rigid_body == rb_spaceship || id.node_B->rigid_body == rb_spaceship; });
     if (id_it != isect_data.end())
     {
       sprite_spaceship->enabled = false;
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
       spaceship_explosion = true;
+      spaceship_killed_timestamp = t;
       num_lives--;
+    }
+    if (spaceship_explosion && t - spaceship_killed_timestamp > 3.f)
+    {
+      const auto& spaceship_pos = rb_spaceship->get_curr_cm();
+      if (!stlutils::contains_if(asteroids_vec, [&spaceship_pos](const auto& a) { return math::distance_squared(a.rb->get_curr_cm(), spaceship_pos) < 400.f; }))
+      {
+        spaceship_explosion = false;
+        sprite_spaceship->enabled = true;
+        rb_spaceship->set_curr_cm({ sh.num_rows()/2.f, sh.num_cols()/2.f });
+        rb_spaceship->set_curr_lin_vel({ 0, 0 });
+        rb_spaceship->set_curr_ang(0.f);
+        coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+      }
     }
     
     for (auto& explosion : explosions_vec)
@@ -677,6 +697,7 @@ private:
   float crit_vel_c = 30.f;
   float crit_vel_r = crit_vel_c/1.5f;
   bool spaceship_explosion = false;
+  float spaceship_killed_timestamp = 0.f;
   
   float shot_speed = 31.f;
   float shot_lifetime = 2.f;
