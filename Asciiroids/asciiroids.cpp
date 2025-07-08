@@ -383,7 +383,6 @@ public:
       );
     sprite_explosion->fill_sprite_fg_colors(6, Color::White);
     sprite_explosion->fill_sprite_bg_colors(6, Color::Transparent2);
-    sprite_explosion->func_calc_anim_frame = [&](int sim_frame) { return spaceship_explosion_anim_ctr; };
   }
   
 private:
@@ -539,6 +538,20 @@ private:
     coll_handler.update();
     // #FIXME: Make dynamic explosions (sprites + SFX) out of this vector.
     auto isect_data = coll_handler.get_isect_world_positions();
+    for (const auto& id : isect_data)
+    {
+      if (!stlutils::contains_if(explosions_vec, [&id](const auto& expl) { return (id.node_A == expl->isect_data.node_A && id.node_B == expl->isect_data.node_B) || (id.node_A == expl->isect_data.node_B && id.node_B == expl->isect_data.node_A); }))
+      {
+        auto& explosion = explosions_vec.emplace_back(std::make_unique<ExplosionData>());
+        explosion->isect_data = id;
+        explosion->trig = true;
+        explosion->sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("explosion " + std::to_string(explosion_id++), "explosion"));
+        explosion->sprite->enabled = true;
+        explosion->sprite->pos = to_RC_round(isect_data.back().world_pos) - sprite_explosion->get_size() / 2;
+        auto* expl_raw_ptr = explosion.get();
+        explosion->sprite->func_calc_anim_frame = [expl_raw_ptr](int sim_frame) { return expl_raw_ptr->anim_ctr; };
+      }
+    }
     
     auto id_it = stlutils::find_if(isect_data, [&](const auto& id) { return id.node_A->rigid_body == rb_spaceship || id.node_B->rigid_body == rb_spaceship; });
     if (id_it != isect_data.end())
@@ -546,21 +559,31 @@ private:
       sprite_spaceship->enabled = false;
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
       spaceship_explosion = true;
-      sprite_explosion->enabled = true;
-      sprite_explosion->pos = to_RC_round(isect_data.back().world_pos) - sprite_explosion->get_size() / 2;
       num_lives--;
     }
     
-    if (spaceship_explosion)
+    for (auto& explosion : explosions_vec)
     {
-      spaceship_explosion_timestamp = GameEngine::get_anim_count(0);
-      spaceship_explosion_anim_ctr = 0;
-      spaceship_explosion = false;
+      if (explosion->trig)
+      {
+        explosion->timestamp = GameEngine::get_anim_count(0);
+        explosion->anim_ctr = 0;
+        explosion->trig = false;
+      }
+      else if (explosion->anim_ctr < 6)
+        explosion->anim_ctr = GameEngine::get_anim_count(0) - explosion->timestamp;
+      else
+        explosion->sprite->enabled = false;
     }
-    else if (spaceship_explosion_anim_ctr < 6)
-      spaceship_explosion_anim_ctr = GameEngine::get_anim_count(0) - spaceship_explosion_timestamp;
-    else
-      sprite_explosion->enabled = false;
+    stlutils::erase_if(explosions_vec, [&](auto& expl)
+    {
+      if (!expl->sprite->enabled)
+      {
+        sprh.remove_sprite(expl->sprite);
+        return true;
+      }
+      return false;
+    });
     
     if (!stlutils::contains_if(asteroids_vec, [](const auto& a) { return !a.hit; }))
     {
@@ -655,8 +678,6 @@ private:
   float crit_vel_c = 30.f;
   float crit_vel_r = crit_vel_c/1.5f;
   bool spaceship_explosion = false;
-  int spaceship_explosion_timestamp = 0;
-  int spaceship_explosion_anim_ctr = 0;
   
   float shot_speed = 31.f;
   float shot_lifetime = 2.f;
@@ -696,6 +717,17 @@ private:
   
   BitmapSprite* sprite_explosion = nullptr;
   VectorSprite* sprite_broken_ship = nullptr;
+  
+  struct ExplosionData
+  {
+    bool trig = false;
+    int timestamp = 0;
+    int anim_ctr = 0;
+    dynamics::CollisionHandler::IsectData isect_data;
+    BitmapSprite* sprite = nullptr;
+  };
+  int explosion_id = 0;
+  std::vector<std::unique_ptr<ExplosionData>> explosions_vec;
 };
 
 //////////////////////////////////////////////////////////////////////////
