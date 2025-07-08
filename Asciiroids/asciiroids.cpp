@@ -427,16 +427,15 @@ private:
   {
     for (int a_idx = 0; a_idx < num_asteroids; ++a_idx)
     {
-      Asteroid asteroid;
+      auto& asteroid = asteroids_vec.emplace_back();
       std::string sprite_src_name = "asteroid " + std::to_string(rnd::rand_int(0, 2)) + " big";
-      asteroid.sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("asteroid big id:" + std::to_string(a_idx), sprite_src_name));
+      asteroid.sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("asteroid big id:" + std::to_string(global_asteroid_id++), sprite_src_name));
       //std::cout << asteroid.sprite->get_name() << " : " << sprite_src_name << std::endl;
       asteroid.sprite->enabled = true;
       asteroid.rb = dyn_sys.add_rigid_body(asteroid.sprite, 20.f, // mass
         Vec2 { rnd::rand_float(0.f, sh.num_rows()), rnd::rand_float(0.f, sh.num_cols()) }, // pos
         Vec2 { rnd::randn(0.f, 3.f), rnd::randn(0.f, 3.f) } // vel
       );
-      asteroids_vec.emplace_back(asteroid);
     }
     coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
     coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ast");
@@ -541,21 +540,84 @@ private:
     //  * asteroid <-> spaceship
     //  * small ufo <-> spaceship
     //  * large ufo <-> spaceship
+    auto f_generate_explosion = [&](const RC& pos) -> ExplosionData*
+    {
+      auto& explosion = explosions_vec.emplace_back(std::make_unique<ExplosionData>());
+      explosion->trig = true;
+      explosion->sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("explosion " + std::to_string(global_explosion_id++), "explosion"));
+      explosion->sprite->enabled = true;
+      explosion->sprite->pos = pos - sprite_explosion->get_size() / 2;
+      auto* expl_raw_ptr = explosion.get();
+      explosion->sprite->func_calc_anim_frame = [expl_raw_ptr](int sim_frame) { return expl_raw_ptr->anim_ctr; };
+      return expl_raw_ptr;
+    };
     auto isect_data = coll_handler.get_isect_world_positions();
     for (const auto& id : isect_data)
     {
       if (!stlutils::contains_if(explosions_vec, [&id](const auto& expl) { return (id.node_A == expl->isect_data.node_A && id.node_B == expl->isect_data.node_B) || (id.node_A == expl->isect_data.node_B && id.node_B == expl->isect_data.node_A); }))
       {
-        auto& explosion = explosions_vec.emplace_back(std::make_unique<ExplosionData>());
+        auto* explosion = f_generate_explosion(to_RC_round(id.world_pos));
         explosion->isect_data = id;
-        explosion->trig = true;
-        explosion->sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("explosion " + std::to_string(explosion_id++), "explosion"));
-        explosion->sprite->enabled = true;
-        explosion->sprite->pos = to_RC_round(isect_data.back().world_pos) - sprite_explosion->get_size() / 2;
-        auto* expl_raw_ptr = explosion.get();
-        explosion->sprite->func_calc_anim_frame = [expl_raw_ptr](int sim_frame) { return expl_raw_ptr->anim_ctr; };
       }
     }
+    new_asteroids_vec.clear();
+    for (auto& asteroid : asteroids_vec)
+    {
+      auto aabb_asteroid = asteroid.sprite->calc_curr_AABB(0);
+      RC hit_rc;
+      for (auto& shot : shots_vec)
+      {
+        auto shot_rc = to_RC_round(shot.pos);
+        if (aabb_asteroid.contains(shot_rc))
+        {
+          asteroid.hit = true;
+          shot.hit = true;
+          hit_rc = shot_rc;
+          break;
+        }
+      }
+      if (asteroid.hit)
+      {
+        f_generate_explosion(hit_rc);
+        
+        if (asteroid.level < 3)
+        {
+          Asteroid a_child[2];
+          Vec2 a_child_dir[2];
+          const float ar = 1.8f;
+          a_child_dir[0] = Vec2 { rnd::rand_float(-1.f, +1.f)/ar, rnd::rand_float(-1.f, +1.f) };
+          a_child_dir[0] = math::normalize(a_child_dir[0]);
+          a_child_dir[1] = Vec2 {
+            -a_child_dir[0].r + rnd::randn(0.f, 0.2f)/ar,
+            -a_child_dir[0].c + rnd::randn(0.f, 0.2f)
+          };
+          a_child_dir[1] = math::normalize(a_child_dir[1]);
+          for (int a_idx = 0; a_idx < 2; ++a_idx)
+          {
+            a_child[a_idx].level = asteroid.level + 1;
+            std::string a_size = a_child[a_idx].level == 1 ? "small" : "tiny";
+            std::string sprite_src_name = "asteroid " + std::to_string(rnd::rand_int(0, 2)) + " " + a_size;
+            a_child[a_idx].sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("asteroid " + a_size + " id:" + std::to_string(global_asteroid_id++), sprite_src_name));
+            //std::cout << a_child[a_idx].sprite->get_name() << " : " << sprite_src_name << std::endl;
+            a_child[a_idx].sprite->enabled = true;
+            auto pos = asteroid.rb->get_curr_cm();
+            pos.r += a_child_dir[a_idx].r * rnd::rand_float(0.1f, 3.f)/ar;
+            pos.c += a_child_dir[a_idx].c * rnd::rand_float(0.1f, 3.f);
+            auto vel = a_child_dir[a_idx] * (math::length(asteroid.rb->get_curr_lin_vel()) + rnd::rand_float(0.05f, 3.f));
+            a_child[a_idx].rb = dyn_sys.add_rigid_body(a_child[a_idx].sprite, 20.f, // mass
+              pos, vel);
+            new_asteroids_vec.emplace_back(a_child[a_idx]);
+          }
+          coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
+        }
+        
+        sprh.remove_sprite(asteroid.sprite);
+        dyn_sys.remove_rigid_body(asteroid.rb);
+      }
+    }
+    stlutils::erase_if(asteroids_vec, [](const auto& a) { return a.hit; });
+    stlutils::erase_if(shots_vec, [](const auto& s) { return s.hit; });
+    stlutils::append(asteroids_vec, new_asteroids_vec);
     
     // If spaceship collided with something then lose a life and make the ship disappear and reappear in a safe zone.
     auto id_it = stlutils::find_if(isect_data, [&](const auto& id) { return id.node_A->rigid_body == rb_spaceship || id.node_B->rigid_body == rb_spaceship; });
@@ -728,12 +790,12 @@ private:
   {
     BitmapSprite* sprite = nullptr;
     dynamics::RigidBody* rb = nullptr;
-    Asteroid* child_A = nullptr;
-    Asteroid* child_B = nullptr;
     int level = 0; // 0 : big, 1 : small, 2 : tiny.
     bool hit = false;
   };
+  int global_asteroid_id = 0;
   std::vector<Asteroid> asteroids_vec;
+  std::vector<Asteroid> new_asteroids_vec;
   
   BitmapSprite* sprite_explosion = nullptr;
   //VectorSprite* sprite_broken_ship = nullptr;
@@ -746,7 +808,7 @@ private:
     dynamics::CollisionHandler::IsectData isect_data;
     BitmapSprite* sprite = nullptr;
   };
-  int explosion_id = 0;
+  int global_explosion_id = 0;
   std::vector<std::unique_ptr<ExplosionData>> explosions_vec;
 };
 
