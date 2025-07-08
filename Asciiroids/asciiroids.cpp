@@ -536,18 +536,18 @@ private:
     }
     
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
-    auto narrow_phase_coll_data = coll_handler.update();
+    coll_handler.update();
     // #FIXME: Make dynamic explosions (sprites + SFX) out of this vector.
-    const auto& isect_world_positions = coll_handler.get_isect_world_positions();
+    auto isect_data = coll_handler.get_isect_world_positions();
     
-    auto coll_it = stlutils::find_if(narrow_phase_coll_data, [&](const auto& coll_pair) { return coll_pair.node_A->rigid_body == rb_spaceship || coll_pair.node_B->rigid_body == rb_spaceship; });
-    if (coll_it != narrow_phase_coll_data.end())
+    auto id_it = stlutils::find_if(isect_data, [&](const auto& id) { return id.node_A->rigid_body == rb_spaceship || id.node_B->rigid_body == rb_spaceship; });
+    if (id_it != isect_data.end())
     {
       sprite_spaceship->enabled = false;
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
       spaceship_explosion = true;
       sprite_explosion->enabled = true;
-      sprite_explosion->pos = to_RC_round(isect_world_positions.back()) - sprite_explosion->get_size() / 2;
+      sprite_explosion->pos = to_RC_round(isect_data.back().world_pos) - sprite_explosion->get_size() / 2;
       num_lives--;
     }
     
