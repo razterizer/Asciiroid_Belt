@@ -19,7 +19,7 @@
 #include <8Beat/ChipTuneEngine.h>
 
 // ////////////////////////////
-// [ ] Explosion sprites.
+// [x] Explosion sprites.
 // [ ] Spaceship collision logic (explosion + reappearance, etc).
 // [ ] Score counting.
 // [ ] Shots should split larger asteroids into two smaller ones which travel faster than the original.
@@ -536,7 +536,6 @@ private:
     
     dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
     coll_handler.update();
-    // #FIXME: Make dynamic explosions (sprites + SFX) out of this vector.
     auto isect_data = coll_handler.get_isect_world_positions();
     for (const auto& id : isect_data)
     {
