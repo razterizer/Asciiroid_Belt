@@ -639,6 +639,7 @@ private:
   
   int num_lives = 3; // max visible lives : 10, but more lives can be stored. You gain an extra life for every 10'000 points gained.
   int score = 0; // max score : 999990
+  int level = 2;
   
   VectorSprite* sprite_spaceship = nullptr;
   dynamics::RigidBody* rb_spaceship = nullptr;
@@ -689,8 +690,6 @@ private:
     bool hit = false;
   };
   std::vector<Asteroid> asteroids_vec;
-  
-  int level = 2;
   
   BitmapSprite* sprite_explosion = nullptr;
   VectorSprite* sprite_broken_ship = nullptr;
