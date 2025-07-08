@@ -736,7 +736,7 @@ private:
   std::vector<Asteroid> asteroids_vec;
   
   BitmapSprite* sprite_explosion = nullptr;
-  VectorSprite* sprite_broken_ship = nullptr;
+  //VectorSprite* sprite_broken_ship = nullptr;
   
   struct ExplosionData
   {
