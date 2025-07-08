@@ -473,33 +473,36 @@ private:
     if (curr_game_key != Key::Thrust)
       spaceship_fwd_force = 0.f;
       
-    switch (curr_game_key)
+    if (sprite_spaceship->enabled)
     {
-      case Key::None:
-        break;
-      case Key::Left:
-        spaceship_rot_vel = +1.5f;
-        break;
-      case Key::Right:
-        spaceship_rot_vel = -1.5f;
-        break;
-      case Key::Thrust:
-        spaceship_fwd_force = 7.f;
-        break;
-      case Key::Fire:
-        if (t - shot_timestamp > shot_min_time_interval)
-        {
-          Shot shot;
-          shot.dir = Vec2 { spaceship_dir.r / spaceship_ar, spaceship_dir.c };
-          shot.dir = math::normalize(shot.dir);
-          shot.pos = rb_spaceship->get_curr_cm() + spaceship_dir * 1.f;
-          shot.time_0 = GameEngine::get_sim_time_s();
-          shots_vec.emplace_back(shot);
-          shot_timestamp = t;
-        }
-        break;
-      case Key::Hyperspace:
-        break;
+      switch (curr_game_key)
+      {
+        case Key::None:
+          break;
+        case Key::Left:
+          spaceship_rot_vel = +1.5f;
+          break;
+        case Key::Right:
+          spaceship_rot_vel = -1.5f;
+          break;
+        case Key::Thrust:
+          spaceship_fwd_force = 7.f;
+          break;
+        case Key::Fire:
+          if (t - shot_timestamp > shot_min_time_interval)
+          {
+            Shot shot;
+            shot.dir = Vec2 { spaceship_dir.r / spaceship_ar, spaceship_dir.c };
+            shot.dir = math::normalize(shot.dir);
+            shot.pos = rb_spaceship->get_curr_cm() + spaceship_dir * 1.f;
+            shot.time_0 = GameEngine::get_sim_time_s();
+            shots_vec.emplace_back(shot);
+            shot_timestamp = t;
+          }
+          break;
+        case Key::Hyperspace:
+          break;
+      }
     }
     
     // Simple Euler stepping scheme.
