@@ -560,6 +560,7 @@ private:
         explosion->isect_data = id;
       }
     }
+
     new_asteroids_vec.clear();
     for (auto& asteroid : asteroids_vec)
     {
@@ -608,7 +609,6 @@ private:
               pos, vel);
             new_asteroids_vec.emplace_back(a_child[a_idx]);
           }
-          coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
         }
         
         sprh.remove_sprite(asteroid.sprite);
@@ -618,6 +618,11 @@ private:
     stlutils::erase_if(asteroids_vec, [](const auto& a) { return a.hit; });
     stlutils::erase_if(shots_vec, [](const auto& s) { return s.hit; });
     stlutils::append(asteroids_vec, new_asteroids_vec);
+    it (!new_asteroids_vec.empty())
+    {
+      coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
+      coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ast");
+    }
     
     // If spaceship collided with something then lose a life and make the ship disappear and reappear in a safe zone.
     auto id_it = stlutils::find_if(isect_data, [&](const auto& id) { return id.node_A->rigid_body == rb_spaceship || id.node_B->rigid_body == rb_spaceship; });
