@@ -432,8 +432,10 @@ private:
       asteroid.sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("asteroid big id:" + std::to_string(global_asteroid_id++), sprite_src_name));
       //std::cout << asteroid.sprite->get_name() << " : " << sprite_src_name << std::endl;
       asteroid.sprite->enabled = true;
+      auto nr_f = static_cast<float>(sh.num_rows());
+      auto nc_f = static_cast<float>(sh.num_cols());
       asteroid.rb = dyn_sys.add_rigid_body(asteroid.sprite, 20.f, // mass
-        Vec2 { rnd::rand_float(0.f, sh.num_rows()), rnd::rand_float(0.f, sh.num_cols()) }, // pos
+        Vec2 { rnd::rand_float(0.f, nr_f), rnd::rand_float(0.f, nc_f) }, // pos
         Vec2 { rnd::randn(0.f, 3.f), rnd::randn(0.f, 3.f) } // vel
       );
     }
