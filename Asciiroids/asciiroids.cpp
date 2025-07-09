@@ -683,11 +683,17 @@ private:
       return false;
     });
     
-    if (!stlutils::contains_if(asteroids_vec, [](const auto& a) { return !a.hit; }))
+    if (!level_up && asteroids_vec.empty())
+    {
+      level_timestamp = t;
+      cleanup_asteroids();
+      level_up = true;
+    }
+    else if (level_up && t - level_timestamp > 2.f)
     {
       level++;
-      cleanup_asteroids();
       generate_big_asteroids(level*2);
+      level_up = false;
     }
     
     if (num_lives < 0)
@@ -768,6 +774,8 @@ private:
   int num_lives = 3; // max visible lives : 10, but more lives can be stored. You gain an extra life for every 10'000 points gained.
   int score = 0; // max score : 999990
   int level = 2;
+  float level_timestamp = 0.f;
+  bool level_up = false;
   
   VectorSprite* sprite_spaceship = nullptr;
   dynamics::RigidBody* rb_spaceship = nullptr;
