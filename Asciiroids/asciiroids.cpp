@@ -492,7 +492,7 @@ private:
           spaceship_rot_vel = -1.5f;
           break;
         case Key::Thrust:
-          spaceship_fwd_force = 7.f;
+          spaceship_fwd_force = 10.f; //7.f;
           break;
         case Key::Fire:
           if (t - shot_timestamp > shot_min_time_interval)
