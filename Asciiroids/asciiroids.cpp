@@ -440,8 +440,15 @@ private:
       asteroid.sprite->enabled = true;
       auto nr_f = static_cast<float>(sh.num_rows());
       auto nc_f = static_cast<float>(sh.num_cols());
+      Vec2 pos;
+      for (;;)
+      {
+        pos = Vec2 { rnd::rand_float(0.f, nr_f), rnd::rand_float(0.f, nc_f) };
+        if (math::distance_squared_ar(pos, rb_spaceship->get_curr_cm(), 2.f) > c_min_ship_asteroid_dist_sq)
+          break;
+      }
       asteroid.rb = dyn_sys.add_rigid_body(asteroid.sprite, 20.f, // mass
-        Vec2 { rnd::rand_float(0.f, nr_f), rnd::rand_float(0.f, nc_f) }, // pos
+        pos, // pos
         Vec2 { rnd::randn(0.f, 3.f), rnd::randn(0.f, 3.f) } // vel
       );
     }
@@ -649,7 +656,7 @@ private:
     if (spaceship_explosion && t - spaceship_killed_timestamp > 0.2f)
     {
       const auto& spaceship_pos = rb_spaceship->get_curr_cm();
-      if (!stlutils::contains_if(asteroids_vec, [&spaceship_pos](const auto& a) { return math::distance_squared(a.rb->get_curr_cm(), spaceship_pos) < 400.f; }))
+      if (!stlutils::contains_if(asteroids_vec, [&spaceship_pos, this](const auto& a) { return math::distance_squared_ar(a.rb->get_curr_cm(), spaceship_pos, 2.f) < c_min_ship_asteroid_dist_sq; }))
       {
         spaceship_explosion = false;
         sprite_spaceship->enabled = true;
@@ -776,6 +783,7 @@ private:
   int level = 2;
   float level_timestamp = 0.f;
   bool level_up = false;
+  const float c_min_ship_asteroid_dist_sq = math::sq(20.f);
   
   VectorSprite* sprite_spaceship = nullptr;
   dynamics::RigidBody* rb_spaceship = nullptr;
