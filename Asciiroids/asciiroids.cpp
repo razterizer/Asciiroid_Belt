@@ -541,9 +541,6 @@ private:
         asteroid.rb->set_curr_cm(to_Vec2(a_cm));
     }
     
-    dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
-    coll_handler.update();
-    
     // Handle collisions and generate explosions:
     //  * asteroid <-> spaceship
     //  * small ufo <-> spaceship
@@ -692,6 +689,10 @@ private:
     
     if (num_lives == 0)
       GameEngine::set_state_game_over();
+      
+    // Update dynamics and collisions.
+    dyn_sys.update(GameEngine::get_sim_time_s(), dt, anim_frame);
+    coll_handler.update();
     
     // Draw stuff.
     
