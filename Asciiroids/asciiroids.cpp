@@ -643,7 +643,7 @@ private:
       spaceship_killed_timestamp = t;
       num_lives--;
     }
-    if (spaceship_explosion && t - spaceship_killed_timestamp > 3.f)
+    if (spaceship_explosion && t - spaceship_killed_timestamp > 0.2f)
     {
       const auto& spaceship_pos = rb_spaceship->get_curr_cm();
       if (!stlutils::contains_if(asteroids_vec, [&spaceship_pos](const auto& a) { return math::distance_squared(a.rb->get_curr_cm(), spaceship_pos) < 400.f; }))
