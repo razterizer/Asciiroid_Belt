@@ -619,6 +619,12 @@ private:
         
         sprh.remove_sprite(asteroid.sprite);
         dyn_sys.remove_rigid_body(asteroid.rb);
+        switch (asteroid.level)
+        {
+          case 0: score += 20; break;
+          case 1: score += 50; break;
+          case 2: score += 100; break;
+        }
       }
     }
     stlutils::erase_if(asteroids_vec, [](const auto& a) { return a.hit; });
