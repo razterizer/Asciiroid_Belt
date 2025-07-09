@@ -20,9 +20,9 @@
 
 // ////////////////////////////
 // [x] Explosion sprites.
-// [ ] Spaceship collision logic (explosion + reappearance, etc).
+// [x] Spaceship collision logic (explosion + reappearance, etc).
 // [ ] Score counting.
-// [ ] Shots should split larger asteroids into two smaller ones which travel faster than the original.
+// [x] Shots should split larger asteroids into two smaller ones which travel faster than the original.
 // [ ] Hyperspace.
 // [ ] Large UFO.
 // [ ] Small UFO.
