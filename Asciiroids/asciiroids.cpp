@@ -569,6 +569,7 @@ private:
       }
     }
 
+    // Split asteroids when shot upon.
     new_asteroids_vec.clear();
     for (auto& asteroid : asteroids_vec)
     {
