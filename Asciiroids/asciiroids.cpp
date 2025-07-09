@@ -132,18 +132,20 @@ public:
     
     Color asteroid_bg_color = use_transparent_asteroids ? Color::Transparent2 : Color::Black;
     
-    //   ._  ___
-    //  /  \/  /
-    // '       \
-    // |       /
-    //  \___,-'
-    //
-    //  /\/"/
-    // (    \
-    //  \___/
-    //
-    // ,^.^
-    // (__<
+    // +-----------+
+    // |   ._  ___ |
+    // |  /  \/  / |
+    // | '       \ |
+    // | |       / |
+    // |  \___,-'  |
+    // +--------+--+
+    // |  /\/"/ |
+    // | (    \ |
+    // |  \___/ |
+    // +------+-+
+    // | ,^.^ |
+    // | (__< |
+    // +------+
     sprite_asteroid_0_big = sprh.create_bitmap_sprite("asteroid 0 big");
     sprite_asteroid_0_big->layer_id = 1;
     sprite_asteroid_0_big->pos = { sh.num_rows()/2, sh.num_cols()/2 };
@@ -190,18 +192,20 @@ public:
     sprite_asteroid_0_tiny->fill_sprite_materials(0, 1);
     sprite_asteroid_0_tiny->enabled = false;
     
-    //  ,_____
-    // /      \
-    // \       |
-    // ,  _    |
-    // \./ |__/
-    //
-    //  ,--.
-    // (    \
-    // /_/|_/
-    //
-    // ,-.
-    // Z,_)
+    // +-----------+
+    // |  ,_____   |
+    // | /      \  |
+    // | \       | |
+    // | ,  _    | |
+    // | \./ |__/  |
+    // +--------+--+
+    // |  ,--.  |
+    // | (    \ |
+    // | /_/|_/ |
+    // +------+-+
+    // | ,-.  |
+    // | Z,_) |
+    // +------+
     sprite_asteroid_1_big = sprh.create_bitmap_sprite("asteroid 1 big");
     sprite_asteroid_1_big->layer_id = 1;
     sprite_asteroid_1_big->pos = { sh.num_rows()/2, sh.num_cols()/2 };
@@ -248,18 +252,20 @@ public:
     sprite_asteroid_1_tiny->fill_sprite_materials(0, 1);
     sprite_asteroid_1_tiny->enabled = false;
     
-    //  -._ _.-
-    // /   "  _\
-    // \      \
-    // /  .-._ /
-    // \_/    '
-    //
-    //  -.-.
-    // (    /
-    // \_\._/
-    //
-    // ,v.
-    // V',)
+    // +-----------+
+    // |  -._ _.-  |
+    // | /   "  _\ |
+    // | \      \  |
+    // | /  .-._ / |
+    // | \_/    '  |
+    // +--------+--+
+    // |  -.-.  |
+    // | (    / |
+    // | \_\._/ |
+    // +------+-+
+    // | ,v.  |
+    // | V',) |
+    // +------+
     sprite_asteroid_2_big = sprh.create_bitmap_sprite("asteroid 2 big");
     sprite_asteroid_2_big->layer_id = 1;
     sprite_asteroid_2_big->pos = { sh.num_rows()/2, sh.num_cols()/2 };
