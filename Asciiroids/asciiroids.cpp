@@ -590,7 +590,7 @@ private:
       {
         f_generate_explosion(hit_rc);
         
-        if (asteroid.level < 3)
+        if (asteroid.level <= 1)
         {
           Asteroid a_child[2];
           Vec2 a_child_dir[2];
