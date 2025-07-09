@@ -618,7 +618,7 @@ private:
     stlutils::erase_if(asteroids_vec, [](const auto& a) { return a.hit; });
     stlutils::erase_if(shots_vec, [](const auto& s) { return s.hit; });
     stlutils::append(asteroids_vec, new_asteroids_vec);
-    it (!new_asteroids_vec.empty())
+    if (!new_asteroids_vec.empty())
     {
       coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ast");
