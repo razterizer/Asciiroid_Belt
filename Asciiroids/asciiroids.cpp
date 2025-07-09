@@ -583,6 +583,7 @@ private:
           break;
         }
       }
+      stlutils::erase_if(shots_vec, [](const auto& s) { return s.hit; });
       if (asteroid.hit)
       {
         f_generate_explosion(hit_rc);
@@ -628,7 +629,6 @@ private:
       }
     }
     stlutils::erase_if(asteroids_vec, [](const auto& a) { return a.hit; });
-    stlutils::erase_if(shots_vec, [](const auto& s) { return s.hit; });
     stlutils::append(asteroids_vec, new_asteroids_vec);
     if (!new_asteroids_vec.empty())
     {
