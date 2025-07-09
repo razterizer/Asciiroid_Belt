@@ -706,7 +706,7 @@ private:
       coll_handler.draw_dbg_broad_phase(sh, 0);
       
     for (const auto& shot : shots_vec)
-      sh.write_buffer(".", std::round(shot.pos.r), std::round(shot.pos.c), Color::White);
+      sh.write_buffer(".", math::roundI(shot.pos.r), math::roundI(shot.pos.c), Color::White);
   }
   
   virtual void on_quit() override
