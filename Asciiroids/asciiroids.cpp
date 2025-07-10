@@ -965,7 +965,7 @@ private:
   int level = 2;
   float level_timestamp = 0.f;
   bool level_up = false;
-  const float c_min_ship_asteroid_dist_sq = math::sq(20.f);
+  const float c_min_ship_asteroid_dist_sq = math::sq(10.f);
   
   VectorSprite* sprite_spaceship = nullptr;
   dynamics::RigidBody* rb_spaceship = nullptr;
