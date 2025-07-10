@@ -50,6 +50,9 @@ public:
     GameEngine::set_anim_rate(1, 3); // Asteroids
     GameEngine::set_anim_rate(2, 5); // UFO AI
   //#endif
+  
+    shot_timer.set(0.f);
+  
     if (argc >= 2 && strcmp(argv[1], "-") != 0)
       GameEngine::set_real_fps(static_cast<float>(atoi(argv[1])));
       
@@ -649,7 +652,7 @@ private:
         case Key::Fire:
           if (log_mode == LogMode::Record)
             rec_file << 'F';
-          if (t - shot_timestamp > shot_min_time_interval)
+          if (shot_timer.wait(t))
           {
             Shot shot;
             shot.dir = Vec2 { spaceship_dir.r / spaceship_ar, spaceship_dir.c };
@@ -657,7 +660,7 @@ private:
             shot.pos = rb_spaceship->get_curr_cm() + spaceship_dir * 1.f;
             shot.time_0 = GameEngine::get_sim_time_s();
             shots_vec.emplace_back(shot);
-            shot_timestamp = t;
+            shot_timer.set(t);
             src_fx_shot->play();
           }
           break;
@@ -981,8 +984,7 @@ private:
   
   float shot_speed = 31.f;
   float shot_lifetime = 2.f;
-  float shot_min_time_interval = 0.1f; // Minimum time allowed between shots.
-  float shot_timestamp = 0.f;
+  Timer shot_timer { 0.1f }; // Minimum time allowed between shots.
   struct Shot
   {
     Vec2 dir;
