@@ -1028,6 +1028,10 @@ int main(int argc, char** argv)
   params.screen_bg_color_instructions = Color::Black;
   params.enable_title_screen = false;
   params.enable_instructions_screen = false;
+  params.screen_bg_color_quit_confirm = std::nullopt;
+  params.quit_confirm_title_style = { Color::LightGray, Color::Transparent };
+  params.quit_confirm_button_style = { Color::Black, Color::DarkGray, Color::LightGray };
+  params.quit_confirm_info_style = { Color::DarkGray, Color::Transparent };
   params.screen_bg_color_input_hiscore = std::nullopt;
   params.input_hiscore_title_style = { Color::LightGray, Color::Transparent };
   params.input_hiscore_prompt_style = { Color::White, Color::DarkGray, Color::LightGray };
