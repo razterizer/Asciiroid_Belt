@@ -1065,6 +1065,11 @@ int main(int argc, char** argv)
   params.hiscores_score_style = { Color::LightGray, Color::Black, Color::White };
   params.hiscores_name_style = { Color::LightGray, Color::Black, Color::White };
   params.hiscores_info_style = { Color::DarkGray, Color::Black };
+  params.game_over_line_0_style = { Color::Black, Color::White };
+  params.game_over_line_1_style = { Color::Black, Color::LightGray };
+  params.game_over_line_2_style = { Color::Black, Color::DarkGray };
+  params.game_over_line_3_style = { Color::Black, Color::LightGray };
+  params.game_over_line_4_style = { Color::Black, Color::White };
   
   Game game(argc, argv, params);
 
