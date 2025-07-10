@@ -1028,6 +1028,16 @@ int main(int argc, char** argv)
   params.screen_bg_color_instructions = Color::Black;
   params.enable_title_screen = false;
   params.enable_instructions_screen = false;
+  params.screen_bg_color_input_hiscore = std::nullopt;
+  params.input_hiscore_title_style = { Color::LightGray, Color::Transparent };
+  params.input_hiscore_prompt_style = { Color::White, Color::DarkGray, Color::LightGray };
+  params.input_hiscore_info_style = { Color::DarkGray, Color::Transparent };
+  params.screen_bg_color_hiscores = std::nullopt;
+  params.hiscores_title_style = { Color::LightGray, Color::DarkGray };
+  params.hiscores_nr_style = { Color::LightGray, Color::Black, Color::White };
+  params.hiscores_score_style = { Color::LightGray, Color::Black, Color::White };
+  params.hiscores_name_style = { Color::LightGray, Color::Black, Color::White };
+  params.hiscores_info_style = { Color::DarkGray, Color::Black };
   
   Game game(argc, argv, params);
 
