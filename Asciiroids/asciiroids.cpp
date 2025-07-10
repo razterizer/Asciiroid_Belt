@@ -670,6 +670,8 @@ private:
       rec_file << '\n';
     rec_file.flush();
     
+    score_prev = GameEngine::ref_score();
+    
     // Simple Euler stepping scheme.
     auto dt = GameEngine::get_sim_dt_s();
     rb_spaceship->set_curr_ang_vel(spaceship_rot_vel);
@@ -856,6 +858,13 @@ private:
       level_up = false;
     }
     
+    if (GameEngine::ref_score() - score_prev)
+    {
+      auto diff_score = GameEngine::ref_score()/10'000 - score_prev/10'000;
+      if (diff_score > 0)
+        num_lives += diff_score;
+    }
+    
     if (num_lives < 0)
       num_lives = 0;
     
@@ -935,7 +944,7 @@ private:
   bool draw_sprites = true;
   
   int num_lives = 3; // max visible lives : 10, but more lives can be stored. You gain an extra life for every 10'000 points gained.
-  // max score : 999990
+  int score_prev = 0; // max score : 999990
   int level = 2;
   float level_timestamp = 0.f;
   bool level_up = false;
