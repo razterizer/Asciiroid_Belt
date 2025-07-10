@@ -17,6 +17,8 @@
 #include <Termin8or/Dynamics/CollisionHandler.h>
 #include <8Beat/AudioSourceHandler.h>
 #include <8Beat/ChipTuneEngine.h>
+#include <8Beat/WaveformGeneration.h>
+#include <8Beat/SFX.h>
 
 #include <fstream>
 
@@ -121,6 +123,7 @@ public:
     
       if (chip_tune.load_tune(folder::join_path({ tune_path, "music.ct" })))
       {
+          chip_tune.set_volume(0.2f);
           //chip_tune.play_tune();
           chip_tune.play_tune_async();
           chip_tune.wait_for_completion();
@@ -131,10 +134,59 @@ public:
       std::cerr << "Caught exception: " << e.what() << std::endl;
     }
     
-    src_fx_shot = audio.create_stream_source();
-    src_fx_explosion = audio.create_stream_source();
-    src_fx_ufo_shot = audio.create_stream_source();
-    src_fx_ufo_propulsion = audio.create_stream_source();
+    {
+      using namespace audio;
+      static std::vector<float> vp_shot
+      {
+        -0.600187f,
+        -0.5f,
+        1.96662f,
+        2.95216f,
+        3.90852f,
+        2.f,
+        0.401617f,
+        5.f,
+        6.68507f,
+        1.68941f,
+        -0.283106f,
+        -0.88113f,
+        0.594106f,
+        2.89542f,
+        2.0655f,
+        1.75611f,
+        -0.0594333f,
+      };
+      static std::vector<float> vp_explosion
+      {
+        -1.5f,
+        -1.f,
+        0.5f,
+        -0.8f,
+        2.f,
+        0.f,
+        1.5f,
+        0.7f,
+        0.05f,
+        0.5f,
+        -0.5f,
+        1.0f,
+        0.f,
+        0.f,
+        0.f,
+        0.f,
+        0.f,
+      };
+      src_fx_shot = audio.create_stream_source();
+      auto wd_shot = SFX::generate(SFXType::LASER, vp_shot);
+      src_fx_shot->update_buffer(wd_shot);
+      src_fx_shot->set_volume(0.4f);
+      src_fx_explosion = audio.create_stream_source();
+      auto wd_explosion = SFX::generate(SFXType::EXPLOSION, vp_explosion);
+      src_fx_explosion->update_buffer(wd_explosion);
+      src_fx_explosion->set_volume(1.f);
+      src_fx_ufo_shot = audio.create_stream_source();
+      src_fx_ufo_propulsion = audio.create_stream_source();
+    }
     
     std::string font_data_path = ASCII_Fonts::get_path_to_font_data(get_exe_folder());
     std::cout << font_data_path << std::endl;
@@ -605,6 +657,7 @@ private:
             shot.time_0 = GameEngine::get_sim_time_s();
             shots_vec.emplace_back(shot);
             shot_timestamp = t;
+            src_fx_shot->play();
           }
           break;
         case Key::Hyperspace:
@@ -660,6 +713,7 @@ private:
       explosion->sprite->pos = pos - sprite_explosion->get_size() / 2;
       auto* expl_raw_ptr = explosion.get();
       explosion->sprite->func_calc_anim_frame = [expl_raw_ptr](int sim_frame) { return expl_raw_ptr->anim_ctr; };
+      src_fx_explosion->play();
       return expl_raw_ptr;
     };
     auto isect_data = coll_handler.get_isect_world_positions();
