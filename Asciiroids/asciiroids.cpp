@@ -25,15 +25,15 @@
 // ////////////////////////////
 // [x] Explosion sprites.
 // [x] Spaceship collision logic (explosion + reappearance, etc).
-// [ ] Score counting.
+// [x] Score counting.
 // [x] Shots should split larger asteroids into two smaller ones which travel faster than the original.
 // [ ] Hyperspace.
 // [ ] Large UFO.
 // [ ] Small UFO.
 // [ ] UFOs shoot at spaceship.
 // [ ] Spaceship can shoot at UFOs.
-// [ ] SFX.
-// [ ] Music.
+// [x] SFX.
+// [x] Music.
 // ////////////////////////////
 
 class Game : public GameEngine<40, 100>
@@ -917,6 +917,21 @@ private:
   }
   
   virtual void on_exit_instructions() override
+  {
+    //chip_tune.stop_tune_async();
+  }
+  
+  virtual void on_enter_paused() override
+  {
+    chip_tune.pause();
+  }
+  
+  virtual void on_exit_paused() override
+  {
+    chip_tune.resume();
+  }
+  
+  virtual void on_enter_game_over() override
   {
     chip_tune.stop_tune_async();
   }
