@@ -849,14 +849,14 @@ private:
     {
       level_timestamp = t;
       cleanup_asteroids();
-      chip_tune.pause();
+      chip_tune.stop_tune_async();
       level_up = true;
     }
     else if (level_up && t - level_timestamp > 2.f)
     {
       level++;
       generate_big_asteroids(level*2);
-      chip_tune.resume();
+      chip_tune.play_tune_async();
       level_up = false;
     }
     
