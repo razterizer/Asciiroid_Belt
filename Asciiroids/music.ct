@@ -1,5 +1,3 @@
-; This song is copyrighted by Björn Rasmus Anthin 2024
-;
 ; Instrument Definitions
 ; Syntax:
 ; instrument <instrument_name> <waveform> ["params:"<params_id>]
@@ -87,171 +85,18 @@ params 1 arpeggio:((0.05, 1.5), (0.1, 2))
 ; Note format:
 ; <pitch> <duration_ms> <instrument>
 
-TIME_STEP_MS 50
-NUM_VOICES 3
+TIME_STEP_MS 400
+NUM_VOICES 1
 
 
-#TAB | A4 400 STEEL_PAN |
-#END
 VOLUME 1
 LABEL lbl0
-TAB | A2 50 KDRUM | C4 250 PIANO adsr:3 |
+TAB | A2 100 I1 |
 TAB -
 TAB -
 TAB -
-TAB | A6 20 HIHAT | - | G4 250 ORGAN adsr:3 |
+TAB | A#2 100 I1 |
 TAB -
 TAB -
 TAB -
-TAB | B4 50 SDRUM |
-TAB -
-TAB -
-TAB -
-ENDING 0
-TAB | A6 20 HIHAT | E#4 250 PIANO | A4 600 FLUTE_VIB |
-TAB -
-TAB -
-TAB -
-TAB | A2 50 KDRUM |
-TAB -
-TAB -
-TAB -
-TAB | A6 20 HIHAT |
-TAB -
-TAB -
-TAB -
-ENDING 1
-TAB | A6 20 HIHAT | F#4 250 PIANO | Db4 600 FLUTE_VIB vol:3.5 |
-TAB -
-TAB -
-TAB -
-TAB | A2 50 KDRUM |
-TAB -
-TAB -
-TAB -
-TAB | A6 20 HIHAT |
-TAB -
-TAB -
-TAB -
-GOTO_TIMES lbl0 1
-TAB | B4 50 SDRUM | G4 500 PIANO |
-TAB -
-TAB -
-TAB -
-TAB | A6 20 HIHAT | - | Gb4 250 ORGAN |
-TAB -
-TAB -
-TAB -
-TAB | A2 50 KDRUM |
-TAB -
-TAB -
-TAB -
-SEGNO
-TAB | A6 20 HIHAT | D#4 360 TRUMPET |
-TAB -
-TAB -
-TAB -
-TAB | B4 50 SDRUM | - | C4 200 TRUMPET |
-TAB -
-TAB -
-TAB -
-TAB | A6 20 HIHAT | - | A3 200 TRUMPET |
-TAB -
-TAB -
-TAB | - | - | - |
-TAB | A2 50 KDRUM | - | C4 200 TRUMPET |
-TAB -
-TAB -
-TAB -
-TAB | A6 20 HIHAT | C4 200 TRUMPET |
-TAB -
-TAB -
-TAB -
-TAB | B4 50 SDRUM | Eb4 650 TRUMPET_VIB |
-TAB -
-TAB -
-TAB -
-FINE
-TO_CODA
-TAB | A6 20 HIHAT |
-TAB -
-TAB -
-TAB -
-TAB | A2 50 KDRUM |
-TAB -
-TAB -
-TAB -
-TIME_STEP_MS 70
-TAB | A6 20 HIHAT |
-TAB -
-TAB -
-TAB -
-TAB | B4 50 SDRUM |
-TAB -
-TAB -
-TAB -
-TIME_STEP_MS 80
-TAB | A6 20 HIHAT |
-TAB -
-TAB -
-TAB -
-TAB | A2 50 KDRUM |
-TAB -
-TAB -
-TAB -
-TIME_STEP_MS 90
-TAB | A6 20 HIHAT |
-TAB -
-TAB -
-TAB -
-TAB | B4 50 SDRUM |
-TAB -
-TAB -
-TAB -
-TIME_STEP_MS 100
-TAB | A6 20 HIHAT |
-TAB -
-TAB -
-TAB -
-TAB | A2 50 KDRUM |
-TAB -
-TAB -
-TAB -
-#DA_CAPO_AL_CODA
-#DAL_SEGNO_AL_CODA
-VOLUME 0.8
-TAB | A6 20 HIHAT | F#4 120 STEEL_PAN adsr:2 |
-TAB -
-TAB -
-TAB -
-VOLUME 0.6
-TAB | B4 50 SDRUM |
-TAB -
-TAB -
-TAB -
-VOLUME 0.4
-TAB | A6 20 HIHAT | G5 350 STEEL_PAN adsr:3 |
-TAB -
-TAB -
-TAB -
-CODA
-TIME_STEP_MS 150
-VOLUME 0.2
-TAB | A2 50 KDRUM |
-TAB -
-TAB -
-TAB -
-TAB | A6 20 HIHAT |
-TAB -
-TAB -
-TAB -
-TAB | B4 50 SDRUM |
-TAB -
-TAB -
-TAB -
-TAB | A6 20 HIHAT | F4 350 STEEL_PAN |
-TAB -
-TAB -
-TAB -
-DA_CAPO_AL_FINE
-#DAL_SEGNO_AL_FINE
+GOTO lbl0
