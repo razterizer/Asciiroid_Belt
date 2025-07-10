@@ -9,6 +9,7 @@
 #include "TitleScreen.h"
 #include "InstructionsScreen.h"
 
+#include <Core/Timer.h>
 #include <Termin8or/GameEngine.h>
 #include <Termin8or/SpriteHandler.h>
 #include <Termin8or/ASCII_Fonts.h>
@@ -845,19 +846,16 @@ private:
       return false;
     });
     
-    if (!level_up && asteroids_vec.empty())
+    if (asteroids_vec.empty() && level_timer.set(t))
     {
-      level_timestamp = t;
       cleanup_asteroids();
       chip_tune.stop_tune_async();
-      level_up = true;
     }
-    else if (level_up && t - level_timestamp > 2.f)
+    else if (level_timer.wait(t))
     {
       level++;
       generate_big_asteroids(level*2);
       chip_tune.play_tune_async();
-      level_up = false;
     }
     
     if (GameEngine::ref_score() - score_prev)
@@ -968,8 +966,7 @@ private:
   int num_lives = 3; // max visible lives : 10, but more lives can be stored. You gain an extra life for every 10'000 points gained.
   int score_prev = 0; // max score : 999990
   int level = 2;
-  float level_timestamp = 0.f;
-  bool level_up = false;
+  Timer level_timer { 2.f };
   const float c_min_ship_asteroid_dist_sq = math::sq(10.f);
   
   VectorSprite* sprite_spaceship = nullptr;
