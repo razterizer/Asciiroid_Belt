@@ -18,6 +18,8 @@
 #include <8Beat/AudioSourceHandler.h>
 #include <8Beat/ChipTuneEngine.h>
 
+#include <fstream>
+
 // ////////////////////////////
 // [x] Explosion sprites.
 // [x] Spaceship collision logic (explosion + reappearance, etc).
@@ -45,20 +47,69 @@ public:
     GameEngine::set_anim_rate(1, 3); // Asteroids
     GameEngine::set_anim_rate(2, 5); // UFO AI
   //#endif
-    if (argc >= 2)
+    if (argc >= 2 && strcmp(argv[1], "-") != 0)
       GameEngine::set_real_fps(static_cast<float>(atoi(argv[1])));
+      
+    if (argc >= 3 && strcmp(argv[2], "--log_mode") == 0)
+    {
+      if (strcmp(argv[3], "record") == 0)
+        log_mode = LogMode::Record;
+      else if (strcmp(argv[3], "replay") == 0)
+        log_mode = LogMode::Replay;
+    }
   }
   
   ~Game()
   {
-    audio.remove_source(src_fx_shot);
-    audio.remove_source(src_fx_explosion);
-    audio.remove_source(src_fx_ufo_shot);
-    audio.remove_source(src_fx_ufo_propulsion);
+    if (src_fx_shot != nullptr)
+      audio.remove_source(src_fx_shot);
+    if (src_fx_explosion != nullptr)
+      audio.remove_source(src_fx_explosion);
+    if (src_fx_ufo_shot != nullptr)
+      audio.remove_source(src_fx_ufo_shot);
+    if (src_fx_ufo_propulsion != nullptr)
+      audio.remove_source(src_fx_ufo_propulsion);
   }
 
   virtual void generate_data() override
   {
+    switch (log_mode)
+    {
+      case LogMode::None:
+        break;
+      case LogMode::Record:
+        folder::delete_file("rec.txt");
+        rec_file = std::ofstream { "rec.txt", std::ios::out | std::ios::trunc };
+        rec_file << curr_rnd_seed << '\n';
+        break;
+      case LogMode::Replay:
+        std::string log_filepath;
+#ifndef _WIN32
+        const char* xcode_env = std::getenv("RUNNING_FROM_XCODE");
+        if (xcode_env != nullptr)
+          log_filepath = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroids/"; // #FIXME: Find a better solution!
+#endif
+        if (log_filepath.empty())
+          log_filepath = "rec.txt";
+        else
+          log_filepath = folder::join_file_path({ log_filepath, "rec.txt" });
+        rep_file = std::ifstream { log_filepath, std::ios::in };
+        if (!rep_file.is_open())
+        {
+          std::cerr << "Error opening log file \"rec.txt\"!" << std::endl;
+          exit(EXIT_FAILURE);
+        }
+        std::string line;
+        if (std::getline(rep_file, line))
+        {
+          std::istringstream iss(line);
+          iss >> curr_rnd_seed;
+          rnd::srand(curr_rnd_seed);
+        }
+        //rep_file >> curr_rnd_seed;
+        break;
+    }
+  
     try
     {
       std::string tune_path = get_exe_folder();
@@ -471,11 +522,44 @@ private:
 
   virtual void update() override
   {
-    int anim_frame = GameEngine::get_anim_count(0);
-    Key curr_game_key = register_keypresses(kpdp);
-    auto t = GameEngine::get_sim_time_s();
-    
     // Game logic.
+    bool log_finished = false;
+    int anim_frame = GameEngine::get_anim_count(0);
+    auto t = GameEngine::get_sim_time_s();
+    Key curr_game_key = Key::None;
+    if (log_mode == LogMode::Replay)
+    {
+      std::string line;
+      if (std::getline(rep_file, line))
+      {
+        std::istringstream iss(line);
+        int log_frame_count = 0;
+        iss >> log_frame_count;
+        if (log_frame_count != GameEngine::get_frame_count())
+        {
+          std::cerr << "REPLAY ERROR : Expected frame number " << GameEngine::get_frame_count() << " but received frame number " << log_frame_count << ". Exiting!" << std::endl;
+          exit(EXIT_FAILURE);
+        }
+        char log_key = ' ';
+        iss >> log_key;
+        if (log_key == 'L')
+          curr_game_key = Key::Left;
+        else if (log_key == 'R')
+          curr_game_key = Key::Right;
+        else if (log_key == 'T')
+          curr_game_key = Key::Thrust;
+        else if (log_key == 'F')
+          curr_game_key = Key::Fire;
+        else if (log_key == 'H')
+          curr_game_key = Key::Hyperspace;
+        else
+          curr_game_key = Key::None;
+      }
+      else
+        log_finished = true;
+    }
+    else
+      curr_game_key = register_keypresses(kpdp);
     
     //update_ship_controls(sh, src_fx_0, wave_gen, kpdp, curr_special_key,
     //                         get_sim_dt_s());
@@ -486,6 +570,8 @@ private:
     if (curr_game_key != Key::Thrust)
       spaceship_fwd_force = 0.f;
       
+    if (log_mode == LogMode::Record)
+      rec_file << std::to_string(GameEngine::get_frame_count()) << ' ';
     if (sprite_spaceship->enabled)
     {
       switch (curr_game_key)
@@ -493,15 +579,23 @@ private:
         case Key::None:
           break;
         case Key::Left:
+          if (log_mode == LogMode::Record)
+            rec_file << 'L';
           spaceship_rot_vel = +1.5f;
           break;
         case Key::Right:
+          if (log_mode == LogMode::Record)
+            rec_file << 'R';
           spaceship_rot_vel = -1.5f;
           break;
         case Key::Thrust:
+          if (log_mode == LogMode::Record)
+            rec_file << 'T';
           spaceship_fwd_force = 10.f; //7.f;
           break;
         case Key::Fire:
+          if (log_mode == LogMode::Record)
+            rec_file << 'F';
           if (t - shot_timestamp > shot_min_time_interval)
           {
             Shot shot;
@@ -514,9 +608,14 @@ private:
           }
           break;
         case Key::Hyperspace:
+          if (log_mode == LogMode::Record)
+            rec_file << 'H';
           break;
       }
     }
+    if (log_mode == LogMode::Record)
+      rec_file << '\n';
+    rec_file.flush();
     
     // Simple Euler stepping scheme.
     auto dt = GameEngine::get_sim_dt_s();
@@ -734,6 +833,9 @@ private:
       
     for (const auto& shot : shots_vec)
       sh.write_buffer(".", math::roundI(shot.pos.r), math::roundI(shot.pos.c), Color::White);
+    
+    if (log_finished)
+      exit(EXIT_SUCCESS);
   }
   
   virtual void on_quit() override
@@ -847,6 +949,10 @@ private:
   };
   int global_explosion_id = 0;
   std::vector<std::unique_ptr<ExplosionData>> explosions_vec;
+  
+  std::ofstream rec_file;
+  std::ifstream rep_file;
+  enum class LogMode { None, Record, Replay } log_mode = LogMode::None;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -864,7 +970,7 @@ int main(int argc, char** argv)
 
   if (argc >= 2 && strcmp(argv[1], "--help") == 0)
   {
-    std::cout << "asciiroids (\"--help\" | [<frame-delay-us>])" << std::endl;
+    std::cout << "asciiroids (\"--help\" | [(<frame-delay-us> | '-') [--log_mode (record | replay)]])" << std::endl;
     std::cout << "  default values:" << std::endl;
     std::cout << "    <frame-delay-us>    : " << game.get_sim_delay_us() << std::endl;
     return EXIT_SUCCESS;
