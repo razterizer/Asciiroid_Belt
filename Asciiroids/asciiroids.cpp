@@ -562,7 +562,7 @@ private:
   template<int NR, int NC>
   void draw_hud(ScreenHandler<NR, NC>& sh)
   {
-    sh.write_buffer(str::adjust_str(std::to_string(score), str::Adjustment::Right, 6), 1, 8, Color::White);
+    sh.write_buffer(str::adjust_str(std::to_string(GameEngine::ref_score()), str::Adjustment::Right, 6), 1, 8, Color::White);
   
     for (int life_idx = 0; life_idx < std::min(num_lives, 10); ++life_idx)
     {
@@ -782,9 +782,9 @@ private:
         dyn_sys.remove_rigid_body(asteroid.rb);
         switch (asteroid.level)
         {
-          case 0: score += 20; break;
-          case 1: score += 50; break;
-          case 2: score += 100; break;
+          case 0: GameEngine::ref_score() += 20; break;
+          case 1: GameEngine::ref_score() += 50; break;
+          case 2: GameEngine::ref_score() += 100; break;
         }
       }
     }
@@ -935,7 +935,7 @@ private:
   bool draw_sprites = true;
   
   int num_lives = 3; // max visible lives : 10, but more lives can be stored. You gain an extra life for every 10'000 points gained.
-  int score = 0; // max score : 999990
+  // max score : 999990
   int level = 2;
   float level_timestamp = 0.f;
   bool level_up = false;
