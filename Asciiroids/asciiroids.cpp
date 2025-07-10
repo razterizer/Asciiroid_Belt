@@ -937,6 +937,11 @@ private:
   {
     chip_tune.stop_tune_async();
   }
+  
+  virtual void on_enter_input_hiscore() override
+  {
+    chip_tune.stop_tune_async();
+  }
 
   //////////////////////////////////////////////////////////////////////////
   
