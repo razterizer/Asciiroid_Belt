@@ -801,20 +801,18 @@ private:
     
     // If spaceship collided with something then lose a life and make the ship disappear and reappear in a safe zone.
     auto id_it = stlutils::find_if(isect_data, [&](const auto& id) { return id.node_A->rigid_body == rb_spaceship || id.node_B->rigid_body == rb_spaceship; });
-    if (id_it != isect_data.end())
+    if (id_it != isect_data.end() && spaceship_reappearance_timer.set(t))
     {
       sprite_spaceship->enabled = false;
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
-      spaceship_explosion = true;
-      spaceship_killed_timestamp = t;
       num_lives--;
     }
-    if (spaceship_explosion && t - spaceship_killed_timestamp > 0.2f)
+    if (spaceship_reappearance_timer.wait(t, false))
     {
       const auto& spaceship_pos = rb_spaceship->get_curr_cm();
       if (!stlutils::contains_if(asteroids_vec, [&spaceship_pos, this](const auto& a) { return math::distance_squared_ar(a.rb->get_curr_cm(), spaceship_pos, 2.f) < c_min_ship_asteroid_dist_sq; }))
       {
-        spaceship_explosion = false;
+        spaceship_reappearance_timer.reset();
         sprite_spaceship->enabled = true;
         rb_spaceship->set_curr_cm({ sh.num_rows()/2.f, sh.num_cols()/2.f });
         rb_spaceship->set_curr_lin_vel({ 0, 0 });
@@ -979,8 +977,7 @@ private:
   Vec2 spaceship_dir { -1.f, 0.f };
   float crit_vel_c = 30.f;
   float crit_vel_r = crit_vel_c/1.5f;
-  bool spaceship_explosion = false;
-  float spaceship_killed_timestamp = 0.f;
+  Timer spaceship_reappearance_timer { 0.2f };
   
   float shot_speed = 31.f;
   float shot_lifetime = 2.f;
