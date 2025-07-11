@@ -451,6 +451,35 @@ public:
       );
     sprite_explosion->fill_sprite_fg_colors(6, Color::White);
     sprite_explosion->fill_sprite_bg_colors(6, Color::Transparent2);
+    
+    sprite_ufo_large = sprh.create_bitmap_sprite("ufo large");
+    sprite_ufo_large->enabled = false;
+    sprite_ufo_large->layer_id = 1;
+    sprite_ufo_large->pos = { 2, sh.num_cols() - 2 };
+    sprite_ufo_large->init(2, 5);
+    sprite_ufo_large->create_frame(0);
+    sprite_ufo_large->fill_sprite_fg_colors(0, Color::White);
+    sprite_ufo_large->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_ufo_large->set_sprite_materials(0,
+      0, 1, 1, 1, 0,
+      1, 1, 1, 1, 1);
+    sprite_ufo_large->set_sprite_chars_from_strings(0,
+      " /-\\ ",
+      "<--->"
+    );
+
+    sprite_ufo_small = sprh.create_bitmap_sprite("ufo small");
+    sprite_ufo_small->enabled = false;
+    sprite_ufo_small->layer_id = 1;
+    sprite_ufo_small->pos = { 2, sh.num_cols() - 2 };
+    sprite_ufo_small->init(1, 3);
+    sprite_ufo_small->create_frame(0);
+    sprite_ufo_small->fill_sprite_fg_colors(0, Color::White);
+    sprite_ufo_small->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_ufo_small->set_sprite_chars_from_strings(0,
+      "<^>"
+    );
+    sprite_ufo_small->fill_sprite_materials(0, 1);
   }
   
 private:
@@ -972,6 +1001,9 @@ private:
   };
   int global_explosion_id = 0;
   std::vector<std::unique_ptr<ExplosionData>> explosions_vec;
+  
+  BitmapSprite* sprite_ufo_large = nullptr;
+  BitmapSprite* sprite_ufo_small = nullptr;
 };
 
 //////////////////////////////////////////////////////////////////////////
