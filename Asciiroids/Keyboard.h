@@ -26,7 +26,7 @@ Key register_keypresses(const keyboard::KeyPressDataPair& kpdp)
     curr_special_key = Key::Right;
   else if (str::to_lower(key_held) == 'w' || special_key == keyboard::SpecialKey::Up)
     curr_special_key = Key::Thrust;
-  else if (str::to_lower(key_held) == 'h' || special_key == keyboard::SpecialKey::Enter)
+  else if (str::to_lower(key_held) == 'h' || special_key == keyboard::SpecialKey::Backspace)
     curr_special_key = Key::Hyperspace;
 
   return curr_special_key;
