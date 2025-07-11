@@ -222,7 +222,13 @@ public:
       );
     sprite_asteroid_0_big->fill_sprite_fg_colors(0, Color::White);
     sprite_asteroid_0_big->fill_sprite_bg_colors(0, asteroid_bg_color);
-    sprite_asteroid_0_big->fill_sprite_materials(0, 1);
+    sprite_asteroid_0_big->set_sprite_materials(0,
+        0, 0, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
+        0, 1, 1, 1, 1, 1, 1, 1, 0
+      );
     sprite_asteroid_0_big->enabled = false;
     
     sprite_asteroid_0_small = sprh.create_bitmap_sprite("asteroid 0 small");
@@ -237,7 +243,11 @@ public:
       );
     sprite_asteroid_0_small->fill_sprite_fg_colors(0, Color::White);
     sprite_asteroid_0_small->fill_sprite_bg_colors(0, asteroid_bg_color);
-    sprite_asteroid_0_small->fill_sprite_materials(0, 1);
+    sprite_asteroid_0_small->set_sprite_materials(0,
+        0, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1,
+        0, 1, 1, 1, 1, 1
+      );
     sprite_asteroid_0_small->enabled = false;
     
     sprite_asteroid_0_tiny = sprh.create_bitmap_sprite("asteroid 0 tiny");
@@ -282,7 +292,13 @@ public:
       );
     sprite_asteroid_1_big->fill_sprite_fg_colors(0, Color::White);
     sprite_asteroid_1_big->fill_sprite_bg_colors(0, asteroid_bg_color);
-    sprite_asteroid_1_big->fill_sprite_materials(0, 1);
+    sprite_asteroid_1_big->set_sprite_materials(0,
+        0, 1, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 0
+      );
     sprite_asteroid_1_big->enabled = false;
     
     sprite_asteroid_1_small = sprh.create_bitmap_sprite("asteroid 1 small");
@@ -297,7 +313,11 @@ public:
       );
     sprite_asteroid_1_small->fill_sprite_fg_colors(0, Color::White);
     sprite_asteroid_1_small->fill_sprite_bg_colors(0, asteroid_bg_color);
-    sprite_asteroid_1_small->fill_sprite_materials(0, 1);
+    sprite_asteroid_1_small->set_sprite_materials(0,
+        0, 1, 1, 1, 1, 0,
+        1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1
+      );
     sprite_asteroid_1_small->enabled = false;
     
     sprite_asteroid_1_tiny = sprh.create_bitmap_sprite("asteroid 1 tiny");
@@ -311,7 +331,10 @@ public:
       );
     sprite_asteroid_1_tiny->fill_sprite_fg_colors(0, Color::White);
     sprite_asteroid_1_tiny->fill_sprite_bg_colors(0, asteroid_bg_color);
-    sprite_asteroid_1_tiny->fill_sprite_materials(0, 1);
+    sprite_asteroid_1_tiny->set_sprite_materials(0,
+        1, 1, 1, 0,
+        1, 1, 1, 1
+      );
     sprite_asteroid_1_tiny->enabled = false;
     
     // +-----------+
@@ -342,7 +365,13 @@ public:
       );
     sprite_asteroid_2_big->fill_sprite_fg_colors(0, Color::White);
     sprite_asteroid_2_big->fill_sprite_bg_colors(0, asteroid_bg_color);
-    sprite_asteroid_2_big->fill_sprite_materials(0, 1);
+    sprite_asteroid_2_big->set_sprite_materials(0,
+        0, 1, 1, 1, 0, 1, 1, 1, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 0, 0, 0, 0, 1, 0
+      );
     sprite_asteroid_2_big->enabled = false;
     
     sprite_asteroid_2_small = sprh.create_bitmap_sprite("asteroid 2 small");
@@ -357,7 +386,11 @@ public:
       );
     sprite_asteroid_2_small->fill_sprite_fg_colors(0, Color::White);
     sprite_asteroid_2_small->fill_sprite_bg_colors(0, asteroid_bg_color);
-    sprite_asteroid_2_small->fill_sprite_materials(0, 1);
+    sprite_asteroid_2_small->set_sprite_materials(0,
+        0, 1, 1, 1, 1, 0,
+        1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1
+      );
     sprite_asteroid_2_small->enabled = false;
     
     sprite_asteroid_2_tiny = sprh.create_bitmap_sprite("asteroid 2 tiny");
@@ -371,7 +404,10 @@ public:
       );
     sprite_asteroid_2_tiny->fill_sprite_fg_colors(0, Color::White);
     sprite_asteroid_2_tiny->fill_sprite_bg_colors(0, asteroid_bg_color);
-    sprite_asteroid_2_tiny->fill_sprite_materials(0, 1);
+    sprite_asteroid_2_tiny->set_sprite_materials(0,
+        1, 1, 1, 0,
+        1, 1, 1, 1
+      );
     sprite_asteroid_2_tiny->enabled = false;
     
     generate_big_asteroids(4);
