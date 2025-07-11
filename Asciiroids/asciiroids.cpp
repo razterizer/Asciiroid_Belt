@@ -576,6 +576,11 @@ private:
           }
           break;
         case Key::Hyperspace:
+          if (hyperspace_jump_timer.set(t))
+          {
+            sprite_spaceship->enabled = false;
+            coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+          }
           break;
       }
     }
@@ -727,6 +732,36 @@ private:
         rb_spaceship->set_curr_lin_vel({ 0, 0 });
         rb_spaceship->set_curr_ang(0.f);
         coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+      }
+    }
+    
+    // Hyperspace jump destination.
+    if (hyperspace_jump_timer.wait(t, false))
+    {
+      auto nr_f = static_cast<float>(sh.num_rows());
+      auto nc_f = static_cast<float>(sh.num_cols());
+      Vec2 pos;
+      int iter = 0;
+      for (;;)
+      {
+        pos = Vec2 { rnd::rand_float(0.f, nr_f), rnd::rand_float(0.f, nc_f) };
+        bool too_close = false;
+        for (const auto& asteroid : asteroids_vec)
+        {
+          if (math::distance_squared_ar(pos, asteroid.rb->get_curr_cm(), 2.f) < c_min_ship_asteroid_dist_sq)
+            too_close = true;
+        }
+        if (!too_close)
+        {
+          hyperspace_jump_timer.reset();
+          rb_spaceship->set_curr_cm(pos);
+          rb_spaceship->set_curr_lin_vel({ 0, 0 });
+          sprite_spaceship->enabled = true;
+          coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+          break;
+        }
+        if (iter++ > 5) // Making sure we don't spend too much time here and stall the main thread.
+          break;
       }
     }
     
@@ -884,6 +919,7 @@ private:
   float crit_vel_c = 30.f;
   float crit_vel_r = crit_vel_c/1.5f;
   Timer spaceship_reappearance_timer { 0.2f };
+  Timer hyperspace_jump_timer { 1.5f };
   
   float shot_speed = 31.f;
   float shot_lifetime = 2.f;
