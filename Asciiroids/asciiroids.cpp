@@ -765,6 +765,7 @@ private:
       }
     }
     
+    // Handling of explosions lifetimes.
     for (auto& explosion : explosions_vec)
     {
       if (explosion->trig)
@@ -788,6 +789,7 @@ private:
       return false;
     });
     
+    // Level logic.
     if (asteroids_vec.empty() && level_timer.set(t))
     {
       cleanup_asteroids();
@@ -800,6 +802,7 @@ private:
       chip_tune.play_tune_async();
     }
     
+    // Extra life every 10'000 points.
     if (GameEngine::ref_score() - score_prev)
     {
       auto diff_score = GameEngine::ref_score()/10'000 - score_prev/10'000;
@@ -807,9 +810,9 @@ private:
         num_lives += diff_score;
     }
     
+    // Game Over if no more lives.
     if (num_lives < 0)
       num_lives = 0;
-    
     if (num_lives == 0)
       GameEngine::set_state_game_over();
       
