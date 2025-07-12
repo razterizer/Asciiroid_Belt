@@ -23,6 +23,8 @@
 
 #include <fstream>
 
+//#define DESIGN_SFX
+
 // ////////////////////////////
 // [x] Explosion sprites.
 // [x] Spaceship collision logic (explosion + reappearance, etc).
@@ -39,6 +41,11 @@
 
 class Game : public GameEngine<40, 100>
 {
+#ifdef DESIGN_SFX
+  std::vector<float> vp_design;
+  int channel = 0;
+#endif
+
 public:
   Game(int argc, char** argv, const GameEngineParams& params)
     : GameEngine(argv[0], params)
@@ -71,6 +78,7 @@ public:
 
   virtual void generate_data() override
   {
+#ifndef DESIGN_SFX
     try
     {
       std::string tune_path = get_exe_folder();
@@ -92,28 +100,32 @@ public:
     {
       std::cerr << "Caught exception: " << e.what() << std::endl;
     }
+#endif
     
     {
       using namespace audio;
+#ifdef DESIGN_SFX
+      vp_design.resize(17);
+#endif
       static std::vector<float> vp_shot
       {
-        -0.600187f,
-        -0.5f,
-        1.96662f,
-        2.95216f,
-        3.90852f,
-        2.f,
-        0.401617f,
-        5.f,
-        6.68507f,
-        1.68941f,
-        -0.283106f,
-        -0.88113f,
-        0.594106f,
-        2.89542f,
-        2.0655f,
-        1.75611f,
-        -0.0594333f,
+        0.32f,
+        0.27f,
+        0.f,
+        -0.16f,
+        -0.11f,
+        0.2f,
+        0.f,
+        0.f,
+        0.5f,
+        0.31f,
+        0.7f,
+        0.f,
+        0.f,
+        0.f,
+        0.f,
+        0.f,
+        0.f,
       };
       static std::vector<float> vp_explosion
       {
@@ -138,7 +150,7 @@ public:
       src_fx_shot = audio.create_stream_source();
       auto wd_shot = SFX::generate(SFXType::LASER, vp_shot);
       src_fx_shot->update_buffer(wd_shot);
-      src_fx_shot->set_volume(0.4f);
+      src_fx_shot->set_volume(0.25f);
       src_fx_explosion = audio.create_stream_source();
       auto wd_explosion = SFX::generate(SFXType::EXPLOSION, vp_explosion);
       src_fx_explosion->update_buffer(wd_explosion);
@@ -598,6 +610,58 @@ private:
 
   virtual void update() override
   {
+#ifdef DESIGN_SFX
+    {
+      using namespace audio;
+      
+      auto key_held = keyboard::get_char_key(kpdp.held);
+      auto special_key = keyboard::get_special_key(kpdp.held);
+      for (int i = 0; i < 17; ++i)
+      {
+        int j_max = math::linmap(vp_design[i], -2.f, 3.f, 0, 50);
+        for (int j = 0; j < j_max; ++j)
+          sh.write_buffer("#", i+2, j+15, channel == i ? Color::Yellow : Color::White);
+        sh.write_buffer(std::to_string(vp_design[i]), i+2, 5, Color::Cyan);
+        sh.write_buffer(std::to_string(i) + '.', i+2, 1, Color::Blue);
+      }
+      
+      auto key = keyboard::get_special_key(kpdp.transient);
+      switch (key)
+      {
+        case keyboard::SpecialKey::Up:
+          channel--;
+          if (channel < 0)
+            channel = 16;
+          break;
+        case keyboard::SpecialKey::Down:
+          channel++;
+          if (channel > 16)
+            channel = 0;
+          break;
+        case keyboard::SpecialKey::Left:
+          vp_design[channel] -= 0.01f;
+          if (vp_design[channel] < -2.f)
+            vp_design[channel] = -2.f;
+          break;
+        case keyboard::SpecialKey::Right:
+          vp_design[channel] += 0.01f;
+          if (vp_design[channel] > 3.f)
+            vp_design[channel] = 3.f;
+          break;
+        default:
+          break;
+      }
+      
+      if (keyboard::get_char_key(kpdp.transient) == ' ')
+      {
+        auto wd_shot = SFX::generate(SFXType::LASER, vp_design);
+        src_fx_shot->update_buffer(wd_shot);
+      
+        src_fx_shot->play();
+      }
+    }
+#else
+  
     // Game logic.
     int anim_frame = GameEngine::get_anim_count(0);
     auto t = GameEngine::get_sim_time_s();
@@ -906,6 +970,7 @@ private:
       
     for (const auto& shot : shots_vec)
       sh.write_buffer(".", math::roundI(shot.pos.r), math::roundI(shot.pos.c), Color::White);
+#endif
   }
   
   virtual void on_quit() override
