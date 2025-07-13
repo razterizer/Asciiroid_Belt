@@ -825,6 +825,7 @@ private:
 
     // Split asteroids when shot upon.
     new_asteroids_vec.clear();
+    bool asteroids_removed = false;
     for (auto& asteroid : asteroids_vec)
     {
       auto aabb_asteroid = asteroid.sprite->calc_curr_AABB(0);
@@ -877,6 +878,7 @@ private:
         
         sprh.remove_sprite(asteroid.sprite);
         dyn_sys.remove_rigid_body(asteroid.rb);
+        asteroids_removed = true;
         switch (asteroid.level)
         {
           case 0: GameEngine::ref_score() += 20; break;
@@ -887,7 +889,7 @@ private:
     }
     stlutils::erase_if(asteroids_vec, [](const auto& a) { return a.hit; });
     stlutils::append(asteroids_vec, new_asteroids_vec);
-    if (!new_asteroids_vec.empty())
+    if (asteroids_removed)
     {
       coll_handler.rebuild_BVH(sh.num_rows(), sh.num_cols(), &dyn_sys);
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ast", true);
