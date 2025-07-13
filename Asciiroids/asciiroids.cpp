@@ -58,7 +58,7 @@ public:
     GameEngine::set_anim_rate(2, 5); // UFO AI
   //#endif
   
-    shot_timer.set(0.f);
+    shot_freq_timer.set(0.f);
   
     if (argc >= 2 && strcmp(argv[1], "-") != 0)
       GameEngine::set_real_fps(static_cast<float>(atoi(argv[1])));
@@ -678,6 +678,22 @@ private:
       spaceship_rot_vel *= 0.5f;
     if (curr_game_key != Key::Thrust)
       spaceship_fwd_force = 0.f;
+      
+    auto f_fire_shot = [&](ShotID id, const Vec2& pos, const Vec2& dir)
+    {
+      if (shot_freq_timer.wait(t))
+      {
+        Shot shot;
+        shot.dir = dir;
+        shot.dir = math::normalize(shot.dir);
+        shot.pos = pos;
+        shot.timer.set(t);
+        shot.id = id;
+        shots_vec.emplace_back(shot);
+        shot_freq_timer.set(t);
+        src_fx_shot->play();
+      }
+    };
     
     if (sprite_spaceship->enabled)
     {
@@ -695,17 +711,9 @@ private:
           spaceship_fwd_force = 10.f; //7.f;
           break;
         case Key::Fire:
-          if (shot_timer.wait(t))
-          {
-            Shot shot;
-            shot.dir = Vec2 { spaceship_dir.r / spaceship_ar, spaceship_dir.c };
-            shot.dir = math::normalize(shot.dir);
-            shot.pos = rb_spaceship->get_curr_cm() + spaceship_dir * 1.f;
-            shot.time_0 = GameEngine::get_sim_time_s();
-            shots_vec.emplace_back(shot);
-            shot_timer.set(t);
-            src_fx_shot->play();
-          }
+          f_fire_shot(ShotID::Spaceship,
+            rb_spaceship->get_curr_cm() + spaceship_dir * 1.f,
+            { spaceship_dir.r / spaceship_ar, spaceship_dir.c });
           break;
         case Key::Hyperspace:
           if (hyperspace_jump_timer.set(t))
@@ -728,7 +736,7 @@ private:
     rb_spaceship->set_curr_lin_force(spaceship_force);
     
     stlutils::erase_if(shots_vec, [&](const Shot& shot) {
-      return t - shot.time_0 > shot_lifetime || shot.hit;
+      return !shot.timer.is_ticking(t) || shot.hit;
     });
     for (auto& shot : shots_vec)
       shot.pos += shot.dir * shot_speed * dt;
@@ -1178,14 +1186,15 @@ private:
   Timer hyperspace_jump_timer { 1.5f };
   
   float shot_speed = 31.f;
-  float shot_lifetime = 2.f;
-  Timer shot_timer { 0.1f }; // Minimum time allowed between shots.
+  Timer shot_freq_timer { 0.1f }; // Minimum time allowed between shots.
+  enum class ShotID { Spaceship, UFO };
   struct Shot
   {
     Vec2 dir;
     Vec2 pos;
     bool hit = false;
-    float time_0 = 0.f;
+    Timer timer { 2.f };
+    ShotID id = ShotID::Spaceship;
   };
   std::vector<Shot> shots_vec;
   
