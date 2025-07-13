@@ -955,21 +955,23 @@ private:
     // UFOs
     if (ufo_active_timer.is_ticking(t))
     {
-      Vec2 pos;
+      dynamics::RigidBody* ufo_rb = nullptr;
+      int ufo_size = -1; // 0 : large, 1 : small.
       if (sprite_ufo_large->enabled)
       {
-        pos = rb_ufo_large->get_curr_cm();
-        rb_ufo_large->set_curr_lin_vel({ 0.f, 0.f });
+        ufo_rb = rb_ufo_large;
+        ufo_size = 0;
       }
       else if (sprite_ufo_small->enabled)
       {
-        pos = rb_ufo_small->get_curr_cm();
-        rb_ufo_small->set_curr_lin_vel({ 0.f, 0.f });
+        ufo_rb = rb_ufo_small;
+        ufo_size = 1;
       }
       else
-      {
         std::cerr << "ERROR : An UFO was expected to be active but none was found!\n";
-      }
+      
+      Vec2 pos = ufo_rb->get_curr_cm();
+      ufo_rb->set_curr_lin_vel({ 0.f, 0.f });
       
       if (ufo_h_dir == +1)
         pos.c += ufo_delta_pos;
@@ -985,10 +987,7 @@ private:
       if (toroidal_wrap(sh, rc, 0, 0))
         pos = to_Vec2(rc);
         
-      if (sprite_ufo_large->enabled)
-        rb_ufo_large->set_curr_cm(pos);
-      else if (sprite_ufo_small->enabled)
-        rb_ufo_small->set_curr_cm(pos);
+      ufo_rb->set_curr_cm(pos);
         
       if (!ufo_v_move_timer.is_ticking(t) && rnd::one_in(50))
       {
