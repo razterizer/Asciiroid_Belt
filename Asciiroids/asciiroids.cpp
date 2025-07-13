@@ -995,7 +995,7 @@ private:
         return false;
       };
       Vec2 pos;
-      if (rnd::one_in(100) && f_set_ufo_pos(pos, ufo_h_dir))
+      if (rnd::one_in(2000) && f_set_ufo_pos(pos, ufo_h_dir))
       {
         ufo_active_timer.set(t);
         ufo_trig.reset();
@@ -1005,7 +1005,7 @@ private:
         coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo");
         coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo");
       }
-      else if (rnd::one_in(100) && f_set_ufo_pos(pos, ufo_h_dir))
+      else if (rnd::one_in(3000) && f_set_ufo_pos(pos, ufo_h_dir))
       {
         ufo_active_timer.set(t);
         ufo_trig.reset();
