@@ -528,6 +528,9 @@ public:
     sprite_ufo_small->set_sprite_chars_from_strings(0,
       "<^>"
     );
+    
+    rb_ufo_large = dyn_sys.add_rigid_body(sprite_ufo_large, 4.f);
+    rb_ufo_small = dyn_sys.add_rigid_body(sprite_ufo_small, 2.f);
   }
   
 private:
@@ -709,6 +712,7 @@ private:
           {
             sprite_spaceship->enabled = false;
             coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+            coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ufo", "spa");
           }
           break;
       }
@@ -848,6 +852,7 @@ private:
     {
       sprite_spaceship->enabled = false;
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+      coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ufo", "spa");
       num_lives--;
     }
     if (spaceship_reappearance_timer.wait(t, false))
@@ -861,6 +866,7 @@ private:
         rb_spaceship->set_curr_lin_vel({ 0, 0 });
         rb_spaceship->set_curr_ang(0.f);
         coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+        coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ufo", "spa");
       }
     }
     
@@ -887,6 +893,7 @@ private:
           rb_spaceship->set_curr_lin_vel({ 0, 0 });
           sprite_spaceship->enabled = true;
           coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+          coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ufo", "spa");
           break;
         }
         if (iter++ > 5) // Making sure we don't spend too much time here and stall the main thread.
@@ -941,6 +948,11 @@ private:
         else
           ufo_v_move_timer.set_delay(rnd::randn_clamp(1.5f, 1.f, 0.5f, 5.f));
       }
+      
+      // UFO collision handling.
+      auto id_it = stlutils::find_if(isect_data, [&](const auto& id) { return id.node_A->rigid_body == rb_ufo_large || id.node_B->rigid_body == rb_ufo_large || id.node_A->rigid_body == rb_ufo_small || id.node_B->rigid_body == rb_ufo_small; });
+      if (id_it != isect_data.end())
+        ufo_active_timer.reset();
     }
     else
     {
@@ -950,8 +962,8 @@ private:
         ufo_active_timer.reset();
         sprite_ufo_large->enabled = false;
         sprite_ufo_small->enabled = false;
-        dyn_sys.remove_rigid_body(rb_ufo_large);
-        dyn_sys.remove_rigid_body(rb_ufo_small);
+        coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo");
+        coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo");
       }
       
       // Respawn.
@@ -977,7 +989,7 @@ private:
           }
           if (math::distance_squared_ar(pos, rb_spaceship->get_curr_cm(), 2.f) > c_min_ship_asteroid_dist_sq)
             return true;
-          if (iters++ > 100)
+          if (iters++ > 10)
             break;
         }
         return false;
@@ -988,16 +1000,20 @@ private:
         ufo_active_timer.set(t);
         ufo_trig.reset();
         sprite_ufo_large->enabled = true;
-        rb_ufo_large = dyn_sys.add_rigid_body(sprite_ufo_large, 4.f, pos);
         rb_ufo_large->set_orig_dir({ -1.f, 0.f });
+        rb_ufo_large->set_curr_cm(pos);
+        coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo");
+        coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo");
       }
       else if (rnd::one_in(100) && f_set_ufo_pos(pos, ufo_h_dir))
       {
         ufo_active_timer.set(t);
         ufo_trig.reset();
         sprite_ufo_small->enabled = true;
-        rb_ufo_small = dyn_sys.add_rigid_body(sprite_ufo_small, 2.f, pos);
         rb_ufo_small->set_orig_dir({ -1.f, 0.f });
+        rb_ufo_small->set_curr_cm(pos);
+        coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo");
+        coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo");
       }
     }
     
