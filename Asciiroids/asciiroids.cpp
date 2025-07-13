@@ -800,6 +800,7 @@ private:
           f_generate_explosion(shot_rc);
           ufo_active_timer.reset();
           shot.hit = true;
+          GameEngine::ref_score() += 200;
         }
       }
       else if (sprite_ufo_small->enabled && shot.id == ShotID::Spaceship)
@@ -809,6 +810,7 @@ private:
           f_generate_explosion(shot_rc);
           ufo_active_timer.reset();
           shot.hit = true;
+          GameEngine::ref_score() += 1000;
         }
       }
       else if (sprite_spaceship->enabled && shot.id == ShotID::UFO)
