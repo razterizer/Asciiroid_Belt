@@ -666,6 +666,7 @@ private:
 #else
   
     // Game logic.
+    //int frame = GameEngine::get_frame_count();
     int anim_frame = GameEngine::get_anim_count(0);
     auto t = GameEngine::get_sim_time_s();
     Key curr_game_key = register_keypresses(kpdp);
