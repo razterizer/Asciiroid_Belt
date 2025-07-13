@@ -1308,7 +1308,7 @@ private:
   //             \----/
   int ufo_h_dir = -1; // -1 : left, +1 : right.
   int ufo_v_dir = 0; // -1 : down, 0 : unchanged, +1 : up.
-  float ufo_delta_pos = 0.5f;
+  float ufo_delta_pos = 0.4f;
   const bool ufo_can_collide_with_asteroids = false;
   Timer ufo_shot_interval_timer { 1.f };
 };
