@@ -1094,7 +1094,7 @@ private:
     });
     
     // Level logic.
-    if (asteroids_vec.empty() && level_timer.set(t))
+    if (asteroids_vec.empty() && !sprite_ufo_large->enabled && !sprite_ufo_small->enabled && level_timer.set(t))
     {
       cleanup_asteroids();
       chip_tune.stop_tune_async();
