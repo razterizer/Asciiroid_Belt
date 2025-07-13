@@ -783,6 +783,40 @@ private:
         explosion->isect_data = id;
       }
     }
+    
+    // Shots: UFO -> spaceship, spaceship -> UFO.
+    for (auto& shot : shots_vec)
+    {
+      auto shot_rc = to_RC_round(shot.pos);
+      if (sprite_ufo_large->enabled && shot.id == ShotID::Spaceship)
+      {
+        if (sprite_ufo_large->calc_curr_AABB(0).contains(shot_rc))
+        {
+          f_generate_explosion(shot_rc);
+          ufo_active_timer.reset();
+          shot.hit = true;
+        }
+      }
+      else if (sprite_ufo_small->enabled && shot.id == ShotID::Spaceship)
+      {
+        if (sprite_ufo_small->calc_curr_AABB(0).contains(shot_rc))
+        {
+          f_generate_explosion(shot_rc);
+          ufo_active_timer.reset();
+          shot.hit = true;
+        }
+      }
+      else if (sprite_spaceship->enabled && shot.id == ShotID::UFO)
+      {
+        if (sprite_spaceship->calc_curr_AABB(0).contains(shot_rc) && spaceship_reappearance_timer.set(t))
+        {
+          sprite_spaceship->enabled = false;
+          coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa");
+          coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ufo", "spa");
+          num_lives--;
+        }
+      }
+    }
 
     // Split asteroids when shot upon.
     new_asteroids_vec.clear();
