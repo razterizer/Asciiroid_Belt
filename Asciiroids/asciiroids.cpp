@@ -1298,7 +1298,7 @@ private:
   BitmapSprite* sprite_ufo_small = nullptr;
   dynamics::RigidBody* rb_ufo_large = nullptr;
   dynamics::RigidBody* rb_ufo_small = nullptr;
-  Timer ufo_active_timer { 7.f };
+  Timer ufo_active_timer { 8.f };
   Timer ufo_v_move_timer { 2.f }; // 2s vertical travel.
   OneShot ufo_trig;
   Vec2 ufo_shot_dir;
