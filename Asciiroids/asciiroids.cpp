@@ -999,6 +999,20 @@ private:
           ufo_v_move_timer.set_delay(rnd::randn_clamp(1.5f, 1.f, 0.5f, 5.f));
       }
       
+      if (!ufo_shot_interval_timer.is_ticking(t))
+      {
+        Vec2 dir = math::normalize(rb_spaceship->get_curr_cm() - pos);
+        auto sigma = ufo_size == 0 ? 0.7f : 0.35f;
+        dir.r += rnd::randn(0.f, sigma)/spaceship_ar;
+        dir.c += rnd::randn(0.f, sigma);
+        dir = math::normalize(dir);
+        f_fire_shot(ShotID::UFO,
+            pos,
+            dir);
+        ufo_shot_interval_timer.reset();
+        ufo_shot_interval_timer.set(t);
+      }
+      
       // UFO collision handling.
       auto id_it = stlutils::find_if(isect_data, [&](const auto& id) { return id.node_A->rigid_body == rb_ufo_large || id.node_B->rigid_body == rb_ufo_large || id.node_A->rigid_body == rb_ufo_small || id.node_B->rigid_body == rb_ufo_small; });
       if (id_it != isect_data.end())
@@ -1296,6 +1310,7 @@ private:
   int ufo_v_dir = 0; // -1 : down, 0 : unchanged, +1 : up.
   float ufo_delta_pos = 0.5f;
   const bool ufo_can_collide_with_asteroids = false;
+  Timer ufo_shot_interval_timer { 1.f };
 };
 
 //////////////////////////////////////////////////////////////////////////
