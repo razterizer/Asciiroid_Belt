@@ -524,10 +524,10 @@ public:
     sprite_ufo_small->create_frame(0);
     sprite_ufo_small->fill_sprite_fg_colors(0, Color::White);
     sprite_ufo_small->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_ufo_small->fill_sprite_materials(0, 1);
     sprite_ufo_small->set_sprite_chars_from_strings(0,
       "<^>"
     );
-    sprite_ufo_small->fill_sprite_materials(0, 1);
   }
   
 private:
@@ -894,6 +894,113 @@ private:
       }
     }
     
+    // UFOs
+    if (ufo_active_timer.is_ticking(t))
+    {
+      Vec2 pos;
+      if (sprite_ufo_large->enabled)
+      {
+        pos = rb_ufo_large->get_curr_cm();
+        rb_ufo_large->set_curr_lin_vel({ 0.f, 0.f });
+      }
+      else if (sprite_ufo_small->enabled)
+      {
+        pos = rb_ufo_small->get_curr_cm();
+        rb_ufo_small->set_curr_lin_vel({ 0.f, 0.f });
+      }
+      else
+      {
+        std::cerr << "ERROR : An UFO was expected to be active but none was found!\n";
+      }
+      
+      if (ufo_h_dir == +1)
+        pos.c += ufo_delta_pos;
+      else if (ufo_h_dir == -1)
+        pos.c -= ufo_delta_pos;
+        
+      if (ufo_v_dir == +1)
+        pos.r -= ufo_delta_pos/2.5f;
+      else if (ufo_v_dir == -1)
+        pos.r += ufo_delta_pos/2.5f;
+        
+      auto rc = to_RC_round(pos);
+      if (toroidal_wrap(sh, rc, 0, 0))
+        pos = to_Vec2(rc);
+        
+      if (sprite_ufo_large->enabled)
+        rb_ufo_large->set_curr_cm(pos);
+      else if (sprite_ufo_small->enabled)
+        rb_ufo_small->set_curr_cm(pos);
+        
+      if (!ufo_v_move_timer.is_ticking(t) && rnd::one_in(50))
+      {
+        ufo_v_dir = rnd::rand_int(-1, +1);
+        ufo_v_move_timer.set(t);
+        if (ufo_v_dir == 0)
+          ufo_v_move_timer.set_delay(rnd::randn_clamp(3.f, 1.f, 0.5f, 5.f));
+        else
+          ufo_v_move_timer.set_delay(rnd::randn_clamp(1.5f, 1.f, 0.5f, 5.f));
+      }
+    }
+    else
+    {
+      // Finished.
+      if (ufo_trig.once())
+      {
+        ufo_active_timer.reset();
+        sprite_ufo_large->enabled = false;
+        sprite_ufo_small->enabled = false;
+        dyn_sys.remove_rigid_body(rb_ufo_large);
+        dyn_sys.remove_rigid_body(rb_ufo_small);
+      }
+      
+      // Respawn.
+      auto f_set_ufo_pos = [this](Vec2& pos, int& h_dir) -> bool
+      {
+        int iters = 0;
+        auto nr_f = static_cast<float>(sh.num_rows());
+        auto nc_f = static_cast<float>(sh.num_cols());
+        for (;;)
+        {
+          pos.r = rnd::rand_float(0.f, nr_f);
+          if (rnd::one_in(2))
+          {
+            // Left -> Right
+            pos.c = rnd::rand_float(0.f, nc_f/3.f);
+            h_dir = +1;
+          }
+          else
+          {
+            // Right -> Left
+            pos.c = rnd::rand_float(2.f/3.f*nc_f, nc_f);
+            h_dir = -1;
+          }
+          if (math::distance_squared_ar(pos, rb_spaceship->get_curr_cm(), 2.f) > c_min_ship_asteroid_dist_sq)
+            return true;
+          if (iters++ > 100)
+            break;
+        }
+        return false;
+      };
+      Vec2 pos;
+      if (rnd::one_in(100) && f_set_ufo_pos(pos, ufo_h_dir))
+      {
+        ufo_active_timer.set(t);
+        ufo_trig.reset();
+        sprite_ufo_large->enabled = true;
+        rb_ufo_large = dyn_sys.add_rigid_body(sprite_ufo_large, 4.f, pos);
+        rb_ufo_large->set_orig_dir({ -1.f, 0.f });
+      }
+      else if (rnd::one_in(100) && f_set_ufo_pos(pos, ufo_h_dir))
+      {
+        ufo_active_timer.set(t);
+        ufo_trig.reset();
+        sprite_ufo_small->enabled = true;
+        rb_ufo_small = dyn_sys.add_rigid_body(sprite_ufo_small, 2.f, pos);
+        rb_ufo_small->set_orig_dir({ -1.f, 0.f });
+      }
+    }
+    
     // Handling of explosions lifetimes.
     for (auto& explosion : explosions_vec)
     {
@@ -1105,6 +1212,19 @@ private:
   
   BitmapSprite* sprite_ufo_large = nullptr;
   BitmapSprite* sprite_ufo_small = nullptr;
+  dynamics::RigidBody* rb_ufo_large = nullptr;
+  dynamics::RigidBody* rb_ufo_small = nullptr;
+  Timer ufo_active_timer { 7.f };
+  Timer ufo_v_move_timer { 2.f }; // 2s vertical travel.
+  OneShot ufo_trig;
+  Vec2 ufo_shot_dir;
+  // UFO Motion e.g.
+  //      /----\
+  // ----/      \
+  //             \----/
+  int ufo_h_dir = -1; // -1 : left, +1 : right.
+  int ufo_v_dir = 0; // -1 : down, 0 : unchanged, +1 : up.
+  float ufo_delta_pos = 0.5f;
 };
 
 //////////////////////////////////////////////////////////////////////////
