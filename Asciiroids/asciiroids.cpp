@@ -163,8 +163,8 @@ public:
       auto wd_prop = wave_gen.generate_waveform(WaveformType::TRIANGLE, 10.f, 1318.f, params, 44100, false);
       src_fx_ufo_large_propulsion->update_buffer(wd_prop);
       src_fx_ufo_small_propulsion->update_buffer(wd_prop);
-      src_fx_ufo_large_propulsion->set_volume(0.5f);
-      src_fx_ufo_small_propulsion->set_volume(0.5f);
+      src_fx_ufo_large_propulsion->set_volume(0.15f);
+      src_fx_ufo_small_propulsion->set_volume(0.15f);
     }
     
     std::string font_data_path = ASCII_Fonts::get_path_to_font_data(get_exe_folder());
