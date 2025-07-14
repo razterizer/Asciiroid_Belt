@@ -28,11 +28,11 @@
 // [x] Spaceship collision logic (explosion + reappearance, etc).
 // [x] Score counting.
 // [x] Shots should split larger asteroids into two smaller ones which travel faster than the original.
-// [ ] Hyperspace.
-// [ ] Large UFO.
-// [ ] Small UFO.
-// [ ] UFOs shoot at spaceship.
-// [ ] Spaceship can shoot at UFOs.
+// [x] Hyperspace.
+// [x] Large UFO.
+// [x] Small UFO.
+// [x] UFOs shoot at spaceship.
+// [x] Spaceship can shoot at UFOs.
 // [x] SFX.
 // [x] Music.
 // ////////////////////////////
