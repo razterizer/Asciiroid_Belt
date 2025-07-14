@@ -27,7 +27,7 @@ A cross-platform (Lin/Mac/Win) terminal-based shooter game.
 
   * `←`, `a` : Turn Left.
   * `→`, `d` : Turn Right.
-  * `↑`, 'w` : Thrust.
+  * `↑`, `w` : Thrust.
   * `<space>` : Fire.
   * `⌫`, `h` : Hyperspace. 
 
