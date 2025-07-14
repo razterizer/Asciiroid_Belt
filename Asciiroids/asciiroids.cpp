@@ -64,14 +64,10 @@ public:
   
   ~Game()
   {
-    if (src_fx_shot != nullptr)
-      audio.remove_source(src_fx_shot);
-    if (src_fx_explosion != nullptr)
-      audio.remove_source(src_fx_explosion);
-    if (src_fx_ufo_shot != nullptr)
-      audio.remove_source(src_fx_ufo_shot);
-    if (src_fx_ufo_propulsion != nullptr)
-      audio.remove_source(src_fx_ufo_propulsion);
+    audio.remove_source(src_fx_shot);
+    audio.remove_source(src_fx_explosion);
+    audio.remove_source(src_fx_ufo_shot);
+    audio.remove_source(src_fx_ufo_propulsion);
   }
 
   virtual void generate_data() override
