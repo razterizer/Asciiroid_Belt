@@ -116,11 +116,6 @@ public:
         0.31f,
         0.7f,
         0.f,
-        0.f,
-        0.f,
-        0.f,
-        0.f,
-        0.f,
       };
       static std::vector<float> vp_explosion
       {
