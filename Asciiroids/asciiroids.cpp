@@ -626,7 +626,7 @@ private:
       
       auto key_held = keyboard::get_char_key(kpdp.held);
       auto special_key = keyboard::get_special_key(kpdp.held);
-      for (int i = 0; i < 17; ++i)
+      for (int i = 0; i < stlutils::sizeI(vp_design); ++i)
       {
         int j_max = math::linmap(vp_design[i], -2.f, 3.f, 0, 50);
         for (int j = 0; j < j_max; ++j)
