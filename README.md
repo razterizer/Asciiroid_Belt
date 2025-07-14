@@ -23,6 +23,14 @@ For 3rd-party license compatibility issues, please refer to the information here
 
 A cross-platform (Lin/Mac/Win) terminal-based shooter game.
 
+### Keys
+
+  * `←`, `a` : Turn Left.
+  * `→`, `d` : Turn Right.
+  * `↑`, 'w` : Thrust.
+  * `<space>` : Fire.
+  * `⌫`, `h` : Hyperspace. 
+
 ## Build & Run Instructions
 
 There are two options on dealing with repo dependencies:
