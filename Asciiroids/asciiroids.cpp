@@ -67,7 +67,8 @@ public:
     audio.remove_source(src_fx_shot);
     audio.remove_source(src_fx_explosion);
     audio.remove_source(src_fx_ufo_shot);
-    audio.remove_source(src_fx_ufo_propulsion);
+    audio.remove_source(src_fx_ufo_large_propulsion);
+    audio.remove_source(src_fx_ufo_small_propulsion);
   }
 
   virtual void generate_data() override
@@ -150,7 +151,20 @@ public:
       src_fx_explosion->update_buffer(wd_explosion);
       src_fx_explosion->set_volume(1.f);
       src_fx_ufo_shot = audio.create_stream_source();
-      src_fx_ufo_propulsion = audio.create_stream_source();
+      src_fx_ufo_large_propulsion = audio.create_stream_source();
+      src_fx_ufo_small_propulsion = audio.create_stream_source();
+      WaveformGenerationParams params;
+      params.vibrato_depth = 0.1f;      // 20% amplitude vibrato
+      params.vibrato_freq = 6.f;       // 6 Hz wobble
+      params.freq_vibrato_depth = 0.3f;
+      params.freq_vibrato_freq = 6.f;
+      params.freq_vibrato_phase = math::c_pi*0.5f;
+      params.duty_cycle = 0.5f;         // standard triangle
+      auto wd_prop = wave_gen.generate_waveform(WaveformType::TRIANGLE, 10.f, 1318.f, params, 44100, false);
+      src_fx_ufo_large_propulsion->update_buffer(wd_prop);
+      src_fx_ufo_small_propulsion->update_buffer(wd_prop);
+      src_fx_ufo_large_propulsion->set_volume(0.5f);
+      src_fx_ufo_small_propulsion->set_volume(0.5f);
     }
     
     std::string font_data_path = ASCII_Fonts::get_path_to_font_data(get_exe_folder());
@@ -1023,6 +1037,8 @@ private:
         if (ufo_can_collide_with_asteroids)
           coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo", true);
         coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo", true);
+        src_fx_ufo_large_propulsion->stop();
+        src_fx_ufo_small_propulsion->stop();
       }
       
       // Respawn.
@@ -1064,6 +1080,7 @@ private:
         if (ufo_can_collide_with_asteroids)
           coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo");
         coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo");
+        src_fx_ufo_large_propulsion->play();
       }
       else if (rnd::one_in(1200) && f_set_ufo_pos(pos, ufo_h_dir))
       {
@@ -1075,6 +1092,7 @@ private:
         if (ufo_can_collide_with_asteroids)
           coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo");
         coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo");
+        src_fx_ufo_small_propulsion->play();
       }
     }
     
@@ -1205,7 +1223,8 @@ private:
   audio::AudioStreamSource* src_fx_shot = nullptr;
   audio::AudioStreamSource* src_fx_explosion = nullptr;
   audio::AudioStreamSource* src_fx_ufo_shot = nullptr;
-  audio::AudioStreamSource* src_fx_ufo_propulsion = nullptr;
+  audio::AudioStreamSource* src_fx_ufo_large_propulsion = nullptr;
+  audio::AudioStreamSource* src_fx_ufo_small_propulsion = nullptr;
   
   std::vector<ASCII_Fonts::ColorScheme> color_schemes;
   ASCII_Fonts::FontDataColl font_data;
