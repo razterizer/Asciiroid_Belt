@@ -117,6 +117,21 @@ public:
         0.7f,
         0.f,
       };
+      static std::vector<float> vp_ufo_shot
+      {
+        0.32f,
+        0.43f,
+        3.f,
+        0.f,
+        -0.11f,
+        0.5f,
+        -0.25f,
+        0.4f,
+        0.3f,
+        0.29f,
+        0.7f,
+        0.09f,
+      };
       static std::vector<float> vp_explosion
       {
         -1.5f,
