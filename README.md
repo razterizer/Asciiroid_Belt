@@ -13,7 +13,7 @@
 ![Last Commit](https://img.shields.io/github/last-commit/razterizer/Asciiroids?color=blue)
 ![Contributors](https://img.shields.io/github/contributors/razterizer/Asciiroids?color=blue)
 
-![Asciiroids 25fps 2](https://github.com/user-attachments/assets/d5af6a5b-1230-4545-9dcf-e8b84f119b44)
+<img alt="Asciiroids 25fps 2" src="https://github.com/user-attachments/assets/d5af6a5b-1230-4545-9dcf-e8b84f119b44" width="696" height="596" />
 
 ## Licensing
 
