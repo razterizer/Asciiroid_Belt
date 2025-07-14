@@ -21,8 +21,6 @@
 #include <8Beat/WaveformGeneration.h>
 #include <8Beat/SFX.h>
 
-#include <fstream>
-
 //#define DESIGN_SFX
 
 // ////////////////////////////
