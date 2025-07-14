@@ -1,6 +1,6 @@
 lib/Core                    https://github.com/razterizer/Core.git                60143dd942bf5c4ee404afe5fd9d663bc88813fa
 lib/Termin8or               https://github.com/razterizer/Termin8or.git           7f4a5bbf0c2eb978250a14b2c120da7aabce89df
-lib/8Beat                   https://github.com/razterizer/8Beat                   fab490743fd669ba41af1803aede426d9f7b14a8
+lib/8Beat                   https://github.com/razterizer/8Beat                   a896ead50e10d97b71ef7f46aae6e90a72748045
 lib/AudioLibSwitcher_OpenAL https://github.com/razterizer/AudioLibSwitcher_OpenAL 4b387804b24f8a252b259975e953282ce9fb4c32
 lib/TrainOfThought          https://github.com/razterizer/TrainOfThought          34922f8167bc18c53357e544fd7539142099fcd2
 lib/3rdparty_OpenAL         https://github.com/razterizer/3rdparty_OpenAL         d8361648d7b505154109f1ba074922555a96e5de                    win
