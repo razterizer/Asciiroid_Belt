@@ -161,6 +161,9 @@ public:
       src_fx_explosion->update_buffer(wd_explosion);
       src_fx_explosion->set_volume(volume_explosion);
       src_fx_ufo_shot = audio.create_stream_source();
+      auto wd_ufo_shot = SFX::generate(SFXType::LASER, vp_ufo_shot);
+      src_fx_ufo_shot->update_buffer(wd_shot);
+      src_fx_ufo_shot->set_volume(volume_ufo_shot);
       src_fx_ufo_large_propulsion = audio.create_stream_source();
       src_fx_ufo_small_propulsion = audio.create_stream_source();
       WaveformGenerationParams params;
@@ -714,7 +717,15 @@ private:
         shot.id = id;
         shots_vec.emplace_back(shot);
         shot_freq_timer.set(t);
-        src_fx_shot->play();
+        switch (id)
+        {
+          case ShotID::Spaceship:
+            src_fx_shot->play();
+            break;
+          case ShotID::UFO:
+            src_fx_ufo_shot->play();
+            break;
+        }
       }
     };
     
@@ -1337,6 +1348,7 @@ private:
   
   float volume_music = 0.25f;
   float volume_shot = 0.2f;
+  float volume_ufo_shot = 0.2f;
   float volume_explosion = 1.f;
   float volume_ufo_propulsion = 0.15f;
 };
