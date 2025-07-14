@@ -1325,8 +1325,8 @@ private:
   const bool ufo_can_collide_with_asteroids = false;
   Timer ufo_shot_interval_timer { 1.f };
   
-  float volume_music = 0.2f;
-  float volume_shot = 0.25f;
+  float volume_music = 0.25f;
+  float volume_shot = 0.2f;
   float volume_explosion = 1.f;
   float volume_ufo_propulsion = 0.15f;
 };
