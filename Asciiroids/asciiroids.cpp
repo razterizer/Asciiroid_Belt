@@ -85,7 +85,7 @@ public:
     
       if (chip_tune.load_tune(folder::join_path({ tune_path, "music.ct" })))
       {
-          chip_tune.set_volume(0.2f);
+          chip_tune.set_volume(volume_music);
           //chip_tune.play_tune();
           chip_tune.play_tune_async();
           chip_tune.wait_for_completion();
@@ -145,11 +145,11 @@ public:
       src_fx_shot = audio.create_stream_source();
       auto wd_shot = SFX::generate(SFXType::LASER, vp_shot);
       src_fx_shot->update_buffer(wd_shot);
-      src_fx_shot->set_volume(0.25f);
+      src_fx_shot->set_volume(volume_shot);
       src_fx_explosion = audio.create_stream_source();
       auto wd_explosion = SFX::generate(SFXType::EXPLOSION, vp_explosion);
       src_fx_explosion->update_buffer(wd_explosion);
-      src_fx_explosion->set_volume(1.f);
+      src_fx_explosion->set_volume(volume_explosion);
       src_fx_ufo_shot = audio.create_stream_source();
       src_fx_ufo_large_propulsion = audio.create_stream_source();
       src_fx_ufo_small_propulsion = audio.create_stream_source();
@@ -163,8 +163,8 @@ public:
       auto wd_prop = wave_gen.generate_waveform(WaveformType::TRIANGLE, 10.f, 1318.f, params, 44100, false);
       src_fx_ufo_large_propulsion->update_buffer(wd_prop);
       src_fx_ufo_small_propulsion->update_buffer(wd_prop);
-      src_fx_ufo_large_propulsion->set_volume(0.15f);
-      src_fx_ufo_small_propulsion->set_volume(0.15f);
+      src_fx_ufo_large_propulsion->set_volume(volume_ufo_propulsion);
+      src_fx_ufo_small_propulsion->set_volume(volume_ufo_propulsion);
     }
     
     std::string font_data_path = ASCII_Fonts::get_path_to_font_data(get_exe_folder());
@@ -1324,6 +1324,11 @@ private:
   float ufo_delta_pos = 0.4f;
   const bool ufo_can_collide_with_asteroids = false;
   Timer ufo_shot_interval_timer { 1.f };
+  
+  float volume_music = 0.2f;
+  float volume_shot = 0.25f;
+  float volume_explosion = 1.f;
+  float volume_ufo_propulsion = 0.15f;
 };
 
 //////////////////////////////////////////////////////////////////////////
