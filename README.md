@@ -13,6 +13,8 @@
 ![Last Commit](https://img.shields.io/github/last-commit/razterizer/Asciiroids?color=blue)
 ![Contributors](https://img.shields.io/github/contributors/razterizer/Asciiroids?color=blue)
 
+![Asciiroids 25fps](https://github.com/user-attachments/assets/67b4e0b1-5629-400c-91de-82bc75820dfb)
+
 ## Licensing
 
 For 3rd-party license compatibility issues, please refer to the information here: https://github.com/razterizer/8Beat/blob/main/README.md
