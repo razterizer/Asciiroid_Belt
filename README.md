@@ -9,6 +9,7 @@
 
 ![Top Languages](https://img.shields.io/github/languages/top/razterizer/Asciiroids)
 ![GitHub repo size](https://img.shields.io/github/repo-size/razterizer/Asciiroids)
+![](https://tokei.rs/b1/github/razterizer/Asciiroids)
 ![Commit Activity](https://img.shields.io/github/commit-activity/t/razterizer/Asciiroids)
 ![Last Commit](https://img.shields.io/github/last-commit/razterizer/Asciiroids?color=blue)
 ![Contributors](https://img.shields.io/github/contributors/razterizer/Asciiroids?color=blue)
