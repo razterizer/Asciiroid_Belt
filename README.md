@@ -24,13 +24,22 @@ For 3rd-party license compatibility issues, please refer to the information here
 
 A cross-platform (Lin/Mac/Win) terminal-based shooter game.
 
+Relive the old Atari Asteroids arcade game from 1979 with this clone. 
+It gets even better, because this game allow you to play it directly on your favourite terminal (emulator) or windows console.
+
+This [`Termin8or`](https://github.com/razterizer/Termin8or)-based game uses a vector based sprite for the spaceship and bitmap based sprites for asteroids, UFOs and explosion animations.
+It uses the Termin8or `CollisionHandler` for collisions between asteroids <-> spaceship and UFOs <-> spaceship.
+[`8Beat`](https://github.com/razterizer/8Beat) is used for "music" playback and SFX generation and playback.
+
+I hope this game will give you much joy and fun.
+
 ### Keys
 
-  * `←`, `a` : Turn Left.
-  * `→`, `d` : Turn Right.
-  * `↑`, `w` : Thrust.
-  * ` ` : Fire.
-  * `⌫`, `h` : Hyperspace. 
+  * `←`, `a`           : Turn Left.
+  * `→`, `d`.          : Turn Right.
+  * `↑`, `w`           : Thrust.
+  * `[space]`          : Fire.
+  * `[backspace]`, `h` : Hyperspace. 
 
 ## Build & Run Instructions
 
