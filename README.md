@@ -36,7 +36,7 @@ I hope this game will give you much joy and fun.
 ### Keys
 
   * `←`, `a`           : Turn Left.
-  * `→`, `d`.          : Turn Right.
+  * `→`, `d`           : Turn Right.
   * `↑`, `w`           : Thrust.
   * `[space]`          : Fire.
   * `[backspace]`, `h` : Hyperspace. 
