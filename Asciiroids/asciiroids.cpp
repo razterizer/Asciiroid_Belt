@@ -601,10 +601,6 @@ private:
     for (int a_idx = 0; a_idx < num_asteroids; ++a_idx)
     {
       auto& asteroid = asteroids_vec.emplace_back();
-      std::string sprite_src_name = "asteroid " + std::to_string(rnd::rand_int(0, 2)) + " big";
-      asteroid.sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("asteroid big id:" + std::to_string(global_asteroid_id++), sprite_src_name));
-      //std::cout << asteroid.sprite->get_name() << " : " << sprite_src_name << std::endl;
-      asteroid.sprite->enabled = true;
       auto nr_f = static_cast<float>(sh.num_rows());
       auto nc_f = static_cast<float>(sh.num_cols());
       Vec2 pos;
@@ -614,6 +610,10 @@ private:
         if (math::distance_squared_ar(pos, rb_spaceship->get_curr_cm(), 2.f) > c_min_ship_asteroid_dist_sq)
           break;
       }
+      std::string sprite_src_name = "asteroid " + std::to_string(rnd::rand_int(0, 2)) + " big";
+      asteroid.sprite = static_cast<BitmapSprite*>(sprh.clone_sprite("asteroid big id:" + std::to_string(global_asteroid_id++), sprite_src_name));
+      //std::cout << asteroid.sprite->get_name() << " : " << sprite_src_name << std::endl;
+      asteroid.sprite->enabled = true;
       asteroid.rb = dyn_sys.add_rigid_body(asteroid.sprite, 20.f, // mass
         pos, // pos
         Vec2 { rnd::randn(0.f, 3.f), rnd::randn(0.f, 3.f) } // vel
