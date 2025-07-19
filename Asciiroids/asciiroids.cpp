@@ -1384,7 +1384,7 @@ int main(int argc, char** argv)
   params.game_over_line_3_style = { Color::Black, Color::LightGray };
   params.game_over_line_4_style = { Color::Black, Color::White };
   
-  if (argc >= 3 && strcmp(argv[2], "--log_mode") == 0)
+  if (argc >= 4 && strcmp(argv[2], "--log_mode") == 0)
   {
     if (strcmp(argv[3], "record") == 0)
       params.log_mode = LogMode::Record;
