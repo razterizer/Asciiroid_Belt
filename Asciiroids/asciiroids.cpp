@@ -1297,7 +1297,7 @@ private:
   Vec2 spaceship_dir { -1.f, 0.f };
   float crit_vel_c = 30.f;
   float crit_vel_r = crit_vel_c/1.5f;
-  Timer spaceship_reappearance_timer { 0.2f };
+  Timer spaceship_reappearance_timer { 2.f };
   Timer hyperspace_jump_timer { 1.5f };
   
   float shot_speed = 31.f;
