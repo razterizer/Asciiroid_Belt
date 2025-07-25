@@ -56,16 +56,25 @@ public:
     GameEngine::set_anim_rate(2, 5); // UFO AI
   //#endif
   
+    for (int i = 1; i < argc; ++i)
+    {
+      if (strcmp(argv[i], "--disable_audio") == 0)
+        enable_audio = false;
+    }
+  
     shot_freq_timer.force_start(0.f);
   }
   
   ~Game()
   {
-    audio.remove_source(src_fx_shot);
-    audio.remove_source(src_fx_explosion);
-    audio.remove_source(src_fx_ufo_shot);
-    audio.remove_source(src_fx_ufo_large_propulsion);
-    audio.remove_source(src_fx_ufo_small_propulsion);
+    if (enable_audio)
+    {
+      audio.remove_source(src_fx_shot);
+      audio.remove_source(src_fx_explosion);
+      audio.remove_source(src_fx_ufo_shot);
+      audio.remove_source(src_fx_ufo_large_propulsion);
+      audio.remove_source(src_fx_ufo_small_propulsion);
+    }
   }
 
   virtual void generate_data() override
@@ -80,7 +89,7 @@ public:
         tune_path = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroids/"; // #FIXME: Find a better solution!
 #endif
     
-      if (chip_tune.load_tune(folder::join_path({ tune_path, "music.ct" })))
+      if (enable_audio && chip_tune.load_tune(folder::join_path({ tune_path, "music.ct" })))
       {
           chip_tune.set_volume(volume_music);
           //chip_tune.play_tune();
@@ -94,6 +103,7 @@ public:
     }
 #endif
     
+    if (enable_audio)
     {
       using namespace audio;
 #ifdef DESIGN_SFX
@@ -636,6 +646,7 @@ private:
   virtual void update() override
   {
 #ifdef DESIGN_SFX
+    if (enable_audio)
     {
       using namespace audio;
       
@@ -717,10 +728,12 @@ private:
         switch (id)
         {
           case ShotID::Spaceship:
-            src_fx_shot->play();
+            if (src_fx_shot != nullptr)
+              src_fx_shot->play();
             break;
           case ShotID::UFO:
-            src_fx_ufo_shot->play();
+            if (src_fx_ufo_shot != nullptr)
+              src_fx_ufo_shot->play();
             break;
         }
       }
@@ -802,7 +815,8 @@ private:
       explosion->sprite->pos = pos - sprite_explosion->get_size() / 2;
       auto* expl_raw_ptr = explosion.get();
       explosion->sprite->func_calc_anim_frame = [expl_raw_ptr](int sim_frame) { return expl_raw_ptr->anim_ctr; };
-      src_fx_explosion->play();
+      if (src_fx_explosion != nullptr)
+        src_fx_explosion->play();
       return expl_raw_ptr;
     };
     auto isect_data = coll_handler.get_isect_world_positions();
@@ -1054,8 +1068,10 @@ private:
         if (ufo_can_collide_with_asteroids)
           coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo", true);
         coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo", true);
-        src_fx_ufo_large_propulsion->stop();
-        src_fx_ufo_small_propulsion->stop();
+        if (src_fx_ufo_large_propulsion != nullptr)
+          src_fx_ufo_large_propulsion->stop();
+        if (src_fx_ufo_small_propulsion != nullptr)
+          src_fx_ufo_small_propulsion->stop();
       }
       
       // Respawn.
@@ -1097,7 +1113,8 @@ private:
         if (ufo_can_collide_with_asteroids)
           coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo");
         coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo");
-        src_fx_ufo_large_propulsion->play();
+        if (src_fx_ufo_large_propulsion != nullptr)
+          src_fx_ufo_large_propulsion->play();
       }
       else if (rnd::one_in(1200) && f_set_ufo_pos(pos, ufo_h_dir))
       {
@@ -1109,7 +1126,8 @@ private:
         if (ufo_can_collide_with_asteroids)
           coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "ufo");
         coll_handler.reinclude_all_rigid_bodies_of_prefixes(&dyn_sys, "spa", "ufo");
-        src_fx_ufo_small_propulsion->play();
+        if (src_fx_ufo_small_propulsion != nullptr)
+          src_fx_ufo_small_propulsion->play();
       }
     }
     
@@ -1141,13 +1159,15 @@ private:
     if (asteroids_vec.empty() && !sprite_ufo_large->enabled && !sprite_ufo_small->enabled && level_timer.start_if_stopped(t))
     {
       cleanup_asteroids();
-      chip_tune.stop_tune_async();
+      if (enable_audio)
+        chip_tune.stop_tune_async();
     }
     else if (level_timer.wait_then_reset(t))
     {
       level++;
       generate_big_asteroids(level*2);
-      chip_tune.play_tune_async();
+      if (enable_audio)
+        chip_tune.play_tune_async();
     }
     
     // Extra life every 10'000 points.
@@ -1194,7 +1214,8 @@ private:
   
   virtual void on_quit() override
   {
-    chip_tune.stop_tune_async();
+    if (enable_audio)
+      chip_tune.stop_tune_async();
   }
   
   virtual void draw_title() override
@@ -1209,27 +1230,32 @@ private:
   
   virtual void on_exit_instructions() override
   {
-    //chip_tune.stop_tune_async();
+    //if (enable_audio)
+    //  chip_tune.stop_tune_async();
   }
   
   virtual void on_enter_paused() override
   {
-    chip_tune.pause();
+    if (enable_audio)
+      chip_tune.pause();
   }
   
   virtual void on_exit_paused() override
   {
-    chip_tune.resume();
+    if (enable_audio)
+      chip_tune.resume();
   }
   
   virtual void on_enter_game_over() override
   {
-    chip_tune.stop_tune_async();
+    if (enable_audio)
+      chip_tune.stop_tune_async();
   }
   
   virtual void on_enter_input_hiscore() override
   {
-    chip_tune.stop_tune_async();
+    if (enable_audio)
+      chip_tune.stop_tune_async();
   }
 
   //////////////////////////////////////////////////////////////////////////
@@ -1349,6 +1375,7 @@ private:
   float volume_ufo_shot = 0.2f;
   float volume_explosion = 1.f;
   float volume_ufo_propulsion = 0.15f;
+  bool enable_audio = true;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -1404,7 +1431,7 @@ int main(int argc, char** argv)
   {
     if (strcmp(argv[i], "--help") == 0)
     {
-      std::cout << "demo --help | [--log_mode (record | replay)] [--suppress_tty_output] [--suppress_tty_input] [--set_fps <fps>] [--set_sim_delay_us <delay_us>]" << std::endl;
+      std::cout << "demo --help | [--log_mode (record | replay)] [--suppress_tty_output] [--suppress_tty_input] [--set_fps <fps>] [--set_sim_delay_us <delay_us>] [--disable_audio]" << std::endl;
       std::cout << "  default values:" << std::endl;
       std::cout << "    <fps>      : " << game.get_real_fps() << std::endl;
       std::cout << "    <delay_us> : " << game.get_sim_delay_us() << std::endl;
