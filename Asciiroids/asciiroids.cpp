@@ -857,6 +857,7 @@ private:
       {
         if (sprite_spaceship->calc_curr_AABB(0).contains(shot_rc) && spaceship_reappearance_timer.start_if_stopped(t))
         {
+          f_generate_explosion(shot_rc);
           sprite_spaceship->enabled = false;
           coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa", true);
           coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ufo", "spa", true);
