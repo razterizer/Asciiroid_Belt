@@ -56,7 +56,7 @@ public:
     GameEngine::set_anim_rate(2, 5); // UFO AI
   //#endif
   
-    shot_freq_timer.set(0.f);
+    shot_freq_timer.force_start(0.f);
   }
   
   ~Game()
@@ -704,16 +704,16 @@ private:
       
     auto f_fire_shot = [&](ShotID id, const Vec2& pos, const Vec2& dir)
     {
-      if (shot_freq_timer.wait(t))
+      if (shot_freq_timer.wait_then_reset(t))
       {
         Shot shot;
         shot.dir = dir;
         shot.dir = math::normalize(shot.dir);
         shot.pos = pos;
-        shot.timer.set(t);
+        shot.timer.start_if_stopped(t);
         shot.id = id;
         shots_vec.emplace_back(shot);
-        shot_freq_timer.set(t);
+        shot_freq_timer.start_if_stopped(t);
         switch (id)
         {
           case ShotID::Spaceship:
@@ -747,7 +747,7 @@ private:
             { spaceship_dir.r / spaceship_ar, spaceship_dir.c });
           break;
         case Key::Hyperspace:
-          if (hyperspace_jump_timer.set(t))
+          if (hyperspace_jump_timer.start_if_stopped(t))
           {
             sprite_spaceship->enabled = false;
             coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa", true);
@@ -841,7 +841,7 @@ private:
       }
       else if (sprite_spaceship->enabled && shot.id == ShotID::UFO)
       {
-        if (sprite_spaceship->calc_curr_AABB(0).contains(shot_rc) && spaceship_reappearance_timer.set(t))
+        if (sprite_spaceship->calc_curr_AABB(0).contains(shot_rc) && spaceship_reappearance_timer.start_if_stopped(t))
         {
           sprite_spaceship->enabled = false;
           coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa", true);
@@ -925,14 +925,14 @@ private:
     
     // If spaceship collided with something then lose a life and make the ship disappear and reappear in a safe zone.
     auto id_it = stlutils::find_if(isect_data, [&](const auto& id) { return id.node_A->rigid_body == rb_spaceship || id.node_B->rigid_body == rb_spaceship; });
-    if (id_it != isect_data.end() && spaceship_reappearance_timer.set(t))
+    if (id_it != isect_data.end() && spaceship_reappearance_timer.start_if_stopped(t))
     {
       sprite_spaceship->enabled = false;
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ast", "spa", true);
       coll_handler.exclude_all_rigid_bodies_of_prefixes(&dyn_sys, "ufo", "spa", true);
       num_lives--;
     }
-    if (spaceship_reappearance_timer.wait(t, false))
+    if (spaceship_reappearance_timer.finished(t))
     {
       const auto& spaceship_pos = rb_spaceship->get_curr_cm();
       if (!stlutils::contains_if(asteroids_vec, [&spaceship_pos, this](const auto& a) { return math::distance_squared_ar(a.rb->get_curr_cm(), spaceship_pos, 2.f) < c_min_ship_asteroid_dist_sq; }))
@@ -948,7 +948,7 @@ private:
     }
     
     // Hyperspace jump destination.
-    if (hyperspace_jump_timer.wait(t, false))
+    if (hyperspace_jump_timer.finished(t))
     {
       auto nr_f = static_cast<float>(sh.num_rows());
       auto nc_f = static_cast<float>(sh.num_cols());
@@ -1018,7 +1018,7 @@ private:
       if (!ufo_v_move_timer.is_ticking(t) && rnd::one_in(50))
       {
         ufo_v_dir = rnd::rand_int(-1, +1);
-        ufo_v_move_timer.set(t);
+        ufo_v_move_timer.start_if_stopped(t);
         if (ufo_v_dir == 0)
           ufo_v_move_timer.set_delay(rnd::randn_clamp(3.f, 1.f, 0.5f, 5.f));
         else
@@ -1035,8 +1035,7 @@ private:
         f_fire_shot(ShotID::UFO,
             pos,
             dir);
-        ufo_shot_interval_timer.reset();
-        ufo_shot_interval_timer.set(t);
+        ufo_shot_interval_timer.force_start(t);
       }
       
       // UFO collision handling.
@@ -1090,7 +1089,7 @@ private:
       Vec2 pos;
       if (rnd::one_in(600) && f_set_ufo_pos(pos, ufo_h_dir))
       {
-        ufo_active_timer.set(t);
+        ufo_active_timer.start_if_stopped(t);
         ufo_trig.reset();
         sprite_ufo_large->enabled = true;
         rb_ufo_large->set_orig_dir({ -1.f, 0.f });
@@ -1102,7 +1101,7 @@ private:
       }
       else if (rnd::one_in(1200) && f_set_ufo_pos(pos, ufo_h_dir))
       {
-        ufo_active_timer.set(t);
+        ufo_active_timer.start_if_stopped(t);
         ufo_trig.reset();
         sprite_ufo_small->enabled = true;
         rb_ufo_small->set_orig_dir({ -1.f, 0.f });
@@ -1139,12 +1138,12 @@ private:
     });
     
     // Level logic.
-    if (asteroids_vec.empty() && !sprite_ufo_large->enabled && !sprite_ufo_small->enabled && level_timer.set(t))
+    if (asteroids_vec.empty() && !sprite_ufo_large->enabled && !sprite_ufo_small->enabled && level_timer.start_if_stopped(t))
     {
       cleanup_asteroids();
       chip_tune.stop_tune_async();
     }
-    else if (level_timer.wait(t))
+    else if (level_timer.wait_then_reset(t))
     {
       level++;
       generate_big_asteroids(level*2);
