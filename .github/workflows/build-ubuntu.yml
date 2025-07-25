@@ -90,6 +90,9 @@ jobs:
       - name: Install Valgrind
         run: sudo apt-get update && sudo apt-get install -y valgrind
 
+      - name: Install OpenAL
+        run: sudo apt install libopenal-dev
+
       - name: Download binary artifact
         uses: actions/download-artifact@v4
         with:
