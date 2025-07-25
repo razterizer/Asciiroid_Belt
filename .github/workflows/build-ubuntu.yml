@@ -107,6 +107,7 @@ jobs:
       
       - name: Generate Valgrind status
         run: |
+          cat valgrind-output/valgrind.log
           if grep -q "definitely lost: 0 bytes" valgrind-output/valgrind.log && grep -q "indirectly lost: 0 bytes" valgrind-output/valgrind.log; then
             echo "status: passing" > valgrind-output/valgrind-status.yml
           else
