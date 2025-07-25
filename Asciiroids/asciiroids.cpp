@@ -1333,9 +1333,11 @@ private:
   OneShot ufo_trig;
   Vec2 ufo_shot_dir;
   // UFO Motion e.g.
-  //      /----\
-  // ----/      \
-  //             \----/
+  // +-------------------+
+  // |     /----\        |
+  // |----/      \       |
+  // |            \----/ |
+  // +-------------------+
   int ufo_h_dir = -1; // -1 : left, +1 : right.
   int ufo_v_dir = 0; // -1 : down, 0 : unchanged, +1 : up.
   float ufo_delta_pos = 0.4f;
