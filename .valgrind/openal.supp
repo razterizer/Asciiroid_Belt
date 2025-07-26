@@ -1,0 +1,5 @@
+{
+   openal-stbi-leak
+   Memcheck:Leak
+   fun:stbi__malloc
+}
