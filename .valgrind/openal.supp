@@ -2,4 +2,21 @@
    openal-stbi-leak
    Memcheck:Leak
    fun:stbi__malloc
+   ...
 }
+
+{
+   openal-definitely-lost
+   Memcheck:Leak
+   fun:malloc
+   fun:stbi__malloc
+   ...
+}
+
+{
+   openal-still-reachable
+   Memcheck:Leak
+   fun:calloc
+   ...
+}
+
