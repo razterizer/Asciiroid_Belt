@@ -107,7 +107,7 @@ jobs:
           # rm rec.txt # remove if any checked in.
           cp rec_valgrind.txt rec.txt
           chmod +x bin/asciiroids
-          valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=../.valgrind/openal.supp ./bin/asciiroids --log_mode replay --suppress_tty_input --suppress_tty_output --disable_audio 2>&1 | tee ../valgrind-output/valgrind.log
+          valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=../.valgrind/openal.supp ./bin/asciiroids --log_mode replay --suppress_tty_input --suppress_tty_output --disable_audio 2>&1 # | tee ../valgrind-output/valgrind.log
       
       - name: Generate Valgrind status
         run: |
