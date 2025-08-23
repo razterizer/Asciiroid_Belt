@@ -192,7 +192,7 @@ public:
     
     auto& cs0 = color_schemes.emplace_back();
     cs0.internal.fg_color = Color::Black;
-    cs0.internal.bg_color = Color::Yellow;
+    cs0.internal.bg_color = Color::White;
     auto& cs1 = color_schemes.emplace_back();
     cs1.internal.fg_color = Color::White;
     cs1.internal.bg_color = Color::Black;
@@ -1388,7 +1388,7 @@ int main(int argc, char** argv)
   params.screen_bg_color_default = Color::Black;
   params.screen_bg_color_title = Color::Black;
   params.screen_bg_color_instructions = Color::Black;
-  params.enable_title_screen = false;
+  params.enable_title_screen = true;
   params.enable_instructions_screen = false;
   params.pause_info_style = { Color::White, Color::Transparent };
   params.screen_bg_color_quit_confirm = std::nullopt;
