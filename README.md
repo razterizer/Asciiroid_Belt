@@ -78,7 +78,7 @@ setup_and_build_macos.sh
 
 Run the following script:
 ```sh
-setup_and_build_debian.bat
+setup_and_build_debian.sh
 ```
 
 ### Repo Dependencies Option 2
