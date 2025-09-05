@@ -21,6 +21,14 @@
 #include <8Beat/WaveformGeneration.h>
 #include <8Beat/SFX.h>
 
+using RC = t8::RC;
+using Color = t8::Color;
+template<int NR, int NC>
+using ScreenHandler = t8::screen::ScreenHandler<NR, NC>;
+using BitmapSprite = t8x::sprite::BitmapSprite;
+using VectorSprite = t8x::sprite::VectorSprite;
+using RigidBody = t8x::physics::RigidBody;
+
 //#define DESIGN_SFX
 
 // ////////////////////////////
@@ -37,7 +45,7 @@
 // [x] Music.
 // ////////////////////////////
 
-class Game : public GameEngine<40, 100>
+class Game : public t8x::GameEngine<40, 100>
 {
 #ifdef DESIGN_SFX
   std::vector<float> vp_design;
@@ -45,7 +53,7 @@ class Game : public GameEngine<40, 100>
 #endif
 
 public:
-  Game(int argc, char** argv, const GameEngineParams& params)
+  Game(int argc, char** argv, const t8x::GameEngineParams& params)
     : GameEngine(argv[0], params)
   {
   //#ifndef _WIN32
@@ -187,7 +195,7 @@ public:
       src_fx_ufo_small_propulsion->set_volume(volume_ufo_propulsion);
     }
     
-    std::string font_data_path = ASCII_Fonts::get_path_to_font_data(get_exe_folder());
+    std::string font_data_path = t8x::fonts::get_path_to_font_data(get_exe_folder());
     std::cout << font_data_path << std::endl;
     
     auto& cs0 = color_schemes.emplace_back();
@@ -197,7 +205,7 @@ public:
     cs1.internal.fg_color = Color::White;
     cs1.internal.bg_color = Color::Black;
     
-    font_data = ASCII_Fonts::load_font_data(font_data_path);
+    font_data = t8x::fonts::load_font_data(font_data_path);
     
     sprite_spaceship = sprh.create_vector_sprite("spaceship");
     sprite_spaceship->layer_id = 2;
@@ -786,18 +794,18 @@ private:
       shot.pos += shot.dir * shot_speed * dt;
     
     // Toroidal geometry update
-    auto cm = to_RC_round(rb_spaceship->get_curr_cm());
+    auto cm = t8::to_RC_round(rb_spaceship->get_curr_cm());
     if (toroidal_wrap(sh, cm, 0, 1))
       rb_spaceship->set_curr_cm(to_Vec2(cm));
     for (auto& shot : shots_vec)
     {
-      auto pos = to_RC_round(shot.pos);
+      auto pos = t8::to_RC_round(shot.pos);
       if (toroidal_wrap(sh, pos, 0, 0))
         shot.pos = to_Vec2(pos);
     }
     for (auto& asteroid : asteroids_vec)
     {
-      auto a_cm = to_RC_round(asteroid.rb->get_curr_cm());
+      auto a_cm = t8::to_RC_round(asteroid.rb->get_curr_cm());
       if (toroidal_wrap(sh, a_cm, 0, 0))
         asteroid.rb->set_curr_cm(to_Vec2(a_cm));
     }
@@ -824,7 +832,7 @@ private:
     {
       if (!stlutils::contains_if(explosions_vec, [&id](const auto& expl) { return (id.node_A == expl->isect_data.node_A && id.node_B == expl->isect_data.node_B) || (id.node_A == expl->isect_data.node_B && id.node_B == expl->isect_data.node_A); }))
       {
-        auto* explosion = f_generate_explosion(to_RC_round(id.world_pos));
+        auto* explosion = f_generate_explosion(t8::to_RC_round(id.world_pos));
         explosion->isect_data = id;
       }
     }
@@ -832,7 +840,7 @@ private:
     // Shots: UFO -> spaceship, spaceship -> UFO.
     for (auto& shot : shots_vec)
     {
-      auto shot_rc = to_RC_round(shot.pos);
+      auto shot_rc = t8::to_RC_round(shot.pos);
       if (sprite_ufo_large->enabled && shot.id == ShotID::Spaceship)
       {
         if (sprite_ufo_large->calc_curr_AABB(0).contains(shot_rc))
@@ -876,7 +884,7 @@ private:
       RC hit_rc;
       for (auto& shot : shots_vec)
       {
-        auto shot_rc = to_RC_round(shot.pos);
+        auto shot_rc = t8::to_RC_round(shot.pos);
         if (aabb_asteroid.contains(shot_rc))
         {
           asteroid.hit = true;
@@ -997,7 +1005,7 @@ private:
     // UFOs
     if (ufo_active_timer.is_ticking(t))
     {
-      dynamics::RigidBody* ufo_rb = nullptr;
+      RigidBody* ufo_rb = nullptr;
       int ufo_size = -1; // 0 : large, 1 : small.
       if (sprite_ufo_large->enabled)
       {
@@ -1025,7 +1033,7 @@ private:
       else if (ufo_v_dir == -1)
         pos.r += ufo_delta_pos/2.5f;
         
-      auto rc = to_RC_round(pos);
+      auto rc = t8::to_RC_round(pos);
       if (toroidal_wrap(sh, rc, 0, 0))
         pos = to_Vec2(rc);
         
@@ -1271,12 +1279,12 @@ private:
   audio::AudioStreamSource* src_fx_ufo_large_propulsion = nullptr;
   audio::AudioStreamSource* src_fx_ufo_small_propulsion = nullptr;
   
-  std::vector<ASCII_Fonts::ColorScheme> color_schemes;
-  ASCII_Fonts::FontDataColl font_data;
+  std::vector<t8x::fonts::ColorScheme> color_schemes;
+  t8x::fonts::FontDataColl font_data;
   
-  SpriteHandler sprh;
-  dynamics::DynamicsSystem dyn_sys;
-  dynamics::CollisionHandler coll_handler;
+  t8x::sprite::SpriteHandler sprh;
+  t8x::physics::DynamicsSystem dyn_sys;
+  t8x::physics::CollisionHandler coll_handler;
   bool dbg_draw_rigid_bodies = false;
   bool dbg_draw_sprites = false;
   bool dbg_draw_narrow_phase = false;
@@ -1290,7 +1298,7 @@ private:
   const float c_min_ship_asteroid_dist_sq = math::sq(10.f);
   
   VectorSprite* sprite_spaceship = nullptr;
-  dynamics::RigidBody* rb_spaceship = nullptr;
+  RigidBody* rb_spaceship = nullptr;
   
   const float spaceship_ar = 2.f;
   float spaceship_rot_vel = 0.f;
@@ -1330,7 +1338,7 @@ private:
   struct Asteroid
   {
     BitmapSprite* sprite = nullptr;
-    dynamics::RigidBody* rb = nullptr;
+    RigidBody* rb = nullptr;
     int level = 0; // 0 : big, 1 : small, 2 : tiny.
     bool hit = false;
   };
@@ -1346,7 +1354,7 @@ private:
     bool trig = false;
     int timestamp = 0;
     int anim_ctr = 0;
-    dynamics::CollisionHandler::IsectData isect_data;
+    t8x::physics::CollisionHandler::IsectData isect_data;
     BitmapSprite* sprite = nullptr;
   };
   int global_explosion_id = 0;
@@ -1354,8 +1362,8 @@ private:
   
   BitmapSprite* sprite_ufo_large = nullptr;
   BitmapSprite* sprite_ufo_small = nullptr;
-  dynamics::RigidBody* rb_ufo_large = nullptr;
-  dynamics::RigidBody* rb_ufo_small = nullptr;
+  RigidBody* rb_ufo_large = nullptr;
+  RigidBody* rb_ufo_small = nullptr;
   Timer ufo_active_timer { 8.f };
   Timer ufo_v_move_timer { 2.f }; // 2s vertical travel.
   OneShot ufo_trig;
@@ -1384,7 +1392,7 @@ private:
 
 int main(int argc, char** argv)
 {
-  GameEngineParams params;
+  t8x::GameEngineParams params;
   params.screen_bg_color_default = Color::Black;
   params.screen_bg_color_title = Color::Black;
   params.screen_bg_color_instructions = Color::Black;

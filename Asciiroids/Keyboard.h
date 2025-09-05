@@ -11,22 +11,22 @@
 #include <Core/StringHelper.h>
 
 
-Key register_keypresses(const keyboard::KeyPressDataPair& kpdp)
+Key register_keypresses(const t8::input::KeyPressDataPair& kpdp)
 {
   Key curr_special_key = Key::None;
-  auto key = keyboard::get_char_key(kpdp.transient);
-  auto key_held = keyboard::get_char_key(kpdp.held);
-  auto special_key = keyboard::get_special_key(kpdp.held);
+  auto key = t8::input::get_char_key(kpdp.transient);
+  auto key_held = t8::input::get_char_key(kpdp.held);
+  auto special_key = t8::input::get_special_key(kpdp.held);
   
   if (key == ' ')
     curr_special_key = Key::Fire;
-  else if (str::to_lower(key_held) == 'a' || special_key == keyboard::SpecialKey::Left)
+  else if (str::to_lower(key_held) == 'a' || special_key == t8::input::SpecialKey::Left)
     curr_special_key = Key::Left;
-  else if (str::to_lower(key_held) == 'd' || special_key == keyboard::SpecialKey::Right)
+  else if (str::to_lower(key_held) == 'd' || special_key == t8::input::SpecialKey::Right)
     curr_special_key = Key::Right;
-  else if (str::to_lower(key_held) == 'w' || special_key == keyboard::SpecialKey::Up)
+  else if (str::to_lower(key_held) == 'w' || special_key == t8::input::SpecialKey::Up)
     curr_special_key = Key::Thrust;
-  else if (str::to_lower(key_held) == 'h' || special_key == keyboard::SpecialKey::Backspace)
+  else if (str::to_lower(key_held) == 'h' || special_key == t8::input::SpecialKey::Backspace)
     curr_special_key = Key::Hyperspace;
 
   return curr_special_key;

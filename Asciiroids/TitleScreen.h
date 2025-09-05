@@ -55,15 +55,17 @@
 //39//                                                                                     (c) 2025       |
 //40//----------------------------------------------------------------------------------------------------+
 template<int NR, int NC>
-void draw_title(ScreenHandler<NR, NC>& sh, const ASCII_Fonts::FontDataColl& font_data, const ASCII_Fonts::ColorScheme& font_colors)
+void draw_title(t8::screen::ScreenHandler<NR, NC>& sh, const t8x::fonts::FontDataColl& font_data, const t8x::fonts::ColorScheme& font_colors)
 {
+  using Color = t8::Color;
+
   sh.write_buffer(" Rasmus Anthin ", 0, 75, Color::Black, Color::White);
   
   sh.write_buffer(" Presents: ", 1, 77, Color::Black, Color::White);
   
   sh.write_buffer(" (c) 2025 ", 39, 90, Color::Black, Color::White);
   
-  ASCII_Fonts::draw_text(sh, font_data, font_colors, "Asciiroids", 32, 23, ASCII_Fonts::Font::Avatar);
+  t8x::fonts::draw_text(sh, font_data, font_colors, "Asciiroids", 32, 23, t8x::fonts::Font::Avatar);
   
   sh.write_buffer("Press space-bar to continue...", 38, 33, Color::Black, Color::White);
   
@@ -111,6 +113,6 @@ void draw_title(ScreenHandler<NR, NC>& sh, const ASCII_Fonts::FontDataColl& font
   sh.write_buffer("#+-----==---:::....:::...............::+##########**################################################", 38, 0, fg, bg);
   sh.write_buffer("#+==-==------:.....::-:..............::=**###############################**+*#*+###%################", 39, 0, fg, bg);
   
-  sh.replace_bg_color(Color::White, ttl::Rectangle { 32, 23, 5, 51 });
+  sh.replace_bg_color(Color::White, t8::Rectangle { 32, 23, 5, 51 });
 }
 
