@@ -10,12 +10,12 @@
 #include "InstructionsScreen.h"
 
 #include <Core/Timer.h>
-#include <Termin8or/GameEngine.h>
-#include <Termin8or/SpriteHandler.h>
-#include <Termin8or/ASCII_Fonts.h>
-#include <Termin8or/Dynamics/RigidBody.h>
-#include <Termin8or/Dynamics/DynamicsSystem.h>
-#include <Termin8or/Dynamics/CollisionHandler.h>
+#include <Termin8or/sys/GameEngine.h>
+#include <Termin8or/sprite/SpriteHandler.h>
+#include <Termin8or/title/ASCII_Fonts.h>
+#include <Termin8or/physics/dynamics/RigidBody.h>
+#include <Termin8or/physics/dynamics/DynamicsSystem.h>
+#include <Termin8or/physics/dynamics/CollisionHandler.h>
 #include <8Beat/AudioSourceHandler.h>
 #include <8Beat/ChipTuneEngine.h>
 #include <8Beat/WaveformGeneration.h>
@@ -24,10 +24,10 @@
 using RC = t8::RC;
 using Color = t8::Color;
 template<int NR, int NC>
-using ScreenHandler = t8::screen::ScreenHandler<NR, NC>;
-using BitmapSprite = t8x::sprite::BitmapSprite;
-using VectorSprite = t8x::sprite::VectorSprite;
-using RigidBody = t8x::physics::RigidBody;
+using ScreenHandler = t8::ScreenHandler<NR, NC>;
+using BitmapSprite = t8x::BitmapSprite;
+using VectorSprite = t8x::VectorSprite;
+using RigidBody = t8x::RigidBody;
 
 //#define DESIGN_SFX
 
@@ -195,7 +195,7 @@ public:
       src_fx_ufo_small_propulsion->set_volume(volume_ufo_propulsion);
     }
     
-    std::string font_data_path = t8x::fonts::get_path_to_font_data(get_exe_folder());
+    std::string font_data_path = t8x::get_path_to_font_data(get_exe_folder());
     std::cout << font_data_path << std::endl;
     
     auto& cs0 = color_schemes.emplace_back();
@@ -205,7 +205,7 @@ public:
     cs1.internal.fg_color = Color::White;
     cs1.internal.bg_color = Color::Black;
     
-    font_data = t8x::fonts::load_font_data(font_data_path);
+    font_data = t8x::load_font_data(font_data_path);
     
     sprite_spaceship = sprh.create_vector_sprite("spaceship");
     sprite_spaceship->layer_id = 2;
@@ -1279,12 +1279,12 @@ private:
   audio::AudioStreamSource* src_fx_ufo_large_propulsion = nullptr;
   audio::AudioStreamSource* src_fx_ufo_small_propulsion = nullptr;
   
-  std::vector<t8x::fonts::ColorScheme> color_schemes;
-  t8x::fonts::FontDataColl font_data;
+  std::vector<t8x::ColorScheme> color_schemes;
+  t8x::FontDataColl font_data;
   
-  t8x::sprite::SpriteHandler sprh;
-  t8x::physics::DynamicsSystem dyn_sys;
-  t8x::physics::CollisionHandler coll_handler;
+  t8x::SpriteHandler sprh;
+  t8x::DynamicsSystem dyn_sys;
+  t8x::CollisionHandler coll_handler;
   bool dbg_draw_rigid_bodies = false;
   bool dbg_draw_sprites = false;
   bool dbg_draw_narrow_phase = false;
@@ -1354,7 +1354,7 @@ private:
     bool trig = false;
     int timestamp = 0;
     int anim_ctr = 0;
-    t8x::physics::CollisionHandler::IsectData isect_data;
+    t8x::CollisionHandler::IsectData isect_data;
     BitmapSprite* sprite = nullptr;
   };
   int global_explosion_id = 0;

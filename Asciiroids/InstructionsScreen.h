@@ -6,15 +6,15 @@
 //
 
 #pragma once
-#include <Termin8or/ASCII_Fonts.h>
+#include <Termin8or/title/ASCII_Fonts.h>
 
 
 template<int NR, int NC>
-void draw_instructions(t8::screen::ScreenHandler<NR, NC>& sh, const t8x::fonts::FontDataColl& font_data, const t8x::fonts::ColorScheme& font_colors)
+void draw_instructions(t8::ScreenHandler<NR, NC>& sh, const t8x::FontDataColl& font_data, const t8x::ColorScheme& font_colors)
 {
   using Color = t8::Color;
 
-  t8x::fonts::draw_text(sh, font_data, font_colors, "Pilot Episode", 1, 6, t8x::fonts::Font::Avatar);
+  t8x::draw_text(sh, font_data, font_colors, "Pilot Episode", 1, 6, t8x::Font::Avatar);
 
   sh.write_buffer("The objective of this game is to shoot as many enemiy UFOs you can.", 7, 2, Color::White);
   sh.write_buffer("You can hide from UFOs in the clouds, just make sure that no part of the plane ", 8, 2, Color::White);

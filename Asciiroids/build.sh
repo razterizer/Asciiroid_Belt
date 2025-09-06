@@ -23,6 +23,6 @@ fi
 ### Post-Build Actions ###
 
 mkdir -p bin/fonts/
-cp ../../lib/Termin8or/fonts/* bin/fonts/
+cp ../../lib/Termin8or/title/fonts/* bin/fonts/
 
 cp music.ct bin/

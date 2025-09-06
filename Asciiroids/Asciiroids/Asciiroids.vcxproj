@@ -136,7 +136,7 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)\music.ct" "$(TargetDir)" /Y
-xcopy "$(SolutionDir)\..\..\lib\Termin8or\fonts\*" "$(TargetDir)\fonts\" /Y
+xcopy "$(SolutionDir)\..\..\lib\Termin8or\title\fonts\*" "$(TargetDir)\fonts\" /Y
 xcopy "$(SolutionDir)..\..\lib\3rdparty_OpenAL\lib\OpenAL32.dll" "$(TargetDir)" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -161,7 +161,7 @@ xcopy "$(SolutionDir)..\..\lib\3rdparty_OpenAL\lib\OpenAL32.dll" "$(TargetDir)" 
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)\music.ct" "$(TargetDir)" /Y
-xcopy "$(SolutionDir)\..\..\lib\Termin8or\fonts\*" "$(TargetDir)\fonts\" /Y
+xcopy "$(SolutionDir)\..\..\lib\Termin8or\title\fonts\*" "$(TargetDir)\fonts\" /Y
 xcopy "$(SolutionDir)..\..\lib\3rdparty_OpenAL\lib\OpenAL32.dll" "$(TargetDir)" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

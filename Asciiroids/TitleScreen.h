@@ -6,7 +6,7 @@
 //
 
 #pragma once
-#include <Termin8or/ASCII_Fonts.h>
+#include <Termin8or/title/ASCII_Fonts.h>
 //40x100
 
 //    00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001
@@ -55,7 +55,7 @@
 //39//                                                                                     (c) 2025       |
 //40//----------------------------------------------------------------------------------------------------+
 template<int NR, int NC>
-void draw_title(t8::screen::ScreenHandler<NR, NC>& sh, const t8x::fonts::FontDataColl& font_data, const t8x::fonts::ColorScheme& font_colors)
+void draw_title(t8::ScreenHandler<NR, NC>& sh, const t8x::FontDataColl& font_data, const t8x::ColorScheme& font_colors)
 {
   using Color = t8::Color;
 
@@ -65,7 +65,7 @@ void draw_title(t8::screen::ScreenHandler<NR, NC>& sh, const t8x::fonts::FontDat
   
   sh.write_buffer(" (c) 2025 ", 39, 90, Color::Black, Color::White);
   
-  t8x::fonts::draw_text(sh, font_data, font_colors, "Asciiroids", 32, 23, t8x::fonts::Font::Avatar);
+  t8x::draw_text(sh, font_data, font_colors, "Asciiroids", 32, 23, t8x::Font::Avatar);
   
   sh.write_buffer("Press space-bar to continue...", 38, 33, Color::Black, Color::White);
   
