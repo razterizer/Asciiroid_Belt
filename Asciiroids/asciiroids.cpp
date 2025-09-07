@@ -168,27 +168,27 @@ public:
         0.f,
       };
       src_fx_shot = audio.create_stream_source();
-      auto wd_shot = SFX::generate(SFXType::LASER, vp_shot);
+      auto wd_shot = beat::SFX::generate(beat::SFXType::LASER, vp_shot);
       src_fx_shot->update_buffer(wd_shot);
       src_fx_shot->set_volume(volume_shot);
       src_fx_explosion = audio.create_stream_source();
-      auto wd_explosion = SFX::generate(SFXType::EXPLOSION, vp_explosion);
+      auto wd_explosion = beat::SFX::generate(beat::SFXType::EXPLOSION, vp_explosion);
       src_fx_explosion->update_buffer(wd_explosion);
       src_fx_explosion->set_volume(volume_explosion);
       src_fx_ufo_shot = audio.create_stream_source();
-      auto wd_ufo_shot = SFX::generate(SFXType::LASER, vp_ufo_shot);
+      auto wd_ufo_shot = beat::SFX::generate(beat::SFXType::LASER, vp_ufo_shot);
       src_fx_ufo_shot->update_buffer(wd_shot);
       src_fx_ufo_shot->set_volume(volume_ufo_shot);
       src_fx_ufo_large_propulsion = audio.create_stream_source();
       src_fx_ufo_small_propulsion = audio.create_stream_source();
-      WaveformGenerationParams params;
+      beat::WaveformGenerationParams params;
       params.vibrato_depth = 0.1f;      // 20% amplitude vibrato
       params.vibrato_freq = 6.f;       // 6 Hz wobble
       params.freq_vibrato_depth = 0.3f;
       params.freq_vibrato_freq = 6.f;
       params.freq_vibrato_phase = math::c_pi*0.5f;
       params.duty_cycle = 0.5f;         // standard triangle
-      auto wd_prop = wave_gen.generate_waveform(WaveformType::TRIANGLE, 10.f, 1318.f, params, 44100, false);
+      auto wd_prop = wave_gen.generate_waveform(beat::WaveformType::TRIANGLE, 10.f, 1318.f, params, 44100, false);
       src_fx_ufo_large_propulsion->update_buffer(wd_prop);
       src_fx_ufo_small_propulsion->update_buffer(wd_prop);
       src_fx_ufo_large_propulsion->set_volume(volume_ufo_propulsion);
@@ -1270,14 +1270,14 @@ private:
 
   //////////////////////////////////////////////////////////////////////////
   
-  audio::AudioSourceHandler audio;
-  audio::WaveformGeneration wave_gen;
-  audio::ChipTuneEngine chip_tune { audio, wave_gen };
-  audio::AudioStreamSource* src_fx_shot = nullptr;
-  audio::AudioStreamSource* src_fx_explosion = nullptr;
-  audio::AudioStreamSource* src_fx_ufo_shot = nullptr;
-  audio::AudioStreamSource* src_fx_ufo_large_propulsion = nullptr;
-  audio::AudioStreamSource* src_fx_ufo_small_propulsion = nullptr;
+  beat::AudioSourceHandler audio;
+  beat::WaveformGeneration wave_gen;
+  beat::ChipTuneEngine chip_tune { audio, wave_gen };
+  beat::AudioStreamSource* src_fx_shot = nullptr;
+  beat::AudioStreamSource* src_fx_explosion = nullptr;
+  beat::AudioStreamSource* src_fx_ufo_shot = nullptr;
+  beat::AudioStreamSource* src_fx_ufo_large_propulsion = nullptr;
+  beat::AudioStreamSource* src_fx_ufo_small_propulsion = nullptr;
   
   std::vector<t8x::ColorScheme> color_schemes;
   t8x::FontDataColl font_data;
