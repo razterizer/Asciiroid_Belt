@@ -1431,7 +1431,7 @@ int main(int argc, char** argv)
         params.log_mode = LogMode::Record;
       else if (std::strcmp(argv[i + 1], "replay") == 0)
         params.log_mode = LogMode::Replay;
-      params.xcode_log_filepath = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroids/";
+      params.xcode_log_path = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroids/";
     }
   }
   
