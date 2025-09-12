@@ -4,9 +4,11 @@ os_name=$(uname)
 
 if [[ $os_name == *"Darwin"* ]]; then
   additional_flags="-I../../lib \
-  -I/opt/homebrew/opt/openal-soft/include -L/opt/homebrew/opt/openal-soft/lib -lopenal"
+    -I../../lib/Termin8or/include \
+    -I/opt/homebrew/opt/openal-soft/include -L/opt/homebrew/opt/openal-soft/lib -lopenal"
 else
-  additional_flags="-I../../lib"
+  additional_flags="-I../../lib \
+    -I../../lib/Termin8or/include"
   export BUILD_PKG_CONFIG_MODULES='openal'
 fi
 
@@ -23,6 +25,6 @@ fi
 ### Post-Build Actions ###
 
 mkdir -p bin/fonts/
-cp ../../lib/Termin8or/title/fonts/* bin/fonts/
+cp ../../lib/Termin8or/include/Termin8or/title/fonts/* bin/fonts/
 
 cp music.ct bin/
