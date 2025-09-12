@@ -320,7 +320,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = c23;
 				HEADER_SEARCH_PATHS = (
-					../lib,
+					../lib/,
+					../lib/Termin8or/include/,
 					"/opt/homebrew/opt/openal-soft/include/",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -335,7 +336,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = c23;
 				HEADER_SEARCH_PATHS = (
-					../lib,
+					../lib/,
+					../lib/Termin8or/include/,
 					"/opt/homebrew/opt/openal-soft/include/",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
