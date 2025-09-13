@@ -12,7 +12,7 @@ else
   additional_flags="-I../../lib \
     -I../../lib/Core/include \
     -I../../lib/Termin8or/include \
-    -I../../lib/8Beat/include \"
+    -I../../lib/8Beat/include"
   export BUILD_PKG_CONFIG_MODULES='openal'
 fi
 
