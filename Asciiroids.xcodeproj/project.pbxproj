@@ -321,6 +321,7 @@
 				GCC_C_LANGUAGE_STANDARD = c23;
 				HEADER_SEARCH_PATHS = (
 					../lib/,
+					../lib/Core/include,
 					../lib/Termin8or/include/,
 					"/opt/homebrew/opt/openal-soft/include/",
 				);
@@ -337,6 +338,7 @@
 				GCC_C_LANGUAGE_STANDARD = c23;
 				HEADER_SEARCH_PATHS = (
 					../lib/,
+					../lib/Core/include,
 					../lib/Termin8or/include/,
 					"/opt/homebrew/opt/openal-soft/include/",
 				);
