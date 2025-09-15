@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		072E94532E18DAC30051F9AB /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 072E94522E18DAC30051F9AB /* OpenAL.framework */; };
 		072E94D02E19373B0051F9AB /* asciiroids.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 072E94CB2E19373A0051F9AB /* asciiroids.cpp */; };
+		0799EFEA2E78712100BAE112 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0799EFE82E7867D800BAE112 /* AudioToolbox.framework */; };
+		0799EFEB2E78712900BAE112 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0799EFE62E7865FF00BAE112 /* CoreAudio.framework */; };
+		0799EFED2E78713400BAE112 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0799EFEC2E78713400BAE112 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +48,9 @@
 		072E94CE2E19373A0051F9AB /* Keyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keyboard.h; sourceTree = "<group>"; };
 		072E94CF2E19373A0051F9AB /* TitleScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TitleScreen.h; sourceTree = "<group>"; };
 		072E94E32E1B6F750051F9AB /* music.ct */ = {isa = PBXFileReference; lastKnownFileType = text; path = music.ct; sourceTree = "<group>"; };
+		0799EFE62E7865FF00BAE112 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		0799EFE82E7867D800BAE112 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		0799EFEC2E78713400BAE112 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +58,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				072E94532E18DAC30051F9AB /* OpenAL.framework in Frameworks */,
+				0799EFED2E78713400BAE112 /* CoreFoundation.framework in Frameworks */,
+				0799EFEB2E78712900BAE112 /* CoreAudio.framework in Frameworks */,
+				0799EFEA2E78712100BAE112 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +99,9 @@
 		072E94512E18DAC20051F9AB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0799EFEC2E78713400BAE112 /* CoreFoundation.framework */,
+				0799EFE82E7867D800BAE112 /* AudioToolbox.framework */,
+				0799EFE62E7865FF00BAE112 /* CoreAudio.framework */,
 				072E94522E18DAC30051F9AB /* OpenAL.framework */,
 			);
 			name = Frameworks;
@@ -326,7 +336,9 @@
 					../lib/8Beat/include/,
 					../lib/TrainOfThought/include/,
 					../lib/AudioLibSwitcher_OpenAL/include/,
+					../lib/AudioLibSwitcher_applaudio/include/,
 					"/opt/homebrew/opt/openal-soft/include/",
+					../lib/applaudio/include,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -346,7 +358,9 @@
 					../lib/8Beat/include/,
 					../lib/TrainOfThought/include/,
 					../lib/AudioLibSwitcher_OpenAL/include/,
+					../lib/AudioLibSwitcher_applaudio/include/,
 					"/opt/homebrew/opt/openal-soft/include/",
+					../lib/applaudio/include,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
