@@ -8,16 +8,21 @@ if [[ $os_name == *"Darwin"* ]]; then
     -I../../lib/Termin8or/include \
     -I../../lib/8Beat/include \
     -I../../lib/TrainOfThought/include \
-    -I../../lib/AudioLibSwitcher_OpenAL/include \
-    -I/opt/homebrew/opt/openal-soft/include -L/opt/homebrew/opt/openal-soft/lib -lopenal"
+    -I../../lib/AudioLibSwitcher_applaudio/include \
+    -I../../lib/applaudio/include -framework AudioToolbox -framework CoreAudio -framework CoreFoundation"
+  # -I../../lib/AudioLibSwitcher_OpenAL/include \
+  # -I/opt/homebrew/opt/openal-soft/include -L/opt/homebrew/opt/openal-soft/lib -lopenal"
 else
   additional_flags="\
     -I../../lib/Core/include \
     -I../../lib/Termin8or/include \
     -I../../lib/8Beat/include \
     -I../../lib/TrainOfThought/include \
-    -I../../lib/AudioLibSwitcher_OpenAL/include"
-  export BUILD_PKG_CONFIG_MODULES='openal'
+    -I../../lib/AudioLibSwitcher_applaudio/include \
+    -I../../lib/applaudio/include"
+  # -I../../lib/AudioLibSwitcher_OpenAL/include"
+  #export BUILD_PKG_CONFIG_MODULES='openal'
+  export BUILD_PKG_CONFIG_MODULES='alsa'
 fi
 
 ../../lib/Core/build.sh asciiroids "$1" "${additional_flags[@]}"
