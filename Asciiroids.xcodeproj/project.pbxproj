@@ -335,9 +335,7 @@
 					../lib/Termin8or/include/,
 					../lib/8Beat/include/,
 					../lib/TrainOfThought/include/,
-					../lib/AudioLibSwitcher_OpenAL/include/,
 					../lib/AudioLibSwitcher_applaudio/include/,
-					"/opt/homebrew/opt/openal-soft/include/",
 					../lib/applaudio/include,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -357,9 +355,7 @@
 					../lib/Termin8or/include/,
 					../lib/8Beat/include/,
 					../lib/TrainOfThought/include/,
-					../lib/AudioLibSwitcher_OpenAL/include/,
 					../lib/AudioLibSwitcher_applaudio/include/,
-					"/opt/homebrew/opt/openal-soft/include/",
 					../lib/applaudio/include,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
