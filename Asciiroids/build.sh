@@ -9,7 +9,7 @@ if [[ $os_name == *"Darwin"* ]]; then
     -I../../lib/8Beat/include \
     -I../../lib/TrainOfThought/include \
     -I../../lib/AudioLibSwitcher_applaudio/include \
-    -I../../lib/applaudio/include -framework AudioToolbox -framework CoreAudio -framework CoreFoundation"
+    -I../../lib/applaudio/include -framework AudioToolbox -framework CoreAudio -framework CoreFoundation -DUSE_APPLAUDIO"
   # -I../../lib/AudioLibSwitcher_OpenAL/include \
   # -I/opt/homebrew/opt/openal-soft/include -L/opt/homebrew/opt/openal-soft/lib -lopenal"
 else
@@ -19,7 +19,7 @@ else
     -I../../lib/8Beat/include \
     -I../../lib/TrainOfThought/include \
     -I../../lib/AudioLibSwitcher_applaudio/include \
-    -I../../lib/applaudio/include"
+    -I../../lib/applaudio/include -DUSE_APPLAUDIO"
   # -I../../lib/AudioLibSwitcher_OpenAL/include"
   #export BUILD_PKG_CONFIG_MODULES='openal'
   export BUILD_PKG_CONFIG_MODULES='alsa'
