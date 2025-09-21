@@ -154,3 +154,12 @@ git tag release-1.0.0.0
 # Push the tag again (this retriggers the workflow)
 git push origin release-1.0.0.0
 ```
+
+## Running from a Release
+
+When you download a MacOS release then you need to tell the gatekeeper unblock the executable (here: `asciiroids`), but only if you trust the program of course (check source code + release workflow if you're unsure).
+When you feel ready, you can allow the binary to be run by going to the release folder and type the following:
+
+```sh
+xattr -dr com.apple.quarantine asciiroids
+```
