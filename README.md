@@ -131,3 +131,11 @@ Then goto `<my_source_code_dir>/Asciiroids/Asciiroids
 /` and build with `./build.sh`.
 
 Then run by typing `./bin/asciiroids`.
+
+## Make New Release
+
+e.g.
+```sh
+git tag release-1.0.0.0
+git push origin release-1.0.0.0
+```
