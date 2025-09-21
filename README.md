@@ -134,8 +134,23 @@ Then run by typing `./bin/asciiroids`.
 
 ## Make New Release
 
-e.g.
+Trigger new release:
 ```sh
 git tag release-1.0.0.0
+git push origin release-1.0.0.0
+```
+
+If release workflow failed, you can delete the tag and add it again which then retriggers the release workflow:
+```sh
+# Delete local tag
+git tag -d release-1.0.0.0
+
+# Delete remote tag
+git push --delete origin release-1.0.0.0
+
+# Re-create the tag locally
+git tag release-1.0.0.0
+
+# Push the tag again (this retriggers the workflow)
 git push origin release-1.0.0.0
 ```
