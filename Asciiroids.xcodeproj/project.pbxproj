@@ -329,6 +329,11 @@
 				DEVELOPMENT_TEAM = HFL2Q84SZB;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = c23;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					USE_APPLAUDIO,
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					../lib/,
 					../lib/Core/include/,
@@ -349,6 +354,7 @@
 				DEVELOPMENT_TEAM = HFL2Q84SZB;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = c23;
+				GCC_PREPROCESSOR_DEFINITIONS = USE_APPLAUDIO;
 				HEADER_SEARCH_PATHS = (
 					../lib/,
 					../lib/Core/include/,
