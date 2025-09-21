@@ -13,7 +13,7 @@ jobs:
     steps:
       # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       # Step 2: Move to the parent directory and fetch dependencies
       - name: Fetch dependencies
@@ -48,7 +48,7 @@ jobs:
 
       # Step 6: Upload build artifact
       - name: Upload Ubuntu build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: asciiroids-ubuntu-build
           path: Asciiroids/bin/
@@ -60,10 +60,10 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         
       - name: Download Ubuntu build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: asciiroids-ubuntu-build
           path: ubuntu-build
