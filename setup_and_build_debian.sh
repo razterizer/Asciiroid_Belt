@@ -2,7 +2,7 @@
 
 REPO_DIR="Asciiroids"
 
-sudo apt install libopenal-dev
+# sudo apt install libopenal-dev
 
 cd ..
 

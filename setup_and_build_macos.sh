@@ -2,7 +2,7 @@
 
 REPO_DIR="Asciiroids"
 
-brew install openal-soft
+# brew install openal-soft
 
 cd ..
 
