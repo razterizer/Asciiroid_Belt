@@ -53,8 +53,10 @@ class Game : public t8x::GameEngine<40, 100>
 #endif
 
 public:
-  Game(int argc, char** argv, const t8x::GameEngineParams& params)
+  Game(int argc, char** argv, const t8x::GameEngineParams& params, bool use_audio)
     : GameEngine(argv[0], params)
+    , audio(use_audio)
+    , enable_audio(use_audio)
   {
   //#ifndef _WIN32
     GameEngine::set_real_fps(15);
@@ -63,12 +65,6 @@ public:
     GameEngine::set_anim_rate(1, 3); // Asteroids
     GameEngine::set_anim_rate(2, 5); // UFO AI
   //#endif
-  
-    for (int i = 1; i < argc; ++i)
-    {
-      if (std::strcmp(argv[i], "--disable_audio") == 0)
-        enable_audio = false;
-    }
   
     shot_freq_timer.force_start(0.f);
   }
@@ -1419,6 +1415,8 @@ int main(int argc, char** argv)
   params.game_over_line_3_style = { Color::Black, Color::LightGray };
   params.game_over_line_4_style = { Color::Black, Color::White };
   
+  bool use_audio = true;
+  
   for (int i = 1; i < argc; ++i)
   {
     if (std::strcmp(argv[i],  "--suppress_tty_output") == 0)
@@ -1433,9 +1431,11 @@ int main(int argc, char** argv)
         params.log_mode = LogMode::Replay;
       params.xcode_log_path = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroids/bin/";
     }
+    else if (std::strcmp(argv[i], "--disable_audio") == 0)
+      use_audio = false;
   }
   
-  Game game(argc, argv, params);
+  Game game(argc, argv, params, use_audio);
   
   for (int i = 1; i < argc; ++i)
   {
