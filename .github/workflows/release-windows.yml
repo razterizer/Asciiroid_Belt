@@ -1,0 +1,87 @@
+name: release windows
+
+on:
+  push:
+    tags:
+      - 'release-*'
+      - 'v*'
+
+jobs:
+  build-windows-release:
+    runs-on: windows-latest
+  
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Move to the parent directory and fetch dependencies
+      - name: Fetch dependencies
+        run: |
+          cd ..
+          mkdir lib
+          cd lib
+          git clone https://github.com/razterizer/Core.git
+          git clone https://github.com/razterizer/Termin8or.git
+          git clone https://github.com/razterizer/8Beat.git
+          git clone https://github.com/razterizer/AudioLibSwitcher_applaudio.git --recurse-submodules
+          git clone https://github.com/razterizer/applaudio.git
+          git clone https://github.com/razterizer/TrainOfThought.git
+
+      # Step 3: Build project
+      - name: Run build.bat
+        continue-on-error: false
+        run: |
+          cd $env:GITHUB_WORKSPACE\Asciiroids
+          ./build.bat
+
+      # Step 4: Upload build artifact
+      - name: Upload Windows build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: asciiroids-windows-build
+          path: Asciiroids/bin/
+          retention-days: 1
+
+  create-windows-release:
+    runs-on: windows-latest
+    needs: build-windows-release
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Download Windows build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: asciiroids-windows-build
+          path: windows-build
+          
+      - name: Create Windows distribution package
+        run: |
+          cd windows-build
+          # Create a clean distribution folder
+          mkdir -p asciiroids-${{ github.ref_name }}
+          # Copy the executable and necessary files
+          cp asciiroids.exe asciiroids-${{ github.ref_name }}/
+          cp hiscores.txt asciiroids-${{ github.ref_name }}/
+          cp music.ct asciiroids-${{ github.ref_name }}/
+          # Copy fonts directory (if it exists)
+          if [ -d fonts ]; then
+            cp -r fonts asciiroids-${{ github.ref_name }}/
+          fi
+          # Create zip archive (standard for Windows)
+          Compress-Archive -Path asciiroids-${{ github.ref_name }} -DestinationPath asciiroids-${{ github.ref_name }}-windows.zip
+          
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          files: |
+            windows-build/asciiroids-${{ github.ref_name }}-windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
