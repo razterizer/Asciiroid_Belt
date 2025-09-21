@@ -50,6 +50,7 @@
 		072E94E32E1B6F750051F9AB /* music.ct */ = {isa = PBXFileReference; lastKnownFileType = text; path = music.ct; sourceTree = "<group>"; };
 		07980B832E8042B5007A0EB4 /* release-macos.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "release-macos.yml"; path = ".github/workflows/release-macos.yml"; sourceTree = SOURCE_ROOT; };
 		07980B842E8042B5007A0EB4 /* release-ubuntu.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "release-ubuntu.yml"; path = ".github/workflows/release-ubuntu.yml"; sourceTree = SOURCE_ROOT; };
+		07980B872E80457C007A0EB4 /* release-windows.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "release-windows.yml"; path = ".github/workflows/release-windows.yml"; sourceTree = SOURCE_ROOT; };
 		0799EFE62E7865FF00BAE112 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		0799EFE82E7867D800BAE112 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		0799EFEC2E78713400BAE112 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -77,6 +78,7 @@
 				072E94952E191D790051F9AB /* build-windows.yml */,
 				07980B832E8042B5007A0EB4 /* release-macos.yml */,
 				07980B842E8042B5007A0EB4 /* release-ubuntu.yml */,
+				07980B872E80457C007A0EB4 /* release-windows.yml */,
 			);
 			name = workflows;
 			sourceTree = "<group>";
