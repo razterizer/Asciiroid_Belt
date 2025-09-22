@@ -1,4 +1,4 @@
-name: release ubuntu
+name: release linux
 
 on:
   push:
@@ -7,15 +7,15 @@ on:
       - 'v*'
 
 jobs:
-  build-ubuntu-release:
-    runs-on: ubuntu-latest
+  build-linux-release:
+    runs-on: ubuntu-latest  # Still use Ubuntu runner, but call it "Linux" release.
     
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout the repository.
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      # Step 2: Move to the parent directory and fetch dependencies
+      # Step 2: Move to the parent directory and fetch dependencies.
       - name: Fetch dependencies
         run: |
           cd ..
@@ -28,71 +28,57 @@ jobs:
           git clone https://github.com/razterizer/applaudio.git
           git clone https://github.com/razterizer/TrainOfThought.git
 
-      # Step 3: Install OpenAL
-      - name: Install OpenAL
-        if: false
-        run: sudo apt install libopenal-dev
-        
-      # Step 4: Install ALSA development packages
+      # Step 3: Install ALSA development packages.
       - name: Install ALSA development packages
         run: |
           sudo apt-get update
           sudo apt-get install libasound2-dev pkg-config
       
-      # Step 5: Build project
+      # Step 4: Build project.
       - name: Build project
         run: |
           cd Asciiroids
           ./build.sh
         continue-on-error: false
 
-      # Step 6: Upload build artifact
-      - name: Upload Ubuntu build artifact
+      # Step 5: Upload build artifact.
+      - name: Upload Linux build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: asciiroids-ubuntu-build
+          name: asciiroids-linux-build
           path: Asciiroids/bin/
           retention-days: 1
 
-  create-ubuntu-release:
+  create-linux-release:
     runs-on: ubuntu-latest
-    needs: build-ubuntu-release
+    needs: build-linux-release
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Download Ubuntu build artifact
+      - name: Download Linux build artifact
         uses: actions/download-artifact@v4
         with:
-          name: asciiroids-ubuntu-build
-          path: ubuntu-build
+          name: asciiroids-linux-build
+          path: linux-build
           
-      - name: Create Ubuntu distribution package
+      - name: Create Linux distribution package
         run: |
-          cd ubuntu-build
-          # Create a clean distribution folder
+          cd linux-build
           mkdir -p asciiroids-${{ github.ref_name }}
-          # Copy the executable and necessary files
           cp asciiroids asciiroids-${{ github.ref_name }}/
           # cp hiscores.txt asciiroids-${{ github.ref_name }}/
           cp music.ct asciiroids-${{ github.ref_name }}/
-          # Copy fonts directory (if it exists)
           if [ -d fonts ]; then
             cp -r fonts asciiroids-${{ github.ref_name }}/
           fi
-          # Create tar.gz archive (common for Linux)
-          tar -czf asciiroids-${{ github.ref_name }}-ubuntu.tar.gz asciiroids-${{ github.ref_name }}/
+          tar -czf asciiroids-${{ github.ref_name }}-linux.tar.gz asciiroids-${{ github.ref_name }}/
           
-      - name: Create GitHub Release
-        id: create_release
+      - name: Upload Linux package to release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-          files: |
-            ubuntu-build/asciiroids-${{ github.ref_name }}-ubuntu.tar.gz
+          files: linux-build/asciiroids-${{ github.ref_name }}-linux.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
