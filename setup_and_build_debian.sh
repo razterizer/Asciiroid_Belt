@@ -4,6 +4,8 @@ REPO_DIR="Asciiroids"
 
 # sudo apt install libopenal-dev
 
+sudo apt install libasound2-dev pkg-config
+
 cd ..
 
 ./"${REPO_DIR}"/fetch-dependencies.py "${REPO_DIR}"/dependencies
