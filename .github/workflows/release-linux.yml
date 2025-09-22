@@ -31,8 +31,7 @@ jobs:
       # Step 3: Install ALSA development packages.
       - name: Install ALSA development packages
         run: |
-          sudo apt-get update
-          sudo apt-get install libasound2-dev pkg-config
+          sudo apt install libasound2-dev pkg-config
       
       # Step 4: Build project.
       - name: Build project
