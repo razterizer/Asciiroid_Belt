@@ -35,11 +35,23 @@ jobs:
           cd $env:GITHUB_WORKSPACE\Asciiroids
           ./build.bat
           
-      - name: Debug - List files
+      - name: Debug - List ALL files after build
         run: |
-           cd $env:GITHUB_WORKSPACE\Asciiroids
-           dir
-           echo "Build.bat exists: $(Test-Path build.bat)"
+          cd $env:GITHUB_WORKSPACE
+          echo "=== Full directory structure ==="
+          Get-ChildItem -Recurse -File | Select-Object Name, Directory | Format-Table
+          echo "=== Asciiroids/Asciiroids/x64/Release/ contents ==="
+          if (Test-Path "Asciiroids/Asciiroids/x64/Release/") {
+            Get-ChildItem "Asciiroids/Asciiroids/x64/Release/" -Recurse
+          } else {
+            echo "Release directory not found!"
+          }
+          echo "=== Asciiroids/bin/ contents ==="
+          if (Test-Path "Asciiroids/bin/") {
+            Get-ChildItem "Asciiroids/bin/" -Recurse
+          } else {
+            echo "bin directory not found!"
+          }
 
       # Step 4: Upload build artifact
       - name: Upload Windows build artifact
