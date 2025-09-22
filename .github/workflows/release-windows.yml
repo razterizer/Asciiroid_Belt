@@ -73,15 +73,11 @@ jobs:
           # Create zip archive (standard for Windows)
           Compress-Archive -Path asciiroids-${{ github.ref_name }} -DestinationPath asciiroids-${{ github.ref_name }}-windows.zip
           
-      - name: Create GitHub Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
+      - name: Upload MacOS package to release
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-          files: |
-            windows-build/asciiroids-${{ github.ref_name }}-windows.zip
+          tag: ${{ github.ref_name }}  # Note: just the tag name, not refs/tags/
+          artifacts: windows-build/asciiroids-${{ github.ref_name }}-windows.zip
+          allowUpdates: true  # ← This is the key!
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

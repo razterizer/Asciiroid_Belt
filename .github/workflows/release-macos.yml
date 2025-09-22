@@ -78,15 +78,11 @@ jobs:
           # Create zip archive
           zip -r asciiroids-${{ github.ref_name }}-macos.zip asciiroids-${{ github.ref_name }}/
           
-      - name: Create GitHub Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
+      - name: Upload MacOS package to release
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-          files: |
-            macos-build/asciiroids-${{ github.ref_name }}-macos.zip
+          tag: ${{ github.ref_name }}  # Note: just the tag name, not refs/tags/
+          artifacts: macos-build/asciiroids-${{ github.ref_name }}-macos.zip
+          allowUpdates: true  # ← This is the key!
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

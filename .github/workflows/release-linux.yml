@@ -75,9 +75,10 @@ jobs:
           tar -czf asciiroids-${{ github.ref_name }}-linux.tar.gz asciiroids-${{ github.ref_name }}/
           
       - name: Upload Linux package to release
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ github.ref }}
-          files: linux-build/asciiroids-${{ github.ref_name }}-linux.tar.gz
+          tag: ${{ github.ref_name }}  # Note: just the tag name, not refs/tags/
+          artifacts: linux-build/asciiroids-${{ github.ref_name }}-linux.tar.gz
+          allowUpdates: true  # ← This is the key!
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
