@@ -75,13 +75,19 @@ jobs:
           name: asciiroids-windows-build
           path: windows-build
           
+      - name: Debug - List downloaded files
+        run: |
+          cd windows-build
+          echo "=== Downloaded files ==="
+          Get-ChildItem -Recurse
+          
       - name: Create Windows distribution package
         run: |
           cd windows-build
           # Create a clean distribution folder
           New-Item -ItemType Directory -Force -Path "asciiroids-${{ github.ref_name }}"
           # Copy the executable and necessary files
-          Copy-Item "asciiroids.exe" "asciiroids-${{ github.ref_name }}/"
+          Copy-Item "Asciiroids.exe" "asciiroids-${{ github.ref_name }}/"
           Copy-Item "music.ct" "asciiroids-${{ github.ref_name }}/"
           # Copy fonts directory (if it exists)
           if (Test-Path "fonts") {
