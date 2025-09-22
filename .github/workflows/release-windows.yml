@@ -67,17 +67,16 @@ jobs:
         run: |
           cd windows-build
           # Create a clean distribution folder
-          mkdir -p asciiroids-${{ github.ref_name }}
+          New-Item -ItemType Directory -Force -Path "asciiroids-${{ github.ref_name }}"
           # Copy the executable and necessary files
-          cp asciiroids.exe asciiroids-${{ github.ref_name }}/
-          # cp hiscores.txt asciiroids-${{ github.ref_name }}/
-          cp music.ct asciiroids-${{ github.ref_name }}/
+          Copy-Item "Asciiroids.exe" "asciiroids-${{ github.ref_name }}/"
+          Copy-Item "music.ct" "asciiroids-${{ github.ref_name }}/"
           # Copy fonts directory (if it exists)
-          if [ -d fonts ]; then
-            cp -r fonts asciiroids-${{ github.ref_name }}/
-          fi
-          # Create zip archive (standard for Windows)
-          Compress-Archive -Path asciiroids-${{ github.ref_name }} -DestinationPath asciiroids-${{ github.ref_name }}-windows.zip
+          if (Test-Path "fonts") {
+            Copy-Item -Recurse "fonts" "asciiroids-${{ github.ref_name }}/"
+          }
+          # Create zip archive
+          Compress-Archive -Path "asciiroids-${{ github.ref_name }}" -DestinationPath "asciiroids-${{ github.ref_name }}-windows.zip"
           
       - name: Upload Windows package to release
         uses: ncipollo/release-action@v1
