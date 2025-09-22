@@ -74,7 +74,7 @@ jobs:
           Compress-Archive -Path asciiroids-${{ github.ref_name }} -DestinationPath asciiroids-${{ github.ref_name }}-windows.zip
           
       - name: Debug - List files
-         run: |
+        run: |
            cd $env:GITHUB_WORKSPACE\Asciiroids
            dir
            echo "Build.bat exists: $(Test-Path build.bat)"
