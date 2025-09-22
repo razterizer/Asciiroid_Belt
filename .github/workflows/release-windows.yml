@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: asciiroids-windows-build
-          path: Asciiroids/x64/Release/
+          path: Asciiroids/Asciiroids/x64/Release/
           retention-days: 1
 
   create-windows-release:
