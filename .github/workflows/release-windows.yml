@@ -58,7 +58,7 @@ jobs:
           New-Item -ItemType Directory -Force -Path "upload-temp"
           Copy-Item "Asciiroids/x64/Release/Asciiroids.exe" "upload-temp/"
           Copy-Item "Asciiroids/x64/Release/music.ct" "upload-temp/"
-          if (Test-Path "Asciiroidsx64/Release/fonts") {
+          if (Test-Path "Asciiroids/x64/Release/fonts") {
               Copy-Item -Recurse "Asciiroids/x64/Release/fonts" "upload-temp/"
           }
 
