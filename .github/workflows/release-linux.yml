@@ -66,6 +66,7 @@ jobs:
         run: |
           cd linux-build
           mkdir -p asciiroids-${{ github.ref_name }}
+          chmod ugo+x asciiroids
           cp asciiroids asciiroids-${{ github.ref_name }}/
           # cp hiscores.txt asciiroids-${{ github.ref_name }}/
           cp music.ct asciiroids-${{ github.ref_name }}/
