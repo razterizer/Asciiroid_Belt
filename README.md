@@ -7,6 +7,7 @@
 [![build macos](https://github.com/razterizer/Asciiroids/actions/workflows/build-macos.yml/badge.svg)](https://github.com/razterizer/Asciiroids/actions/workflows/build-macos.yml)
 [![build windows](https://github.com/razterizer/Asciiroids/actions/workflows/build-windows.yml/badge.svg)](https://github.com/razterizer/Asciiroids/actions/workflows/build-windows.yml)
 ![Valgrind Status](https://raw.githubusercontent.com/razterizer/Asciiroids/badges/valgrind-badge.svg)
+
 [![release linux](https://github.com/razterizer/Asciiroids/actions/workflows/release-linux.yml/badge.svg)](https://github.com/razterizer/Asciiroids/actions/workflows/release-linux.yml)
 [![release macos](https://github.com/razterizer/Asciiroids/actions/workflows/release-macos.yml/badge.svg)](https://github.com/razterizer/Asciiroids/actions/workflows/release-macos.yml)
 [![release windows](https://github.com/razterizer/Asciiroids/actions/workflows/release-windows.yml/badge.svg)](https://github.com/razterizer/Asciiroids/actions/workflows/release-windows.yml)
