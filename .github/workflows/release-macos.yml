@@ -85,5 +85,6 @@ jobs:
           tag: ${{ github.ref_name }}  # Note: just the tag name, not refs/tags/
           artifacts: macos-build/asciiroids-${{ github.ref_name }}-macos.zip
           allowUpdates: true  # ← This is the key!
+          body: ${{ github.event.release.body || github.event.head_commit.message }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
