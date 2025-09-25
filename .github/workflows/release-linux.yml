@@ -113,7 +113,7 @@ jobs:
         with:
           tag: ${{ github.ref_name }}
           artifacts: asciiroids-${{ github.ref_name }}-linux.tar.gz
-		      allowUpdates: true
+          allowUpdates: true
           body: ${{ github.event.release.body || github.event.head_commit.message }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
