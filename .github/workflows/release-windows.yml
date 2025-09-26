@@ -90,6 +90,12 @@ jobs:
           if (Test-Path "fonts") {
             Copy-Item -Recurse "fonts" "asciiroids-${{ github.ref_name }}/"
           }
+          echo "Unblock instructions:" > asciiroids-${{ github.ref_name }}/README.txt
+          echo "=====================" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo "To tell Windows that this executable is fine" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo " you can unblock the executable by" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo " rightclicking the exe, then:" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo "   Properties -> Unblock (check this)." >> asciiroids-${{ github.ref_name }}/README.txt
           # Create zip archive
           Compress-Archive -Path "asciiroids-${{ github.ref_name }}" -DestinationPath "asciiroids-${{ github.ref_name }}-windows.zip"
           

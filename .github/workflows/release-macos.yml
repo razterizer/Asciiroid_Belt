@@ -76,6 +76,12 @@ jobs:
           if [ -d fonts ]; then
             cp -r fonts asciiroids-${{ github.ref_name }}/
           fi
+          echo "Unblock instructions:" > asciiroids-${{ github.ref_name }}/README.txt
+          echo "=====================" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo "To tell the gatekeeper that this executable is fine" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo " you can unblock the executable with" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo " the following command:" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo "   xattr -dr com.apple.quarantine asciiroids" >> asciiroids-${{ github.ref_name }}/README.txt
           # Create zip archive
           zip -r asciiroids-${{ github.ref_name }}-macos.zip asciiroids-${{ github.ref_name }}/
           
