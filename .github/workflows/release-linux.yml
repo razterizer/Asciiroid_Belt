@@ -107,6 +107,10 @@ jobs:
           echo "- asciiroids-glibc2.38: for modern systems (Ubuntu 24.04+, Arch Linux)" >> asciiroids-${{ github.ref_name }}/README.txt
           echo "- asciiroids-glibc2.35: for legacy systems (WSL, Ubuntu 22.04)" >> asciiroids-${{ github.ref_name }}/README.txt
           echo "" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo "To run either executable, you might have to first do:" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo "  chmod ugo+x asciiroids-glibc2.38" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo " or:" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo "  chmod ugo+x asciiroids-glibc2.35" >> asciiroids-${{ github.ref_name }}/README.txt
           echo "Run the binary that matches your system's glibc version." >> asciiroids-${{ github.ref_name }}/README.txt
           tar -czf asciiroids-${{ github.ref_name }}-linux.tar.gz asciiroids-${{ github.ref_name }}/
 
