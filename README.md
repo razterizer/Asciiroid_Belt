@@ -136,13 +136,13 @@ Then run by typing `./bin/asciiroids`.
 
 ## Make New Release
 
-Trigger new release:
+Trigger new release. For example:
 ```sh
 git tag release-1.0.0.0
 git push origin release-1.0.0.0
 ```
 
-If release workflow failed, you can delete the tag and add it again which then retriggers the release workflow:
+If release workflow failed, you can delete the tag and add it again which then retriggers the release workflow. For example::
 ```sh
 # Delete local tag
 git tag -d release-1.0.0.0
@@ -156,6 +156,17 @@ git tag release-1.0.0.0
 # Push the tag again (this retriggers the workflow)
 git push origin release-1.0.0.0
 ```
+
+But it is best to use the script `retag_release.sh` for such tasks. E.g.:
+```sh
+./retag_release bump patch "Some tag message."
+```
+or e.g.:
+```sh
+./retag_release 1.1.5.7 "Some tag message."
+```
+
+Note that the tag message is currently not used as release notes, but the last commit message is. I will change this in the future.
 
 ## Running from a Release
 
