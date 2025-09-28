@@ -123,7 +123,7 @@ Go to `<my_source_code_dir>/Asciiroids/Asciiroids/` and build with `./build.sh`.
 
 Then run by typing `./bin/asciiroids`.
 
-### Linux (Ubuntu)
+### Linux
 
 Go to `<my_source_code_dir>/Asciiroids/Asciiroids/` and build with `./build.sh`.
 
