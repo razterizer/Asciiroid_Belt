@@ -26,11 +26,6 @@
 
 <img width="703" height="594" alt="image" src="https://github.com/user-attachments/assets/369e49c5-8242-4997-8fa4-d46e4f40138d" />
 
-
-## Licensing
-
-For 3rd-party license compatibility issues, please refer to the information here: https://github.com/razterizer/8Beat/blob/main/README.md
-
 ## About the Game
 
 A cross-platform (Lin/Mac/Win) terminal-based shooter game.
