@@ -109,7 +109,6 @@ public:
     
     if (enable_audio)
     {
-      using namespace audio;
 #ifdef DESIGN_SFX
       vp_design.resize(17);
 #endif
@@ -647,10 +646,8 @@ private:
 #ifdef DESIGN_SFX
     if (enable_audio)
     {
-      using namespace audio;
-      
-      auto key_held = keyboard::get_char_key(kpdp.held);
-      auto special_key = keyboard::get_special_key(kpdp.held);
+      auto key_held = t8::get_char_key(kpdp.held);
+      auto special_key = t8::get_special_key(kpdp.held);
       for (int i = 0; i < stlutils::sizeI(vp_design); ++i)
       {
         int j_max = math::linmap(vp_design[i], -2.f, 3.f, 0, 50);
@@ -660,25 +657,25 @@ private:
         sh.write_buffer(std::to_string(i) + '.', i+2, 1, Color::Blue);
       }
       
-      auto key = keyboard::get_special_key(kpdp.transient);
+      auto key = t8::get_special_key(kpdp.transient);
       switch (key)
       {
-        case keyboard::SpecialKey::Up:
+        case t8::SpecialKey::Up:
           channel--;
           if (channel < 0)
             channel = 16;
           break;
-        case keyboard::SpecialKey::Down:
+        case t8::SpecialKey::Down:
           channel++;
           if (channel > 16)
             channel = 0;
           break;
-        case keyboard::SpecialKey::Left:
+        case t8::SpecialKey::Left:
           vp_design[channel] -= 0.01f;
           if (vp_design[channel] < -2.f)
             vp_design[channel] = -2.f;
           break;
-        case keyboard::SpecialKey::Right:
+        case t8::SpecialKey::Right:
           vp_design[channel] += 0.01f;
           if (vp_design[channel] > 3.f)
             vp_design[channel] = 3.f;
@@ -687,9 +684,9 @@ private:
           break;
       }
       
-      if (keyboard::get_char_key(kpdp.transient) == ' ')
+      if (t8::get_char_key(kpdp.transient) == ' ')
       {
-        auto wd_shot = SFX::generate(SFXType::LASER, vp_design);
+        auto wd_shot = beat::SFX::generate(beat::SFXType::LASER, vp_design);
         src_fx_shot->update_buffer(wd_shot);
       
         src_fx_shot->play();
