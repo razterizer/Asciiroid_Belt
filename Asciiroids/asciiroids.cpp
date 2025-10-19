@@ -53,10 +53,11 @@ class Game : public t8x::GameEngine<40, 100>
 #endif
 
 public:
-  Game(int argc, char** argv, const t8x::GameEngineParams& params, bool use_audio)
+  Game(int argc, char** argv, const t8x::GameEngineParams& params, bool use_audio, bool use_3d_audio)
     : GameEngine(argv[0], params)
     , audio(use_audio)
     , enable_audio(use_audio)
+    , enable_3d_audio(use_3d_audio)
   {
   //#ifndef _WIN32
     GameEngine::set_real_fps(15);
@@ -162,15 +163,57 @@ public:
         0.f,
         0.f,
       };
+      
+      float vol_factor = enable_3d_audio ? 4.f : 1.f;
+
       auto wd_shot = beat::SFX::generate(beat::SFXType::LASER, vp_shot);
       src_fx_shot = audio.create_source_from_waveform(wd_shot);
-      src_fx_shot->set_volume(volume_shot);
+      src_fx_shot->set_volume(volume_shot * vol_factor);
+      src_fx_shot->enable_3d_audio(enable_3d_audio);
+      if (enable_3d_audio)
+      {
+        src_fx_shot->set_speed_of_sound(300.f);
+        src_fx_shot->set_directivity_alpha(0.8f);
+        src_fx_shot->set_directivity_sharpness(1.f);
+        src_fx_shot->set_directivity_type(0);
+        src_fx_shot->set_rear_attenuation(0.5f);
+        src_fx_shot->set_attenuation_min_distance(0.5f);
+        src_fx_shot->set_attenuation_constant_falloff(1.f);
+        src_fx_shot->set_attenuation_linear_falloff(0.004f);
+        src_fx_shot->set_attenuation_quadratic_falloff(0.0002f);
+      }
       auto wd_explosion = beat::SFX::generate(beat::SFXType::EXPLOSION, vp_explosion);
       src_fx_explosion = audio.create_source_from_waveform(wd_explosion);
-      src_fx_explosion->set_volume(volume_explosion);
+      src_fx_explosion->set_volume(volume_explosion * vol_factor);
+      src_fx_explosion->enable_3d_audio(enable_3d_audio);
+      if (enable_3d_audio)
+      {
+        src_fx_explosion->set_speed_of_sound(300.f);
+        src_fx_explosion->set_directivity_alpha(0.f);
+        src_fx_explosion->set_directivity_sharpness(1.f);
+        src_fx_explosion->set_directivity_type(0);
+        src_fx_explosion->set_rear_attenuation(1.f);
+        src_fx_explosion->set_attenuation_min_distance(0.5f);
+        src_fx_explosion->set_attenuation_constant_falloff(1.f);
+        src_fx_explosion->set_attenuation_linear_falloff(0.004f);
+        src_fx_explosion->set_attenuation_quadratic_falloff(0.0002f);
+      }
       auto wd_ufo_shot = beat::SFX::generate(beat::SFXType::LASER, vp_ufo_shot);
       src_fx_ufo_shot = audio.create_source_from_waveform(wd_ufo_shot);
-      src_fx_ufo_shot->set_volume(volume_ufo_shot);
+      src_fx_ufo_shot->set_volume(volume_ufo_shot * vol_factor);
+      src_fx_ufo_shot->enable_3d_audio(enable_3d_audio);
+      if (enable_3d_audio)
+      {
+        src_fx_ufo_shot->set_speed_of_sound(300.f);
+        src_fx_ufo_shot->set_directivity_alpha(0.8f);
+        src_fx_ufo_shot->set_directivity_sharpness(1.f);
+        src_fx_ufo_shot->set_directivity_type(0);
+        src_fx_ufo_shot->set_rear_attenuation(0.5f);
+        src_fx_ufo_shot->set_attenuation_min_distance(0.5f);
+        src_fx_ufo_shot->set_attenuation_constant_falloff(1.f);
+        src_fx_ufo_shot->set_attenuation_linear_falloff(0.004f);
+        src_fx_ufo_shot->set_attenuation_quadratic_falloff(0.0002f);
+      }
       beat::WaveformGenerationParams params;
       params.vibrato_depth = 0.1f;      // 20% amplitude vibrato
       params.vibrato_freq = 6.f;       // 6 Hz wobble
@@ -181,8 +224,43 @@ public:
       auto wd_prop = wave_gen.generate_waveform(beat::WaveformType::TRIANGLE, 10.f, 1318.f, params, 44100, false);
       src_fx_ufo_large_propulsion = audio.create_source_from_waveform(wd_prop);
       src_fx_ufo_small_propulsion = audio.create_source_from_waveform(wd_prop);
-      src_fx_ufo_large_propulsion->set_volume(volume_ufo_propulsion);
-      src_fx_ufo_small_propulsion->set_volume(volume_ufo_propulsion);
+      src_fx_ufo_large_propulsion->set_volume(volume_ufo_propulsion * vol_factor);
+      src_fx_ufo_small_propulsion->set_volume(volume_ufo_propulsion * vol_factor);
+      src_fx_ufo_large_propulsion->enable_3d_audio(enable_3d_audio);
+      src_fx_ufo_small_propulsion->enable_3d_audio(enable_3d_audio);
+      if (enable_3d_audio)
+      {
+        src_fx_ufo_large_propulsion->set_speed_of_sound(300.f);
+        src_fx_ufo_large_propulsion->set_directivity_alpha(0.8f);
+        src_fx_ufo_large_propulsion->set_directivity_sharpness(1.f);
+        src_fx_ufo_large_propulsion->set_directivity_type(0);
+        src_fx_ufo_large_propulsion->set_rear_attenuation(0.5f);
+        src_fx_ufo_large_propulsion->set_attenuation_min_distance(0.5f);
+        src_fx_ufo_large_propulsion->set_attenuation_constant_falloff(1.f);
+        src_fx_ufo_large_propulsion->set_attenuation_linear_falloff(0.004f);
+        src_fx_ufo_large_propulsion->set_attenuation_quadratic_falloff(0.0002f);
+        src_fx_ufo_small_propulsion->set_speed_of_sound(300.f);
+        src_fx_ufo_small_propulsion->set_directivity_alpha(0.8f);
+        src_fx_ufo_small_propulsion->set_directivity_sharpness(1.f);
+        src_fx_ufo_small_propulsion->set_directivity_type(0);
+        src_fx_ufo_small_propulsion->set_rear_attenuation(0.5f);
+        src_fx_ufo_small_propulsion->set_attenuation_min_distance(0.5f);
+        src_fx_ufo_small_propulsion->set_attenuation_constant_falloff(1.f);
+        src_fx_ufo_small_propulsion->set_attenuation_linear_falloff(0.004f);
+        src_fx_ufo_small_propulsion->set_attenuation_quadratic_falloff(0.0002f);
+      }
+
+      if (enable_3d_audio)
+      {
+        la::Mtx4 trf_l = la::Mtx4_Identity;
+        trf_l.set_column_vec(la::W, { sh.num_cols()*0.5f, sh.num_rows()*0.5f, 0.f }); // Source world position encoded here.
+        la::Vec3 pos_l_L_l { -0.12f, 0.05f, -0.05f }; // Channel Left emitter local position encoded here.
+        la::Vec3 pos_l_R_l { +0.12f, 0.05f, -0.05f }; // Channel Left emitter local position encoded here.
+        la::Vec3 vel_w_l = la::Vec3_Zero; // Lisitener world velocity encoded here.
+        //beat::la::Vec3 ang_vel_w_l = beat::la::Vec3_Zero;
+        audio.set_listener_3d_state_channel(0, trf_l.get_rot_matrix().to_arr(), trf_l.transform_pos(pos_l_L_l).to_arr(), vel_w_l.to_arr());
+        audio.set_listener_3d_state_channel(1, trf_l.get_rot_matrix().to_arr(), trf_l.transform_pos(pos_l_R_l).to_arr(), vel_w_l.to_arr());
+      }
     }
     
     std::string font_data_path = t8x::get_path_to_font_data(get_exe_folder());
@@ -565,6 +643,27 @@ public:
   
 private:
 
+  void set_sound_channel_state(beat::AudioSource* src, const Vec2& pos, const Vec2& dir, const Vec2& vel)
+  {
+    if (!enable_3d_audio)
+      return;
+    la::Mtx4 trf_s;
+    la::Vec3 w;
+    la::Vec3 vel_3d;
+    auto z = -la::Vec3 { dir.c, -dir.r, 0.f };
+    z = la::normalize(z);
+    auto y = la::Vec3 { 0.f, 0.f, 1.f };
+    auto x = la::normalize(la::cross(y, z));
+    w = la::Vec3 { pos.c, static_cast<float>(sh.num_rows()) - pos.r, -5.f };
+    trf_s.set_column_vec(la::Z, z);
+    trf_s.set_column_vec(la::Y, y);
+    trf_s.set_column_vec(la::X, x);
+    trf_s.set_column_vec(la::W, w);
+    vel_3d = { vel.c, -vel.r, 0.f };
+    
+    src->set_3d_state_channel(0, trf_s.get_rot_matrix().to_arr(), w.to_arr(), (vel_3d * vel_factor_3d).to_arr());
+  }
+
   template<int NR, int NC>
   bool toroidal_wrap(const ScreenHandler<NR, NC>& sh, RC& pos, int c_offs, int r_offs)
   {
@@ -709,7 +808,7 @@ private:
     if (curr_game_key != Key::Thrust)
       spaceship_fwd_force = 0.f;
       
-    auto f_fire_shot = [&](ShotID id, const Vec2& pos, const Vec2& dir)
+    auto f_fire_shot = [&](ShotID id, const Vec2& pos, const Vec2& dir, const Vec2& ship_vel)
     {
       if (shot_freq_timer.wait_then_reset(t))
       {
@@ -721,15 +820,24 @@ private:
         shot.id = id;
         shots_vec.emplace_back(shot);
         shot_freq_timer.start_if_stopped(t);
+        
         switch (id)
         {
           case ShotID::Spaceship:
             if (src_fx_shot != nullptr)
+            {
+              if (enable_3d_audio)
+                set_sound_channel_state(src_fx_shot, pos, dir, ship_vel);
               src_fx_shot->play();
+            }
             break;
           case ShotID::UFO:
             if (src_fx_ufo_shot != nullptr)
+            {
+              if (enable_3d_audio)
+                set_sound_channel_state(src_fx_ufo_shot, pos, dir, ship_vel);
               src_fx_ufo_shot->play();
+            }
             break;
         }
       }
@@ -753,7 +861,8 @@ private:
         case Key::Fire:
           f_fire_shot(ShotID::Spaceship,
             rb_spaceship->get_curr_cm() + spaceship_dir * 1.f,
-            { spaceship_dir.r / spaceship_ar, spaceship_dir.c });
+            { spaceship_dir.r / spaceship_ar, spaceship_dir.c },
+            rb_spaceship->get_curr_lin_vel());
           break;
         case Key::Hyperspace:
           if (hyperspace_jump_timer.start_if_stopped(t))
@@ -812,7 +921,10 @@ private:
       auto* expl_raw_ptr = explosion.get();
       explosion->sprite->func_calc_anim_frame = [expl_raw_ptr](int sim_frame) { return expl_raw_ptr->anim_ctr; };
       if (src_fx_explosion != nullptr)
+      {
+        set_sound_channel_state(src_fx_explosion, to_Vec2(pos), { 0.f, -1.f }, { 0.f, 0.f });
         src_fx_explosion->play();
+      }
       return expl_raw_ptr;
     };
     auto isect_data = coll_handler.get_isect_world_positions();
@@ -1037,6 +1149,15 @@ private:
           ufo_v_move_timer.set_delay(rnd::randn_clamp(1.5f, 1.f, 0.5f, 5.f));
       }
       
+      if (enable_3d_audio)
+      {
+        auto ufo_dir = rb_ufo_large->get_curr_dir();
+        if (src_fx_ufo_large_propulsion->is_playing())
+          set_sound_channel_state(src_fx_ufo_large_propulsion, pos, ufo_dir, { 0.f, 0.f });
+        else if (src_fx_ufo_small_propulsion->is_playing())
+          set_sound_channel_state(src_fx_ufo_small_propulsion, pos, ufo_dir, { 0.f, 0.f });
+      }
+      
       if (!ufo_shot_interval_timer.is_ticking(t))
       {
         Vec2 dir = math::normalize(rb_spaceship->get_curr_cm() - pos);
@@ -1046,7 +1167,8 @@ private:
         dir = math::normalize(dir);
         f_fire_shot(ShotID::UFO,
             pos,
-            dir);
+            dir,
+            ufo_rb->get_curr_lin_vel());
         ufo_shot_interval_timer.force_start(t);
       }
       
@@ -1374,6 +1496,8 @@ private:
   float volume_explosion = 1.f;
   float volume_ufo_propulsion = 0.15f;
   bool enable_audio = true;
+  bool enable_3d_audio = true;
+  float vel_factor_3d = 5.f;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -1408,6 +1532,7 @@ int main(int argc, char** argv)
   params.game_over_line_4_style = { Color::Black, Color::White };
   
   bool use_audio = true;
+  bool use_3d_audio = true;
   bool show_help = false;
   
   for (int i = 1; i < argc; ++i)
@@ -1426,6 +1551,8 @@ int main(int argc, char** argv)
     }
     else if (std::strcmp(argv[i], "--disable_audio") == 0)
       use_audio = false;
+    else if (std::strcmp(argv[i], "--disable_3d_audio") == 0)
+      use_3d_audio = false;
     else if (std::strcmp(argv[i], "--help") == 0)
       show_help = true;
   }
@@ -1433,11 +1560,11 @@ int main(int argc, char** argv)
   if (show_help)
     use_audio = false;
   
-  Game game(argc, argv, params, use_audio);
+  Game game(argc, argv, params, use_audio, use_3d_audio);
   
   if (show_help)
   {
-    std::cout << "asciiroids --help | [--log_mode (record | replay)] [--suppress_tty_output] [--suppress_tty_input] [--set_fps <fps>] [--set_sim_delay_us <delay_us>] [--disable_audio]" << std::endl;
+    std::cout << "asciiroids --help | [--log_mode (record | replay)] [--suppress_tty_output] [--suppress_tty_input] [--set_fps <fps>] [--set_sim_delay_us <delay_us>] [--disable_audio] [--disable_3d_audio]" << std::endl;
     std::cout << "  default values:" << std::endl;
     std::cout << "    <fps>      : " << game.get_real_fps() << std::endl;
     std::cout << "    <delay_us> : " << game.get_sim_delay_us() << std::endl;
