@@ -645,6 +645,7 @@ private:
 
   void set_sound_channel_state(beat::AudioSource* src, const Vec2& pos, const Vec2& dir, const Vec2& vel)
   {
+    using namespace applaudio;
     if (!enable_3d_audio)
       return;
     la::Mtx4 trf_s;
