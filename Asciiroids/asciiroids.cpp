@@ -651,10 +651,10 @@ private:
     la::Mtx4 trf_s;
     la::Vec3 w;
     la::Vec3 vel_3d;
-    auto z = -la::Vec3 { dir.c, -dir.r, 0.f };
+    auto z = la::Vec3 { dir.c, -dir.r, 0.f }; // +Z is forward by default in applaudio, but this is a derived property from z.
     z = la::normalize(z);
     auto y = la::Vec3 { 0.f, 0.f, 1.f };
-    auto x = la::normalize(la::cross(y, z));
+    auto x = la::normalize(la::cross(y, z)); // -X is right by default in applaudio, but this is a derived property from x.
     w = la::Vec3 { pos.c, static_cast<float>(sh.num_rows()) - pos.r, -5.f };
     trf_s.set_column_vec(la::Z, z);
     trf_s.set_column_vec(la::Y, y);
