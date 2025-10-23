@@ -253,9 +253,14 @@ public:
       if (enable_3d_audio)
       {
         la::Mtx4 trf_l;
-        trf_l.set_column_vec(la::X, { -1.f, 0.f, 0.f });
-        trf_l.set_column_vec(la::Y, { 0.f, 1.f, 0.f });
-        trf_l.set_column_vec(la::Z, { 0.f, 0.f, -1.f });
+        // World coordsys assumed to be:
+        //   Z : up towards viewer, straight out of the screen.
+        //   X : towards the right edge of the screen.
+        //   Y : up towards the upper edge of the screen.
+        //   origin at the center of the screen.
+        trf_l.set_column_vec(la::X, { -1.f, 0.f, 0.f }); // towards the left along the screen.
+        trf_l.set_column_vec(la::Y, { 0.f, 1.f, 0.f }); // upwards along the screen.
+        trf_l.set_column_vec(la::Z, { 0.f, 0.f, -1.f }); // towards the "inside" of the screen.
         trf_l.set_column_vec(la::W, { sh.num_cols()*0.5f, sh.num_rows()*0.5f, 0.f }); // Source world position encoded here.
         la::Vec3 pos_l_L_l { -0.12f, 0.05f, -0.05f }; // Channel Left emitter local position encoded here.
         la::Vec3 pos_l_R_l { +0.12f, 0.05f, -0.05f }; // Channel Left emitter local position encoded here.
