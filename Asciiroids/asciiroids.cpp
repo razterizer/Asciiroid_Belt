@@ -252,7 +252,10 @@ public:
 
       if (enable_3d_audio)
       {
-        la::Mtx4 trf_l = la::Mtx4_Identity;
+        la::Mtx4 trf_l;
+        trf_l.set_column_vec(la::X, { -1.f, 0.f, 0.f });
+        trf_l.set_column_vec(la::Y, { 0.f, 1.f, 0.f });
+        trf_l.set_column_vec(la::Z, { 0.f, 0.f, -1.f });
         trf_l.set_column_vec(la::W, { sh.num_cols()*0.5f, sh.num_rows()*0.5f, 0.f }); // Source world position encoded here.
         la::Vec3 pos_l_L_l { -0.12f, 0.05f, -0.05f }; // Channel Left emitter local position encoded here.
         la::Vec3 pos_l_R_l { +0.12f, 0.05f, -0.05f }; // Channel Left emitter local position encoded here.
