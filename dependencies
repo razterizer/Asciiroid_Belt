@@ -1,8 +1,8 @@
-lib/Core                       https://github.com/razterizer/Core.git                   29defbae354c299ed3893a76bcf1d6456cb20559
-lib/Termin8or                  https://github.com/razterizer/Termin8or.git              dadf63b4fe3641586ac92a0b3a493caa1ed68084
-lib/8Beat                      https://github.com/razterizer/8Beat                      73afc4a5ae7ea92aaf68475f8fba04d00b95a1d5
-lib/AudioLibSwitcher_applaudio https://github.com/razterizer/AudioLibSwitcher_applaudio a18fa87d693d6bad878fc39f611732dc3610ccce
+lib/Core                       https://github.com/razterizer/Core.git                   ac6502a849745ba5fe7277ab54f478a9b33ef35c
+lib/Termin8or                  https://github.com/razterizer/Termin8or.git              932c5a9a0560df739ad4c807d1ee3c52d479a361
+lib/8Beat                      https://github.com/razterizer/8Beat                      ea8c6bc8507128913b9fdbb9441ecfa7c010a4e7
+lib/AudioLibSwitcher_applaudio https://github.com/razterizer/AudioLibSwitcher_applaudio 979c8ef9a461a171d47e4835ce97052270784411
 # lib/AudioLibSwitcher_OpenAL    https://github.com/razterizer/AudioLibSwitcher_OpenAL    811c60c23a446d5f2894e9379c938df19f889c41
 lib/TrainOfThought             https://github.com/razterizer/TrainOfThought             7fc7c595b17b54323106a7de37adf9052164cc40
-lib/applaudio                  https://github.com/razterizer/applaudio                  b288641d6a19942847a6886b503ce4a1b50b65eb
+lib/applaudio                  https://github.com/razterizer/applaudio                  a4fe100f7a285d800c28a725787f3838af28dd23
 # lib/3rdparty_OpenAL            https://github.com/razterizer/3rdparty_OpenAL            d8361648d7b505154109f1ba074922555a96e5de                    win
