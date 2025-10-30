@@ -53,9 +53,13 @@ class Game : public t8x::GameEngine<40, 100>
 #endif
 
 public:
-  Game(int argc, char** argv, const t8x::GameEngineParams& params, bool use_audio, bool use_3d_audio)
+  Game(int argc, char** argv, const t8x::GameEngineParams& params,
+       bool use_audio, bool use_3d_audio,
+       float music_volume, float sfx_volume)
     : GameEngine(argv[0], params)
     , audio(use_audio)
+    , volume_music(music_volume)
+    , volume_sfx(sfx_volume)
     , enable_audio(use_audio)
     , enable_3d_audio(use_3d_audio)
   {
@@ -164,11 +168,11 @@ public:
         0.f,
       };
       
-      float vol_factor = enable_3d_audio ? 4.f : 1.f;
+      float sfx_vol_factor = (enable_3d_audio ? 4.f : 1.f) * volume_sfx;
 
       auto wd_shot = beat::SFX::generate(beat::SFXType::LASER, vp_shot);
       src_fx_shot = audio.create_source_from_waveform(wd_shot);
-      src_fx_shot->set_volume(volume_shot * vol_factor);
+      src_fx_shot->set_volume(std::clamp(volume_shot * sfx_vol_factor, 0.f, 1.f));
       src_fx_shot->enable_3d_audio(enable_3d_audio);
       if (enable_3d_audio)
       {
@@ -184,7 +188,7 @@ public:
       }
       auto wd_explosion = beat::SFX::generate(beat::SFXType::EXPLOSION, vp_explosion);
       src_fx_explosion = audio.create_source_from_waveform(wd_explosion);
-      src_fx_explosion->set_volume(volume_explosion * vol_factor);
+      src_fx_explosion->set_volume(std::clamp(volume_explosion * sfx_vol_factor, 0.f, 1.f));
       src_fx_explosion->enable_3d_audio(enable_3d_audio);
       if (enable_3d_audio)
       {
@@ -200,7 +204,7 @@ public:
       }
       auto wd_ufo_shot = beat::SFX::generate(beat::SFXType::LASER, vp_ufo_shot);
       src_fx_ufo_shot = audio.create_source_from_waveform(wd_ufo_shot);
-      src_fx_ufo_shot->set_volume(volume_ufo_shot * vol_factor);
+      src_fx_ufo_shot->set_volume(std::clamp(volume_ufo_shot * sfx_vol_factor, 0.f, 1.f));
       src_fx_ufo_shot->enable_3d_audio(enable_3d_audio);
       if (enable_3d_audio)
       {
@@ -224,8 +228,8 @@ public:
       auto wd_prop = wave_gen.generate_waveform(beat::WaveformType::TRIANGLE, 10.f, 1318.f, params, 44100, false);
       src_fx_ufo_large_propulsion = audio.create_source_from_waveform(wd_prop);
       src_fx_ufo_small_propulsion = audio.create_source_from_waveform(wd_prop);
-      src_fx_ufo_large_propulsion->set_volume(volume_ufo_propulsion * vol_factor);
-      src_fx_ufo_small_propulsion->set_volume(volume_ufo_propulsion * vol_factor);
+      src_fx_ufo_large_propulsion->set_volume(std::clamp(volume_ufo_propulsion * sfx_vol_factor, 0.f, 1.f));
+      src_fx_ufo_small_propulsion->set_volume(std::clamp(volume_ufo_propulsion * sfx_vol_factor, 0.f, 1.f));
       src_fx_ufo_large_propulsion->enable_3d_audio(enable_3d_audio);
       src_fx_ufo_small_propulsion->enable_3d_audio(enable_3d_audio);
       if (enable_3d_audio)
@@ -1500,6 +1504,7 @@ private:
   Timer ufo_shot_interval_timer { 1.f };
   
   float volume_music = 0.25f;
+  float volume_sfx = 1.f;
   float volume_shot = 0.2f;
   float volume_ufo_shot = 0.2f;
   float volume_explosion = 1.f;
@@ -1543,6 +1548,8 @@ int main(int argc, char** argv)
   bool use_audio = true;
   bool use_3d_audio = true;
   bool show_help = false;
+  float music_volume = 0.25f;
+  float sfx_volume = 1.f;
   
   for (int i = 1; i < argc; ++i)
   {
@@ -1562,6 +1569,10 @@ int main(int argc, char** argv)
       use_audio = false;
     else if (std::strcmp(argv[i], "--disable_3d_audio") == 0)
       use_3d_audio = false;
+    else if (std::strcmp(argv[i], "--music_volume") == 0)
+      music_volume = static_cast<float>(std::atof(argv[i + 1]));
+    else if (std::strcmp(argv[i], "--sfx_volume") == 0)
+      sfx_volume = static_cast<float>(std::atof(argv[i + 1]));
     else if (std::strcmp(argv[i], "--help") == 0)
       show_help = true;
   }
@@ -1569,14 +1580,28 @@ int main(int argc, char** argv)
   if (show_help)
     use_audio = false;
   
-  Game game(argc, argv, params, use_audio, use_3d_audio);
+  Game game(argc, argv, params,
+            use_audio, use_3d_audio,
+            std::clamp(music_volume, 0.f, 1.f), std::clamp(sfx_volume, 0.f, 1.f));
   
   if (show_help)
   {
-    std::cout << "asciiroids --help | [--log_mode (record | replay)] [--suppress_tty_output] [--suppress_tty_input] [--set_fps <fps>] [--set_sim_delay_us <delay_us>] [--disable_audio] [--disable_3d_audio]" << std::endl;
+    std::cout << "asciiroids --help |" << std::endl;
+    std::cout << "   [--log_mode (record | replay)]" << std::endl;
+    std::cout << "   [--suppress_tty_output]" << std::endl;
+    std::cout << "   [--suppress_tty_input]" << std::endl;
+    std::cout << "   [--set_fps <fps>]" << std::endl;
+    std::cout << "   [--set_sim_delay_us <delay_us>]" << std::endl;
+    std::cout << "   [--disable_audio]" << std::endl;
+    std::cout << "   [--disable_3d_audio]" << std::endl;
+    std::cout << "   [--music_volume <music_vol>]" << std::endl;
+    std::cout << "   [--sfx_volume <sfx_vol>]" << std::endl;
+    std::cout << std::endl;
     std::cout << "  default values:" << std::endl;
-    std::cout << "    <fps>      : " << game.get_real_fps() << std::endl;
-    std::cout << "    <delay_us> : " << game.get_sim_delay_us() << std::endl;
+    std::cout << "    <fps>       : " << game.get_real_fps() << std::endl;
+    std::cout << "    <delay_us>  : " << game.get_sim_delay_us() << std::endl;
+    std::cout << "    <music_vol> : " << music_volume << " (valid range: [0, 1])" <<std::endl;
+    std::cout << "    <sfx_vol>   : " << sfx_volume << " (valid range: [0, 1])" <<std::endl;
     return EXIT_SUCCESS;
   }
   
