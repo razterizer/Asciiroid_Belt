@@ -4,5 +4,5 @@ lib/8Beat                      https://github.com/razterizer/8Beat              
 lib/AudioLibSwitcher_applaudio https://github.com/razterizer/AudioLibSwitcher_applaudio 979c8ef9a461a171d47e4835ce97052270784411
 # lib/AudioLibSwitcher_OpenAL    https://github.com/razterizer/AudioLibSwitcher_OpenAL    811c60c23a446d5f2894e9379c938df19f889c41
 lib/TrainOfThought             https://github.com/razterizer/TrainOfThought             7fc7c595b17b54323106a7de37adf9052164cc40
-lib/applaudio                  https://github.com/razterizer/applaudio                  a4fe100f7a285d800c28a725787f3838af28dd23
+lib/applaudio                  https://github.com/razterizer/applaudio                  e2976532946c357fc9ba5f0d2f54513b6b385174
 # lib/3rdparty_OpenAL            https://github.com/razterizer/3rdparty_OpenAL            d8361648d7b505154109f1ba074922555a96e5de                    win
