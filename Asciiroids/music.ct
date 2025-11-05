@@ -2,27 +2,27 @@
 ; Syntax:
 ; instrument <instrument_name> <waveform> ["params:"<params_id>]
 ;   ["ffx:"<freq_preset_effect>] ["afx:"<ampl_preset_effect>] ["pfx:"<phase_preset_effect>]
-;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["vol:"<volume>]
+;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["gain:"<gain>]
 ; instrument <instrument_name> "ring_mod_A:"<ring_mod_instr_A> "ring_mod_B:"<ring_mod_instr_B>
-;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["vol:"<volume>]
+;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["gain:"<gain>]
 ; instrument <instrument_name> "conv_A:"<conv_instr_A> "conv_B:"<conv_instr_B>
-;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["vol:"<volume>]
+;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["gain:"<gain>]
 ; instrument <instrument_name> "(("<w0>, <instrument_name0>"), ("<w1>, <instrument_name1>")," ...")"
-;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["vol:"<volume>]
+;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["gain:"<gain>]
 ; instrument <instrument_name> "&"<lib_instrument_name>
 ;   ["ffx:"<freq_preset_effect>] ["afx:"<ampl_preset_effect>] ["pfx:"<phase_preset_effect>]
-;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["vol:"<volume>]
+;   ["adsr:"<adsr_id>] ["flt:"<filter_id>] ["gain:"<gain>]
 ; <instrument_name> := [A-Za-z][A-Za-z0-9]*
 ; <waveform> := "SINE"|"SQUARE"|"TRIANGLE"|"SAWTOOTH"|"NOISE"
-; <volume> := 0..1
+; <gain> := 0..1
 ; Example:
 instrument PIANO ring_mod_A:I0 ring_mod_B:I1 adsr:0
 instrument I0 SQUARE adsr:1 flt:0 afx:VIBRATO_0
 instrument I1 SQUARE params:0
 instrument ORGAN ((0.5, PIANO), (0.2, I0)) flt:0
-instrument FLUTE_VIB &FLUTE ffx:CONSTANT afx:VIBRATO_0 pfx:ZERO vol:0.15
-instrument TRUMPET &TRUMPET ffx:CONSTANT afx:CONSTANT pfx:ZERO vol:0.6
-instrument TRUMPET_VIB &TRUMPET ffx:CHIRP_2 afx:VIBRATO_0 pfx:ZERO vol:0.6
+instrument FLUTE_VIB &FLUTE ffx:CONSTANT afx:VIBRATO_0 pfx:ZERO gain:0.15
+instrument TRUMPET &TRUMPET ffx:CONSTANT afx:CONSTANT pfx:ZERO gain:0.6
+instrument TRUMPET_VIB &TRUMPET ffx:CHIRP_2 afx:VIBRATO_0 pfx:ZERO gain:0.6
 instrument KDRUM &KICKDRUM
 instrument SDRUM &SNAREDRUM
 instrument HIHAT &HIHAT
@@ -89,7 +89,7 @@ TIME_STEP_MS 400
 NUM_VOICES 1
 
 
-VOLUME 1
+gain 1
 LABEL lbl0
 TAB | E2 100 I1 |
 TAB -
