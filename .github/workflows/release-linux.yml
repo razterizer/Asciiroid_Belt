@@ -115,12 +115,22 @@ jobs:
           echo "  chmod ugo+x asciiroids-glibc2.35" >> asciiroids-${{ github.ref_name }}/README.txt
           tar -czf asciiroids-${{ github.ref_name }}-linux.tar.gz asciiroids-${{ github.ref_name }}/
 
-      - name: Upload Linux package to release
+      - name: Extract tag annotation as release notes
+        id: notes
+        run: |
+          git fetch --tags --force
+          TAG="${{ github.ref_name }}"
+          git tag -l --format='%(contents)' "$TAG" > RELEASE_NOTES.txt
+          echo "Release notes extracted from tag annotation:"
+          cat RELEASE_NOTES.txt
+
+      - name: Upload package to release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref_name }}
           artifacts: asciiroids-${{ github.ref_name }}-linux.tar.gz
           allowUpdates: true
-          body: ${{ github.event.release.body || github.event.head_commit.message }}
+          bodyFile: RELEASE_NOTES.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
