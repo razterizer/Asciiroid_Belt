@@ -100,7 +100,7 @@ public:
     
       if (enable_audio && chip_tune.load_tune(folder::join_path({ tune_path, "music.ct" })))
       {
-          chip_tune.set_volume_slider(volume_music);
+          chip_tune.set_volume_slider(volume_music, min_dB, nl_taper);
           //chip_tune.play_tune();
           chip_tune.play_tune_async();
           chip_tune.wait_for_completion();
@@ -168,11 +168,12 @@ public:
         0.f,
       };
       
-      float sfx_volume_factor = (enable_3d_audio ? 1.2f : 1.f) * volume_sfx;
+      float sfx_gain_factor = (enable_3d_audio ? 10.f : 2.f);
 
       auto wd_shot = beat::SFX::generate(beat::SFXType::LASER, vp_shot);
       src_fx_shot = audio.create_source_from_waveform(wd_shot);
-      src_fx_shot->set_volume_slider(volume_shot * sfx_volume_factor);
+      src_fx_shot->set_volume_slider(volume_sfx, min_dB, nl_taper);
+      src_fx_shot->set_gain(gain_shot * sfx_gain_factor);
       src_fx_shot->enable_3d_audio(enable_3d_audio);
       if (enable_3d_audio)
       {
@@ -188,7 +189,8 @@ public:
       }
       auto wd_explosion = beat::SFX::generate(beat::SFXType::EXPLOSION, vp_explosion);
       src_fx_explosion = audio.create_source_from_waveform(wd_explosion);
-      src_fx_explosion->set_volume_slider(volume_explosion * sfx_volume_factor);
+      src_fx_explosion->set_volume_slider(volume_sfx, min_dB, nl_taper);
+      src_fx_explosion->set_gain(gain_explosion * sfx_gain_factor);
       src_fx_explosion->enable_3d_audio(enable_3d_audio);
       if (enable_3d_audio)
       {
@@ -204,7 +206,8 @@ public:
       }
       auto wd_ufo_shot = beat::SFX::generate(beat::SFXType::LASER, vp_ufo_shot);
       src_fx_ufo_shot = audio.create_source_from_waveform(wd_ufo_shot);
-      src_fx_ufo_shot->set_volume_slider(volume_ufo_shot * sfx_volume_factor);
+      src_fx_ufo_shot->set_volume_slider(volume_sfx, min_dB, nl_taper);
+      src_fx_ufo_shot->set_gain(gain_ufo_shot * sfx_gain_factor);
       src_fx_ufo_shot->enable_3d_audio(enable_3d_audio);
       if (enable_3d_audio)
       {
@@ -228,8 +231,10 @@ public:
       auto wd_prop = wave_gen.generate_waveform(beat::WaveformType::TRIANGLE, 10.f, 1318.f, params, 44100, false);
       src_fx_ufo_large_propulsion = audio.create_source_from_waveform(wd_prop);
       src_fx_ufo_small_propulsion = audio.create_source_from_waveform(wd_prop);
-      src_fx_ufo_large_propulsion->set_volume_slider(volume_ufo_propulsion * sfx_volume_factor);
-      src_fx_ufo_small_propulsion->set_volume_slider(volume_ufo_propulsion * sfx_volume_factor);
+      src_fx_ufo_large_propulsion->set_volume_slider(volume_sfx, min_dB, nl_taper);
+      src_fx_ufo_large_propulsion->set_gain(gain_ufo_propulsion * sfx_gain_factor);
+      src_fx_ufo_small_propulsion->set_volume_slider(volume_sfx, min_dB, nl_taper);
+      src_fx_ufo_small_propulsion->set_gain(gain_ufo_propulsion * sfx_gain_factor);
       src_fx_ufo_large_propulsion->enable_3d_audio(enable_3d_audio);
       src_fx_ufo_small_propulsion->enable_3d_audio(enable_3d_audio);
       if (enable_3d_audio)
@@ -1505,13 +1510,15 @@ private:
   
   float volume_music = 1.f;
   float volume_sfx = 1.f;
-  float volume_shot = 0.91f;
-  float volume_ufo_shot = 0.91f;
-  float volume_explosion = 1.15f;
-  float volume_ufo_propulsion = 0.8f;
+  float gain_shot = 0.2f;
+  float gain_ufo_shot = 0.2f;
+  float gain_explosion = 1.f;
+  float gain_ufo_propulsion = 0.15f;
   bool enable_audio = true;
   bool enable_3d_audio = true;
   float vel_factor_3d = 5.f;
+  float min_dB = -40.f;
+  float nl_taper = 0.7f;
 };
 
 //////////////////////////////////////////////////////////////////////////
