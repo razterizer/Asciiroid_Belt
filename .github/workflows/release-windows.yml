@@ -112,7 +112,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref_name }}
-          artifacts: asciiroids-${{ github.ref_name }}-windows.zip
+          artifacts: windows-build/asciiroids-${{ github.ref_name }}-windows.zip
           allowUpdates: true
           bodyFile: RELEASE_NOTES.txt
         env:
