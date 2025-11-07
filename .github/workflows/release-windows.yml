@@ -100,7 +100,7 @@ jobs:
           Compress-Archive -Path "asciiroids-${{ github.ref_name }}" -DestinationPath "asciiroids-${{ github.ref_name }}-windows.zip"
           
       - name: Extract tag annotation as release notes
-        id: notes
+        shell: bash
         run: |
           git fetch --tags --force
           TAG="${{ github.ref_name }}"
