@@ -48,6 +48,7 @@
 		072E94CE2E19373A0051F9AB /* Keyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keyboard.h; sourceTree = "<group>"; };
 		072E94CF2E19373A0051F9AB /* TitleScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TitleScreen.h; sourceTree = "<group>"; };
 		072E94E32E1B6F750051F9AB /* music.ct */ = {isa = PBXFileReference; lastKnownFileType = text; path = music.ct; sourceTree = "<group>"; };
+		0733A59F2EBEABB30045BCFD /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASE_NOTES.md; sourceTree = "<group>"; };
 		07980B832E8042B5007A0EB4 /* release-macos.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "release-macos.yml"; path = ".github/workflows/release-macos.yml"; sourceTree = SOURCE_ROOT; };
 		07980B842E8042B5007A0EB4 /* release-linux.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "release-linux.yml"; path = ".github/workflows/release-linux.yml"; sourceTree = SOURCE_ROOT; };
 		07980B872E80457C007A0EB4 /* release-windows.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "release-windows.yml"; path = ".github/workflows/release-windows.yml"; sourceTree = SOURCE_ROOT; };
@@ -89,6 +90,7 @@
 			children = (
 				072E946A2E1911010051F9AB /* LICENSE */,
 				072E94542E18DC4A0051F9AB /* README.md */,
+				0733A59F2EBEABB30045BCFD /* RELEASE_NOTES.md */,
 				07844E4028FDEBAA00B30C0D /* Asciiroids */,
 				072E94512E18DAC20051F9AB /* Frameworks */,
 				072E94402E18CCD00051F9AB /* Products */,
