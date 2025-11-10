@@ -31,6 +31,8 @@ using RigidBody = t8x::RigidBody;
 
 //#define DESIGN_SFX
 
+static const float c_default_vol = 0.5f;
+
 // ////////////////////////////
 // [x] Explosion sprites.
 // [x] Spaceship collision logic (explosion + reappearance, etc).
@@ -1508,8 +1510,8 @@ private:
   const bool ufo_can_collide_with_asteroids = false;
   Timer ufo_shot_interval_timer { 1.f };
   
-  float volume_music = 1.f;
-  float volume_sfx = 1.f;
+  float volume_music = c_default_vol;
+  float volume_sfx = c_default_vol;
   float gain_shot = 0.2f;
   float gain_ufo_shot = 0.2f;
   float gain_explosion = 1.f;
@@ -1517,8 +1519,8 @@ private:
   bool enable_audio = true;
   bool enable_3d_audio = true;
   float vel_factor_3d = 5.f;
-  float min_dB = -40.f;
-  float nl_taper = 0.7f;
+  float min_dB = -60.f;
+  float nl_taper = 0.28f;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -1555,8 +1557,8 @@ int main(int argc, char** argv)
   bool use_audio = true;
   bool use_3d_audio = true;
   bool show_help = false;
-  float music_volume = 1.f;
-  float sfx_volume = 1.f;
+  float music_volume = c_default_vol;
+  float sfx_volume = c_default_vol;
   
   for (int i = 1; i < argc; ++i)
   {
@@ -1607,8 +1609,8 @@ int main(int argc, char** argv)
     std::cout << "  default values:" << std::endl;
     std::cout << "    <fps>       : " << game.get_real_fps() << std::endl;
     std::cout << "    <delay_us>  : " << game.get_sim_delay_us() << std::endl;
-    std::cout << "    <music_vol> : " << music_volume << " (valid range: [0, 1])" <<std::endl;
-    std::cout << "    <sfx_vol>   : " << sfx_volume << " (valid range: [0, 1])" <<std::endl;
+    std::cout << "    <music_vol> : " << c_default_vol << " (valid range: [0, 1])" <<std::endl;
+    std::cout << "    <sfx_vol>   : " << c_default_vol << " (valid range: [0, 1])" <<std::endl;
     return EXIT_SUCCESS;
   }
   
