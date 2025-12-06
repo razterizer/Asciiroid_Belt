@@ -1,5 +1,8 @@
 # Release Notes
 
+## 1.2.1.7
+- Fixed tag_release.sh script so that it doesn't output a version.h header (copy-paste mistake).
+
 ## 1.2.0.6
 - Using Termin8or 2.0.0.2 with 8-bit color support. But we still render in black and white though.
 - Improved volume levels.
