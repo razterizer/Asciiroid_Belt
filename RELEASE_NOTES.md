@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.2.0.6
+- Using Termin8or 2.0.0.2 with 8-bit color support. But we still render in black and white though.
+- Improved volume levels.
+
 ## 1.1.3.5
 - Fixes the --help argument so that it doesn't display audio settings on top of the help text, which seems a little out of place.
 - Replacing SFX sources from AudioStreamSource to just AudioSource as I think it is a bit overkill to use AudioStreamSource here.
