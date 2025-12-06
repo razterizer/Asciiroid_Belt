@@ -79,7 +79,6 @@ fi
 VERSION=""
 MESSAGE=""
 FILE=""
-VERSION_HEADER_FILE="include/Termin8or/version/version.h"
 
 case "$1" in
   bump)
@@ -112,18 +111,6 @@ case "$1" in
     fi
     ;;
 esac
-
-# --- Create version.h ---
-mkdir -p "$(dirname "$VERSION_HEADER_FILE")"
-
-cat > "$VERSION_HEADER_FILE" <<EOF
-#pragma once
-#define TERMIN8OR_VERSION_STR "${VERSION}"
-#define TERMIN8OR_VERSION_MAJOR $(echo "$VERSION" | cut -d. -f1)
-#define TERMIN8OR_VERSION_MINOR $(echo "$VERSION" | cut -d. -f2)
-#define TERMIN8OR_VERSION_PATCH $(echo "$VERSION" | cut -d. -f3)
-#define TERMIN8OR_VERSION_BUILD $(echo "$VERSION" | cut -d. -f4)
-EOF
 
 # --- Determine message ---
 if [ -n "$FILE" ]; then
@@ -166,4 +153,3 @@ git tag -a "$TAG" -m "$MESSAGE"
 git push origin "$TAG"
 
 echo "✅ Done — created $TAG"
-
