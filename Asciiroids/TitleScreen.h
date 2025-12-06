@@ -57,20 +57,20 @@
 template<int NR, int NC>
 void draw_title(t8::ScreenHandler<NR, NC>& sh, const t8x::FontDataColl& font_data, const t8x::ColorScheme& font_colors)
 {
-  using Color = t8::Color;
+  using Color16 = t8::Color16;
 
-  sh.write_buffer(" Rasmus Anthin ", 0, 75, Color::Black, Color::White);
+  sh.write_buffer(" Rasmus Anthin ", 0, 75, Color16::Black, Color16::White);
   
-  sh.write_buffer(" Presents: ", 1, 77, Color::Black, Color::White);
+  sh.write_buffer(" Presents: ", 1, 77, Color16::Black, Color16::White);
   
-  sh.write_buffer(" (c) 2025 ", 39, 90, Color::Black, Color::White);
+  sh.write_buffer(" (c) 2025 ", 39, 90, Color16::Black, Color16::White);
   
   t8x::draw_text(sh, font_data, font_colors, "Asciiroids", 32, 23, t8x::Font::Avatar);
   
-  sh.write_buffer("Press space-bar to continue...", 38, 33, Color::Black, Color::White);
+  sh.write_buffer("Press space-bar to continue...", 38, 33, Color16::Black, Color16::White);
   
-  auto fg = Color::White;
-  auto bg = Color::Transparent2;
+  auto fg = Color16::White;
+  auto bg = Color16::Transparent2;
 
   sh.write_buffer("##**###*=+*****##*##**###**###******+++++***#**+++=--=+****+*#####*###**+=+++*+==+++=-=+#####*****##", 0, 0, fg, bg);
   sh.write_buffer("**####***+++*##*+*+**+=+*##*#**###***++++==++###*==+*******+*######*****#***##**+********##********#", 1, 0, fg, bg);
@@ -113,6 +113,6 @@ void draw_title(t8::ScreenHandler<NR, NC>& sh, const t8x::FontDataColl& font_dat
   sh.write_buffer("#+-----==---:::....:::...............::+##########**################################################", 38, 0, fg, bg);
   sh.write_buffer("#+==-==------:.....::-:..............::=**###############################**+*#*+###%################", 39, 0, fg, bg);
   
-  sh.replace_bg_color(Color::White, t8::Rectangle { 32, 23, 5, 51 });
+  sh.replace_bg_color(Color16::White, t8::Rectangle { 32, 23, 5, 51 });
 }
 

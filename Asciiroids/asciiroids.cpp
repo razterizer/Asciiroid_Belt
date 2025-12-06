@@ -22,7 +22,7 @@
 #include <8Beat/SFX.h>
 
 using RC = t8::RC;
-using Color = t8::Color;
+using Color16 = t8::Color16;
 template<int NR, int NC>
 using ScreenHandler = t8::ScreenHandler<NR, NC>;
 using BitmapSprite = t8x::BitmapSprite;
@@ -286,29 +286,29 @@ public:
     std::cout << font_data_path << std::endl;
     
     auto& cs0 = color_schemes.emplace_back();
-    cs0.internal.fg_color = Color::Black;
-    cs0.internal.bg_color = Color::White;
+    cs0.internal.fg_color = Color16::Black;
+    cs0.internal.bg_color = Color16::White;
     auto& cs1 = color_schemes.emplace_back();
-    cs1.internal.fg_color = Color::White;
-    cs1.internal.bg_color = Color::Black;
+    cs1.internal.fg_color = Color16::White;
+    cs1.internal.bg_color = Color16::Black;
     
     font_data = t8x::load_font_data(font_data_path);
     
     sprite_spaceship = sprh.create_vector_sprite("spaceship");
     sprite_spaceship->layer_id = 2;
     sprite_spaceship->pos = { sh.num_rows()/2, sh.num_cols()/2 };
-    sprite_spaceship->add_line_segment(0, { 1, 1 }, { -1, 0 }, 'o', { Color::White, Color::Transparent2 }, 1);
-    sprite_spaceship->add_line_segment(0, { -1, 0 }, { 1, -1 }, 'o', { Color::White, Color::Transparent2 }, 1);
-    sprite_spaceship->add_line_segment(0, { 0.7f, -1.f }, { 0.7f, 1.f }, '.', { Color::White, Color::Transparent2 }, 1);
-    sprite_spaceship->add_line_segment(0, { 1, -1 }, { 0.7f, -1.f }, '.', { Color::White, Color::Transparent2 }, 1);
-    sprite_spaceship->add_line_segment(0, { 1, 1 }, { 0.7f, 1.f }, '.', { Color::White, Color::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(0, { 1, 1 }, { -1, 0 }, 'o', { Color16::White, Color16::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(0, { -1, 0 }, { 1, -1 }, 'o', { Color16::White, Color16::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(0, { 0.7f, -1.f }, { 0.7f, 1.f }, '.', { Color16::White, Color16::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(0, { 1, -1 }, { 0.7f, -1.f }, '.', { Color16::White, Color16::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(0, { 1, 1 }, { 0.7f, 1.f }, '.', { Color16::White, Color16::Transparent2 }, 1);
     
-    sprite_spaceship->add_line_segment(1, { 1.71f, 0 }, { 1.71f, 0 }, '*', { Color::White, Color::Transparent2 }, 2);
-    sprite_spaceship->add_line_segment(1, { 1, 1 }, { -1, 0 }, 'o', { Color::White, Color::Transparent2 }, 1);
-    sprite_spaceship->add_line_segment(1, { -1, 0 }, { 1, -1 }, 'o', { Color::White, Color::Transparent2 }, 1);
-    sprite_spaceship->add_line_segment(1, { 0.7f, -1.f }, { 0.7f, 1.f }, '.', { Color::White, Color::Transparent2 }, 1);
-    sprite_spaceship->add_line_segment(1, { 1, -1 }, { 0.7f, -1.f }, '.', { Color::White, Color::Transparent2 }, 1);
-    sprite_spaceship->add_line_segment(1, { 1, 1 }, { 0.7f, 1.f }, '.', { Color::White, Color::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(1, { 1.71f, 0 }, { 1.71f, 0 }, '*', { Color16::White, Color16::Transparent2 }, 2);
+    sprite_spaceship->add_line_segment(1, { 1, 1 }, { -1, 0 }, 'o', { Color16::White, Color16::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(1, { -1, 0 }, { 1, -1 }, 'o', { Color16::White, Color16::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(1, { 0.7f, -1.f }, { 0.7f, 1.f }, '.', { Color16::White, Color16::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(1, { 1, -1 }, { 0.7f, -1.f }, '.', { Color16::White, Color16::Transparent2 }, 1);
+    sprite_spaceship->add_line_segment(1, { 1, 1 }, { 0.7f, 1.f }, '.', { Color16::White, Color16::Transparent2 }, 1);
     sprite_spaceship->func_calc_anim_frame = [&](int sim_frame) { return spaceship_fwd_force > 0.f ? sim_frame % 2 : 0; };
     sprite_spaceship->set_rotation(0.f);
     sprite_spaceship->set_aspect_ratio(spaceship_ar);
@@ -318,7 +318,7 @@ public:
       auto* frame = sprite_spaceship->get_curr_local_frame(frame_id);
       frame->fill_closed_polylines = false;
       frame->fill_char = '#';
-      frame->fill_style = { Color::LightGray, Color::DarkGray };
+      frame->fill_style = { Color16::LightGray, Color16::DarkGray };
     }
     rb_spaceship = dyn_sys.add_rigid_body(sprite_spaceship, 4.f,
       std::nullopt, {}, {},
@@ -327,7 +327,7 @@ public:
       crit_vel_r, crit_vel_c);
     rb_spaceship->set_orig_dir({ -1.f, 0.f });
     
-    Color asteroid_bg_color = use_transparent_asteroids ? Color::Transparent2 : Color::Black;
+    Color16 asteroid_bg_color = use_transparent_asteroids ? Color16::Transparent2 : Color16::Black;
     
     // +-----------+
     // |   ._  ___ |
@@ -355,7 +355,7 @@ public:
         "|       /",
         " \\___,-' "
       );
-    sprite_asteroid_0_big->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_0_big->fill_sprite_fg_colors(0, Color16::White);
     sprite_asteroid_0_big->fill_sprite_bg_colors(0, asteroid_bg_color);
     sprite_asteroid_0_big->set_sprite_materials(0,
         0, 0, 1, 1, 0, 0, 1, 1, 1,
@@ -376,7 +376,7 @@ public:
         "(    \\",
         " \\___/"
       );
-    sprite_asteroid_0_small->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_0_small->fill_sprite_fg_colors(0, Color16::White);
     sprite_asteroid_0_small->fill_sprite_bg_colors(0, asteroid_bg_color);
     sprite_asteroid_0_small->set_sprite_materials(0,
         0, 1, 1, 1, 1, 1,
@@ -394,7 +394,7 @@ public:
         ",^.^",
         "(__<"
       );
-    sprite_asteroid_0_tiny->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_0_tiny->fill_sprite_fg_colors(0, Color16::White);
     sprite_asteroid_0_tiny->fill_sprite_bg_colors(0, asteroid_bg_color);
     sprite_asteroid_0_tiny->fill_sprite_materials(0, 1);
     sprite_asteroid_0_tiny->enabled = false;
@@ -425,7 +425,7 @@ public:
         ",  _    |",
         "\\./ |__/ "
       );
-    sprite_asteroid_1_big->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_1_big->fill_sprite_fg_colors(0, Color16::White);
     sprite_asteroid_1_big->fill_sprite_bg_colors(0, asteroid_bg_color);
     sprite_asteroid_1_big->set_sprite_materials(0,
         0, 1, 1, 1, 1, 1, 1, 0, 0,
@@ -446,7 +446,7 @@ public:
         "(    \\",
         "/_/|_/"
       );
-    sprite_asteroid_1_small->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_1_small->fill_sprite_fg_colors(0, Color16::White);
     sprite_asteroid_1_small->fill_sprite_bg_colors(0, asteroid_bg_color);
     sprite_asteroid_1_small->set_sprite_materials(0,
         0, 1, 1, 1, 1, 0,
@@ -464,7 +464,7 @@ public:
         ",-. ",
         "Z,_)"
       );
-    sprite_asteroid_1_tiny->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_1_tiny->fill_sprite_fg_colors(0, Color16::White);
     sprite_asteroid_1_tiny->fill_sprite_bg_colors(0, asteroid_bg_color);
     sprite_asteroid_1_tiny->set_sprite_materials(0,
         1, 1, 1, 0,
@@ -498,7 +498,7 @@ public:
         "/  .-._ /",
         "\\_/    ' "
       );
-    sprite_asteroid_2_big->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_2_big->fill_sprite_fg_colors(0, Color16::White);
     sprite_asteroid_2_big->fill_sprite_bg_colors(0, asteroid_bg_color);
     sprite_asteroid_2_big->set_sprite_materials(0,
         0, 1, 1, 1, 0, 1, 1, 1, 0,
@@ -519,7 +519,7 @@ public:
         "(    /",
         "\\_\\._/"
       );
-    sprite_asteroid_2_small->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_2_small->fill_sprite_fg_colors(0, Color16::White);
     sprite_asteroid_2_small->fill_sprite_bg_colors(0, asteroid_bg_color);
     sprite_asteroid_2_small->set_sprite_materials(0,
         0, 1, 1, 1, 1, 0,
@@ -537,7 +537,7 @@ public:
         ",v. ",
         "V',)"
       );
-    sprite_asteroid_2_tiny->fill_sprite_fg_colors(0, Color::White);
+    sprite_asteroid_2_tiny->fill_sprite_fg_colors(0, Color16::White);
     sprite_asteroid_2_tiny->fill_sprite_bg_colors(0, asteroid_bg_color);
     sprite_asteroid_2_tiny->set_sprite_materials(0,
         1, 1, 1, 0,
@@ -560,8 +560,8 @@ public:
         "         ",
         "         "
       );
-    sprite_explosion->fill_sprite_fg_colors(0, Color::White);
-    sprite_explosion->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_explosion->fill_sprite_fg_colors(0, Color16::White);
+    sprite_explosion->fill_sprite_bg_colors(0, Color16::Transparent2);
     sprite_explosion->create_frame(1);
     sprite_explosion->set_sprite_chars_from_strings(1,
         "         ",
@@ -570,8 +570,8 @@ public:
         "    .    ",
         "         "
       );
-    sprite_explosion->fill_sprite_fg_colors(1, Color::White);
-    sprite_explosion->fill_sprite_bg_colors(1, Color::Transparent2);
+    sprite_explosion->fill_sprite_fg_colors(1, Color16::White);
+    sprite_explosion->fill_sprite_bg_colors(1, Color16::Transparent2);
     sprite_explosion->create_frame(2);
     sprite_explosion->set_sprite_chars_from_strings(2,
         "    . .  ",
@@ -580,8 +580,8 @@ public:
         "  .    . ",
         "    .    "
       );
-    sprite_explosion->fill_sprite_fg_colors(2, Color::White);
-    sprite_explosion->fill_sprite_bg_colors(2, Color::Transparent2);
+    sprite_explosion->fill_sprite_fg_colors(2, Color16::White);
+    sprite_explosion->fill_sprite_bg_colors(2, Color16::Transparent2);
     sprite_explosion->create_frame(3);
     sprite_explosion->set_sprite_chars_from_strings(3,
         " . .. .  ",
@@ -590,8 +590,8 @@ public:
         "  .   .  ",
         " .  .   ."
       );
-    sprite_explosion->fill_sprite_fg_colors(3, Color::White);
-    sprite_explosion->fill_sprite_bg_colors(3, Color::Transparent2);
+    sprite_explosion->fill_sprite_fg_colors(3, Color16::White);
+    sprite_explosion->fill_sprite_bg_colors(3, Color16::Transparent2);
     sprite_explosion->create_frame(4);
     sprite_explosion->set_sprite_chars_from_strings(4,
         ".   .  . ",
@@ -600,8 +600,8 @@ public:
         "         ",
         " .  .   ."
       );
-    sprite_explosion->fill_sprite_fg_colors(4, Color::White);
-    sprite_explosion->fill_sprite_bg_colors(4, Color::Transparent2);
+    sprite_explosion->fill_sprite_fg_colors(4, Color16::White);
+    sprite_explosion->fill_sprite_bg_colors(4, Color16::Transparent2);
     sprite_explosion->create_frame(5);
     sprite_explosion->set_sprite_chars_from_strings(5,
         "         ",
@@ -610,8 +610,8 @@ public:
         "         ",
         "     .   "
       );
-    sprite_explosion->fill_sprite_fg_colors(5, Color::White);
-    sprite_explosion->fill_sprite_bg_colors(5, Color::Transparent2);
+    sprite_explosion->fill_sprite_fg_colors(5, Color16::White);
+    sprite_explosion->fill_sprite_bg_colors(5, Color16::Transparent2);
     sprite_explosion->create_frame(6);
     sprite_explosion->set_sprite_chars_from_strings(6,
         "         ",
@@ -620,8 +620,8 @@ public:
         "         ",
         "         "
       );
-    sprite_explosion->fill_sprite_fg_colors(6, Color::White);
-    sprite_explosion->fill_sprite_bg_colors(6, Color::Transparent2);
+    sprite_explosion->fill_sprite_fg_colors(6, Color16::White);
+    sprite_explosion->fill_sprite_bg_colors(6, Color16::Transparent2);
     
     sprite_ufo_large = sprh.create_bitmap_sprite("ufo large");
     sprite_ufo_large->enabled = false;
@@ -629,8 +629,8 @@ public:
     sprite_ufo_large->pos = { 2, sh.num_cols() - 2 };
     sprite_ufo_large->init(2, 5);
     sprite_ufo_large->create_frame(0);
-    sprite_ufo_large->fill_sprite_fg_colors(0, Color::White);
-    sprite_ufo_large->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_ufo_large->fill_sprite_fg_colors(0, Color16::White);
+    sprite_ufo_large->fill_sprite_bg_colors(0, Color16::Transparent2);
     sprite_ufo_large->set_sprite_materials(0,
       0, 1, 1, 1, 0,
       1, 1, 1, 1, 1);
@@ -645,8 +645,8 @@ public:
     sprite_ufo_small->pos = { 2, sh.num_cols() - 2 };
     sprite_ufo_small->init(1, 3);
     sprite_ufo_small->create_frame(0);
-    sprite_ufo_small->fill_sprite_fg_colors(0, Color::White);
-    sprite_ufo_small->fill_sprite_bg_colors(0, Color::Transparent2);
+    sprite_ufo_small->fill_sprite_fg_colors(0, Color16::White);
+    sprite_ufo_small->fill_sprite_bg_colors(0, Color16::Transparent2);
     sprite_ufo_small->fill_sprite_materials(0, 1);
     sprite_ufo_small->set_sprite_chars_from_strings(0,
       "<^>"
@@ -750,11 +750,11 @@ private:
   template<int NR, int NC>
   void draw_hud(ScreenHandler<NR, NC>& sh)
   {
-    sh.write_buffer(str::adjust_str(std::to_string(GameEngine::ref_score()), str::Adjustment::Right, 6), 1, 8, Color::White);
+    sh.write_buffer(str::adjust_str(std::to_string(GameEngine::ref_score()), str::Adjustment::Right, 6), 1, 8, Color16::White);
   
     for (int life_idx = 0; life_idx < std::min(num_lives, 10); ++life_idx)
     {
-      sh.write_buffer("A", 2, 10 + life_idx, Color::White);
+      sh.write_buffer("A", 2, 10 + life_idx, Color16::White);
     }
   }
   
@@ -771,9 +771,9 @@ private:
       {
         int j_max = math::linmap(vp_design[i], -2.f, 3.f, 0, 50);
         for (int j = 0; j < j_max; ++j)
-          sh.write_buffer("#", i+2, j+15, channel == i ? Color::Yellow : Color::White);
-        sh.write_buffer(std::to_string(vp_design[i]), i+2, 5, Color::Cyan);
-        sh.write_buffer(std::to_string(i) + '.', i+2, 1, Color::Blue);
+          sh.write_buffer("#", i+2, j+15, channel == i ? Color16::Yellow : Color16::White);
+        sh.write_buffer(std::to_string(vp_design[i]), i+2, 5, Color16::Cyan);
+        sh.write_buffer(std::to_string(i) + '.', i+2, 1, Color16::Blue);
       }
       
       auto key = t8::get_special_key(kpdp.transient);
@@ -1332,7 +1332,7 @@ private:
     
     draw_hud(sh);
     
-    draw_frame(sh, Color::LightGray);
+    draw_frame(sh, Color16::LightGray);
     
     if (dbg_draw_rigid_bodies)
       dyn_sys.draw_dbg(sh);
@@ -1348,7 +1348,7 @@ private:
       coll_handler.draw_dbg_broad_phase(sh, 0);
       
     for (const auto& shot : shots_vec)
-      sh.write_buffer(".", math::roundI(shot.pos.r), math::roundI(shot.pos.c), Color::White);
+      sh.write_buffer(".", math::roundI(shot.pos.r), math::roundI(shot.pos.c), Color16::White);
 #endif
   }
   
@@ -1528,31 +1528,31 @@ private:
 int main(int argc, char** argv)
 {
   t8x::GameEngineParams params;
-  params.screen_bg_color_default = Color::Black;
-  params.screen_bg_color_title = Color::Black;
-  params.screen_bg_color_instructions = Color::Black;
+  params.screen_bg_color_default = Color16::Black;
+  params.screen_bg_color_title = Color16::Black;
+  params.screen_bg_color_instructions = Color16::Black;
   params.enable_title_screen = true;
   params.enable_instructions_screen = false;
-  params.pause_info_style = { Color::White, Color::Transparent };
+  params.pause_info_style = { Color16::White, Color16::Transparent };
   params.screen_bg_color_quit_confirm = std::nullopt;
-  params.quit_confirm_title_style = { Color::LightGray, Color::Transparent };
-  params.quit_confirm_button_style = { Color::Black, Color::DarkGray, Color::LightGray };
-  params.quit_confirm_info_style = { Color::DarkGray, Color::Transparent };
+  params.quit_confirm_title_style = { Color16::LightGray, Color16::Transparent };
+  params.quit_confirm_button_style = { Color16::Black, Color16::DarkGray, Color16::LightGray };
+  params.quit_confirm_info_style = { Color16::DarkGray, Color16::Transparent };
   params.screen_bg_color_input_hiscore = std::nullopt;
-  params.input_hiscore_title_style = { Color::LightGray, Color::Transparent };
-  params.input_hiscore_prompt_style = { Color::White, Color::DarkGray, Color::LightGray };
-  params.input_hiscore_info_style = { Color::DarkGray, Color::Transparent };
+  params.input_hiscore_title_style = { Color16::LightGray, Color16::Transparent };
+  params.input_hiscore_prompt_style = { Color16::White, Color16::DarkGray, Color16::LightGray };
+  params.input_hiscore_info_style = { Color16::DarkGray, Color16::Transparent };
   params.screen_bg_color_hiscores = std::nullopt;
-  params.hiscores_title_style = { Color::LightGray, Color::DarkGray };
-  params.hiscores_nr_style = { Color::LightGray, Color::Black, Color::White };
-  params.hiscores_score_style = { Color::LightGray, Color::Black, Color::White };
-  params.hiscores_name_style = { Color::LightGray, Color::Black, Color::White };
-  params.hiscores_info_style = { Color::DarkGray, Color::Black };
-  params.game_over_line_0_style = { Color::Black, Color::White };
-  params.game_over_line_1_style = { Color::Black, Color::LightGray };
-  params.game_over_line_2_style = { Color::Black, Color::DarkGray };
-  params.game_over_line_3_style = { Color::Black, Color::LightGray };
-  params.game_over_line_4_style = { Color::Black, Color::White };
+  params.hiscores_title_style = { Color16::LightGray, Color16::DarkGray };
+  params.hiscores_nr_style = { Color16::LightGray, Color16::Black, Color16::White };
+  params.hiscores_score_style = { Color16::LightGray, Color16::Black, Color16::White };
+  params.hiscores_name_style = { Color16::LightGray, Color16::Black, Color16::White };
+  params.hiscores_info_style = { Color16::DarkGray, Color16::Black };
+  params.game_over_line_0_style = { Color16::Black, Color16::White };
+  params.game_over_line_1_style = { Color16::Black, Color16::LightGray };
+  params.game_over_line_2_style = { Color16::Black, Color16::DarkGray };
+  params.game_over_line_3_style = { Color16::Black, Color16::LightGray };
+  params.game_over_line_4_style = { Color16::Black, Color16::White };
   
   bool use_audio = true;
   bool use_3d_audio = true;
