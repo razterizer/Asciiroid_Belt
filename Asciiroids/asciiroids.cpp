@@ -317,7 +317,7 @@ public:
       sprite_spaceship->finalize_topology(frame_id);
       auto* frame = sprite_spaceship->get_curr_local_frame(frame_id);
       frame->fill_closed_polylines = false;
-      frame->fill_char = '#';
+      frame->fill_glyph = '#';
       frame->fill_style = { Color16::LightGray, Color16::DarkGray };
     }
     rb_spaceship = dyn_sys.add_rigid_body(sprite_spaceship, 4.f,
