@@ -1360,7 +1360,7 @@ private:
   
   virtual void draw_title() override
   {
-    ::draw_title(sh, font_data, color_schemes[0]);
+    ::draw_title(sh, font_data, color_schemes[0], get_exe_folder());
   }
   
   virtual void draw_instructions() override

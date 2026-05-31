@@ -41,3 +41,4 @@ mkdir -p bin/fonts/
 cp ../../lib/Termin8or/include/Termin8or/title/fonts/* bin/fonts/
 
 cp music.ct bin/
+cp asciiroids.tx bin/

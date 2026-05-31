@@ -100,6 +100,7 @@ jobs:
           cp glibc2.38/asciiroids asciiroids-${{ github.ref_name }}/asciiroids-glibc2.38
           cp glibc2.35/asciiroids asciiroids-${{ github.ref_name }}/asciiroids-glibc2.35
           cp glibc2.38/music.ct asciiroids-${{ github.ref_name }}/
+          cp glibc2.38/asciiroids.tx asciiroids-${{ github.ref_name }}/
           if [ -d glibc2.38/fonts ]; then
             cp -r glibc2.38/fonts asciiroids-${{ github.ref_name }}/
           fi
