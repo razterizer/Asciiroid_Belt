@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.3.1.9
+- Replaced the hard-coded title splash screen with an external asciiroids.tx texture asset.
+- Included the new splash texture in local builds and Linux, macOS, and Windows release packages.
+
 ## 1.3.0.8
 - Bumped Termin8or dependency to 3.0.0.6.
 - Updated compatibility with Termin8or's Unicode/glyph API changes.
