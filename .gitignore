@@ -15,6 +15,7 @@ xcdebugger/
 bin/
 bin_linux/
 bin_windows/
+build/
 
 # Ignore breakpoints list
 *.xcbkptlist
