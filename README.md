@@ -51,6 +51,34 @@ I hope this game will give you much joy and fun.
 
 There are two options on dealing with repo dependencies:
 
+### CMake
+
+CMake supports the same two dependency modes as the scripts.
+
+For developer mode, local dependency checkouts default to `../lib/<repo>`:
+```sh
+cmake --preset dev
+cmake --build --preset dev
+./build/dev/asciiroids
+```
+
+The layout is configurable. Set `ASCIIROIDS_LIB_DIR` when all dependencies
+share a parent folder, or override individual paths when they do not:
+```sh
+cmake --preset dev -DASCIIROIDS_LIB_DIR=/path/to/lib
+cmake --preset dev \
+  -DASCIIROIDS_CORE_SOURCE_DIR=/path/to/Core \
+  -DASCIIROIDS_TERMIN8OR_SOURCE_DIR=/another/path/to/Termin8or
+```
+
+For a reproducible build, CMake can fetch the revisions pinned in
+`dependencies`:
+```sh
+cmake --preset pinned
+cmake --build --preset pinned
+./build/pinned/asciiroids
+```
+
 ### Repo Dependencies Option 1
 
 This method will ensure that you are running the latest stable versions of the dependencies that work with `Asciiroids`.
