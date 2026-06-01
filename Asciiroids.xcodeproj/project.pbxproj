@@ -56,6 +56,8 @@
 		0799EFE62E7865FF00BAE112 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		0799EFE82E7867D800BAE112 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		0799EFEC2E78713400BAE112 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		07C80E1E2FCD092900106C83 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		07C80E1F2FCD092900106C83 /* CMakePresets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CMakePresets.json; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,8 @@
 		076D86722D05CA96003BF28D /* scripts */ = {
 			isa = PBXGroup;
 			children = (
+				07C80E1E2FCD092900106C83 /* CMakeLists.txt */,
+				07C80E1F2FCD092900106C83 /* CMakePresets.json */,
 				07980B892E81AEEA007A0EB4 /* tag_release.sh */,
 				072E94B62E19323F0051F9AB /* setup_and_build.bat */,
 				072E94B72E19323F0051F9AB /* setup_and_build_debian.sh */,
