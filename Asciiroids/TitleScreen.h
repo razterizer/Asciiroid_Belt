@@ -9,6 +9,7 @@
 #include <Termin8or/title/ASCII_Fonts.h>
 #include <Termin8or/drawing/TextureFile.h>
 #include <Termin8or/drawing/Drawing.h>
+#include <Termin8or/screen/ScreenUtils.h>
 #include <Core/FolderHelper.h>
 //40x100
 
@@ -57,16 +58,16 @@
 //38//                                                                                                    |
 //39//                                                                                     (c) 2025       |
 //40//----------------------------------------------------------------------------------------------------+
-template<int NR, int NC>
-void draw_title(t8::ScreenHandler<NR, NC>& sh, const t8x::FontDataColl& font_data, const t8x::ColorScheme& font_colors, const std::string& exe_folder)
+template<int NR, int NC, typename CharT>
+void draw_title(t8::ScreenHandler<NR, NC, CharT>& sh, const t8x::FontDataColl& font_data, const t8x::ColorScheme& font_colors, const std::string& exe_folder, bool framed)
 {
   using Color16 = t8::Color16;
 
-  sh.write_buffer(" Rasmus Anthin ", 0, 75, Color16::Black, Color16::White);
+  sh.write_buffer(" Rasmus Anthin ", framed ? 1 : 0, 75, Color16::Black, Color16::White);
   
-  sh.write_buffer(" Presents: ", 1, 77, Color16::Black, Color16::White);
+  sh.write_buffer(" Presents: ", framed ? 2 : 1, 77, Color16::Black, Color16::White);
   
-  sh.write_buffer(" (c) 2025 ", 39, 90, Color16::Black, Color16::White);
+  sh.write_buffer(" (c) 2025 ", framed ? 38 : 39, framed ? 89 : 90, Color16::Black, Color16::White);
   
   t8x::draw_text(sh, font_data, font_colors, "Asciiroids", 32, 23, t8x::Font::Avatar);
   
@@ -77,8 +78,11 @@ void draw_title(t8::ScreenHandler<NR, NC>& sh, const t8x::FontDataColl& font_dat
   auto filepath_tex = folder::join_path({ exe_folder, "asciiroids.tx" });
   t8::TextureFile::load(tex_splash, filepath_tex);
   
+  if (framed)
+    t8::draw_frame(sh, Color16::LightGray);
+  
   t8x::draw_box_textured(sh,
-                         0, 0, tex_splash.size.r, tex_splash.size.c,
+                         -1, -1, tex_splash.size.r, tex_splash.size.c,
                          t8x::SolarDirection::Zenith,
                          tex_splash);
   

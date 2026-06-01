@@ -9,8 +9,8 @@
 #include <Termin8or/title/ASCII_Fonts.h>
 
 
-template<int NR, int NC>
-void draw_instructions(t8::ScreenHandler<NR, NC>& sh, const t8x::FontDataColl& font_data, const t8x::ColorScheme& font_colors)
+template<int NR, int NC, typename CharT>
+void draw_instructions(t8::ScreenHandler<NR, NC, CharT>& sh, const t8x::FontDataColl& font_data, const t8x::ColorScheme& font_colors)
 {
   using Color16 = t8::Color16;
 

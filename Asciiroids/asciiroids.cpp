@@ -23,8 +23,9 @@
 
 using RC = t8::RC;
 using Color16 = t8::Color16;
+using CharT = char; // char32_t;
 template<int NR, int NC>
-using ScreenHandler = t8::ScreenHandler<NR, NC>;
+using ScreenHandler = t8::ScreenHandler<NR, NC, CharT>;
 using BitmapSprite = t8x::BitmapSprite;
 using VectorSprite = t8x::VectorSprite;
 using RigidBody = t8x::RigidBody;
@@ -47,7 +48,7 @@ static const float c_default_vol = 0.5f;
 // [x] Music.
 // ////////////////////////////
 
-class Game : public t8x::GameEngine<40, 100>
+class Game : public t8x::GameEngine<40, 100, CharT>
 {
 #ifdef DESIGN_SFX
   std::vector<float> vp_design;
@@ -74,6 +75,10 @@ public:
   //#endif
   
     shot_freq_timer.force_start(0.f);
+    
+    for (int a_idx = 1; a_idx < argc; ++a_idx)
+      if (std::strcmp(argv[a_idx], "--framed_splash_screen") == 0)
+        framed_splash = true;
   }
   
   ~Game()
@@ -1360,7 +1365,7 @@ private:
   
   virtual void draw_title() override
   {
-    ::draw_title(sh, font_data, color_schemes[0], get_exe_folder());
+    ::draw_title(sh, font_data, color_schemes[0], get_exe_folder(), framed_splash);
   }
   
   virtual void draw_instructions() override
@@ -1411,6 +1416,8 @@ private:
   
   std::vector<t8x::ColorScheme> color_schemes;
   t8x::FontDataColl font_data;
+  
+  bool framed_splash = false;
   
   t8x::SpriteHandler sprh;
   t8x::DynamicsSystem dyn_sys;
@@ -1605,6 +1612,7 @@ int main(int argc, char** argv)
     std::cout << "   [--disable_3d_audio]" << std::endl;
     std::cout << "   [--music_volume <music_vol>]" << std::endl;
     std::cout << "   [--sfx_volume <sfx_vol>]" << std::endl;
+    std::cout << "   [--framed_splash_screen]" << std::endl;
     std::cout << std::endl;
     std::cout << "  default values:" << std::endl;
     std::cout << "    <fps>       : " << game.get_real_fps() << std::endl;
