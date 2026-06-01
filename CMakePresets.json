@@ -1,0 +1,40 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 24,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "dev",
+      "displayName": "Developer mode (local checkouts)",
+      "binaryDir": "${sourceDir}/build/dev",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "ASCIIROIDS_FETCH_DEPENDENCIES": "OFF"
+      }
+    },
+    {
+      "name": "pinned",
+      "displayName": "Pinned dependency revisions",
+      "binaryDir": "${sourceDir}/build/pinned",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "ASCIIROIDS_FETCH_DEPENDENCIES": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "dev",
+      "configurePreset": "dev"
+    },
+    {
+      "name": "pinned",
+      "configurePreset": "pinned"
+    }
+  ]
+}
