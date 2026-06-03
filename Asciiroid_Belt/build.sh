@@ -42,3 +42,4 @@ cp ../../lib/Termin8or/include/Termin8or/title/fonts/* bin/fonts/
 
 cp music.ct bin/
 cp asciiroid_belt.tx bin/
+cp title.txt bin/
