@@ -48,6 +48,7 @@
 		072E94CE2E19373A0051F9AB /* Keyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keyboard.h; sourceTree = "<group>"; };
 		072E94CF2E19373A0051F9AB /* TitleScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TitleScreen.h; sourceTree = "<group>"; };
 		072E94E32E1B6F750051F9AB /* music.ct */ = {isa = PBXFileReference; lastKnownFileType = text; path = music.ct; sourceTree = "<group>"; };
+		072E94E42E1B6F750051F9AB /* title.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = title.txt; sourceTree = "<group>"; };
 		0733A59F2EBEABB30045BCFD /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASE_NOTES.md; sourceTree = "<group>"; };
 		07980B832E8042B5007A0EB4 /* release-macos.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "release-macos.yml"; path = ".github/workflows/release-macos.yml"; sourceTree = SOURCE_ROOT; };
 		07980B842E8042B5007A0EB4 /* release-linux.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = "release-linux.yml"; path = ".github/workflows/release-linux.yml"; sourceTree = SOURCE_ROOT; };
