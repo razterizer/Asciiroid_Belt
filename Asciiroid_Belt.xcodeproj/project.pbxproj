@@ -149,6 +149,7 @@
 				072E94CE2E19373A0051F9AB /* Keyboard.h */,
 				072E94CF2E19373A0051F9AB /* TitleScreen.h */,
 				072E94E32E1B6F750051F9AB /* music.ct */,
+				072E94E42E1B6F750051F9AB /* title.txt */,
 			);
 			path = Asciiroid_Belt;
 			sourceTree = "<group>";
