@@ -282,7 +282,7 @@ public:
       }
     }
     
-    std::string font_data_path = t8x::get_path_to_font_data(get_exe_folder());
+    std::string font_data_path = folder::join_path({ get_exe_folder(), "fonts" });
     std::cout << font_data_path << std::endl;
     
     auto& cs0 = color_schemes.emplace_back();
