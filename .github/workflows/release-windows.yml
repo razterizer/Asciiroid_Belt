@@ -47,6 +47,7 @@ jobs:
           Copy-Item "Asciiroid_Belt/x64/Release/Asciiroid_Belt.exe" "upload-temp/"
           Copy-Item "Asciiroid_Belt/x64/Release/music.ct" "upload-temp/"
           Copy-Item "Asciiroid_Belt/x64/Release/asciiroid_belt.tx" "upload-temp/"
+          Copy-Item "Asciiroid_Belt/x64/Release/title.txt" "upload-temp/"
           if (Test-Path "Asciiroid_Belt/x64/Release/fonts") {
               Copy-Item -Recurse "Asciiroid_Belt/x64/Release/fonts" "upload-temp/"
           }
@@ -88,6 +89,7 @@ jobs:
           Copy-Item "Asciiroid_Belt.exe" "asciiroid_belt-${{ github.ref_name }}/"
           Copy-Item "music.ct" "asciiroid_belt-${{ github.ref_name }}/"
           Copy-Item "asciiroid_belt.tx" "asciiroid_belt-${{ github.ref_name }}/"
+          Copy-Item "title.txt" "asciiroid_belt-${{ github.ref_name }}/"
           # Copy fonts directory (if it exists)
           if (Test-Path "fonts") {
             Copy-Item -Recurse "fonts" "asciiroid_belt-${{ github.ref_name }}/"

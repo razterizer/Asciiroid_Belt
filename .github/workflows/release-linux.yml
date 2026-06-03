@@ -101,6 +101,7 @@ jobs:
           cp glibc2.35/asciiroid_belt asciiroid_belt-${{ github.ref_name }}/asciiroid_belt-glibc2.35
           cp glibc2.38/music.ct asciiroid_belt-${{ github.ref_name }}/
           cp glibc2.38/asciiroid_belt.tx asciiroid_belt-${{ github.ref_name }}/
+          cp glibc2.38/title.txt asciiroid_belt-${{ github.ref_name }}/
           if [ -d glibc2.38/fonts ]; then
             cp -r glibc2.38/fonts asciiroid_belt-${{ github.ref_name }}/
           fi
