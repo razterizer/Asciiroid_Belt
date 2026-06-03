@@ -69,7 +69,10 @@ void draw_title(t8::ScreenHandler<NR, NC, CharT>& sh, const t8x::FontDataColl& f
   
   sh.write_buffer(" (c) 2025 ", framed ? 38 : 39, framed ? 89 : 90, Color16::Black, Color16::White);
   
-  t8x::draw_text(sh, font_data, font_colors, "Asciiroid Belt", 32, 23, t8x::Font::Avatar);
+  std::string title = "Asciiroid Belt";
+  t8x::Font font = t8x::Font::Avatar;
+  auto text_width = calc_text_width(font_data, title, font);
+  t8x::draw_text(sh, font_data, font_colors, title, 32, (NC - text_width)/2, font);
   
   sh.write_buffer("Press space-bar to continue...", 38, 33, Color16::Black, Color16::White);
   
@@ -86,5 +89,5 @@ void draw_title(t8::ScreenHandler<NR, NC, CharT>& sh, const t8x::FontDataColl& f
                          t8x::SolarDirection::Zenith,
                          tex_splash);
   
-  sh.replace_bg_color(Color16::White, t8::Rectangle { 32, 23, 5, 51 });
+  //sh.replace_bg_color(Color16::White, t8::Rectangle { 32, 23, 5, 51 });
 }
