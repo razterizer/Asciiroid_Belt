@@ -1583,7 +1583,6 @@ int main(int argc, char** argv)
         params.log_mode = LogMode::Record;
       else if (std::strcmp(argv[i + 1], "replay") == 0)
         params.log_mode = LogMode::Replay;
-      params.xcode_log_path = "../../../../../../../../Documents/xcode/Asciiroid_Belt/Asciiroid_Belt/bin/";
     }
     else if (std::strcmp(argv[i], "--disable_audio") == 0)
       use_audio = false;
