@@ -99,11 +99,6 @@ public:
     try
     {
       std::string tune_path = get_exe_folder();
-#ifndef _WIN32
-      const char* xcode_env = std::getenv("RUNNING_FROM_XCODE");
-      if (xcode_env != nullptr)
-        tune_path = "../../../../../../../../Documents/xcode/Asciiroid_Belt/Asciiroid_Belt/"; // #FIXME: Find a better solution!
-#endif
     
       if (enable_audio && chip_tune.load_tune(folder::join_path({ tune_path, "music.ct" })))
       {
