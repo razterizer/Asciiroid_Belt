@@ -291,8 +291,12 @@ public:
     std::cout << font_data_path << std::endl;
     
     auto& cs0 = color_schemes.emplace_back();
-    cs0.internal.fg_color = Color16::Black;
-    cs0.internal.bg_color = Color16::White;
+    cs0.internal.fg_color = Color16::White;
+    cs0.internal.bg_color = Color16::Black;
+    cs0.dot_internal.fg_color = Color16::White;
+    cs0.dot_internal.bg_color = Color16::DarkGray;
+    cs0.dot_side_h.fg_color = Color16::White;
+    cs0.dot_side_h.bg_color = Color16::DarkGray;
     auto& cs1 = color_schemes.emplace_back();
     cs1.internal.fg_color = Color16::White;
     cs1.internal.bg_color = Color16::Black;
