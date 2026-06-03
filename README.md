@@ -39,6 +39,12 @@ It uses the Termin8or `CollisionHandler` for collisions between asteroids <-> sp
 
 I hope this game will give you much joy and fun.
 
+### Custom Title
+
+The title shown on the splash screen is loaded from `Asciiroid_Belt/title.txt`.
+The first line is the display title, and the optional second line selects the Termin8or title font.
+Builds copy this file into the runtime folder together with the other game assets.
+
 ### Keys
 
   * `←`, `a`           : Turn Left.
@@ -133,10 +139,10 @@ Make sure the folder structure looks like this:
 <my_source_code_dir>/lib/AudioLibSwitcher_applaudio ; AudioLibSwitcher_applaudio repo workspace/checkout goes here.
 <my_source_code_dir>/lib/TrainOfThought             ; TrainOfThought repo workspace/checkout goes here.
 <my_source_code_dir>/lib/applaudio                  ; applaudio repo workspace/checkout goes here.
-<my_source_code_dir>Asciiroid_Belt/                     ; Asciiroid Belt repo workspace/checkout goes here.
+<my_source_code_dir>/Asciiroid_Belt/                 ; Asciiroid Belt repo workspace/checkout goes here.
 ```
 
-These repos are not guaranteed to all the time work with the latest version of `Asciiroid Belt`. If you want the more stable aproach then look at Option 1 instead.
+These repos are not guaranteed to all the time work with the latest version of `Asciiroid Belt`. If you want the more stable approach then look at Option 1 instead.
 
 ### Windows
 
