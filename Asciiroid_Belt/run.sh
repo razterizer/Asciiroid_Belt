@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bin/asciiroids
+bin/asciiroid_belt
