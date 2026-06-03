@@ -38,5 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\music.ct" />
+    <Text Include="..\asciiroid_belt.tx" />
+    <Text Include="..\title.txt" />
   </ItemGroup>
 </Project>
