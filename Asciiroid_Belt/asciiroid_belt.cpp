@@ -102,7 +102,7 @@ public:
 #ifndef _WIN32
       const char* xcode_env = std::getenv("RUNNING_FROM_XCODE");
       if (xcode_env != nullptr)
-        tune_path = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroid_Belt/"; // #FIXME: Find a better solution!
+        tune_path = "../../../../../../../../Documents/xcode/Asciiroid_Belt/Asciiroid_Belt/"; // #FIXME: Find a better solution!
 #endif
     
       if (enable_audio && chip_tune.load_tune(folder::join_path({ tune_path, "music.ct" })))
@@ -1583,7 +1583,7 @@ int main(int argc, char** argv)
         params.log_mode = LogMode::Record;
       else if (std::strcmp(argv[i + 1], "replay") == 0)
         params.log_mode = LogMode::Replay;
-      params.xcode_log_path = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroid_Belt/bin/";
+      params.xcode_log_path = "../../../../../../../../Documents/xcode/Asciiroid_Belt/Asciiroid_Belt/bin/";
     }
     else if (std::strcmp(argv[i], "--disable_audio") == 0)
       use_audio = false;
