@@ -1,6 +1,6 @@
 //
 //  TitleScreen.h
-//  Asciiroids
+//  Asciiroid_Belt
 //
 //  Created by Rasmus Anthin on 2025-07-05.
 //
@@ -69,13 +69,13 @@ void draw_title(t8::ScreenHandler<NR, NC, CharT>& sh, const t8x::FontDataColl& f
   
   sh.write_buffer(" (c) 2025 ", framed ? 38 : 39, framed ? 89 : 90, Color16::Black, Color16::White);
   
-  t8x::draw_text(sh, font_data, font_colors, "Asciiroids", 32, 23, t8x::Font::Avatar);
+  t8x::draw_text(sh, font_data, font_colors, "Asciiroid Belt", 32, 23, t8x::Font::Avatar);
   
   sh.write_buffer("Press space-bar to continue...", 38, 33, Color16::Black, Color16::White);
   
   t8::Texture tex_splash;
   
-  auto filepath_tex = folder::join_path({ exe_folder, "asciiroids.tx" });
+  auto filepath_tex = folder::join_path({ exe_folder, "asciiroid_belt.tx" });
   t8::TextureFile::load(tex_splash, filepath_tex);
   
   if (framed)
@@ -88,4 +88,3 @@ void draw_title(t8::ScreenHandler<NR, NC, CharT>& sh, const t8x::FontDataColl& f
   
   sh.replace_bg_color(Color16::White, t8::Rectangle { 32, 23, 5, 51 });
 }
-

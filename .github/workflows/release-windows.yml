@@ -32,7 +32,7 @@ jobs:
       - name: Run build.bat
         continue-on-error: false
         run: |
-          cd $env:GITHUB_WORKSPACE\Asciiroids
+          cd $env:GITHUB_WORKSPACE\Asciiroid_Belt
           ./build.bat
           
       - name: Debug - List ALL files after build
@@ -44,18 +44,18 @@ jobs:
       - name: Prepare files for upload
         run: |
           New-Item -ItemType Directory -Force -Path "upload-temp"
-          Copy-Item "Asciiroids/x64/Release/Asciiroids.exe" "upload-temp/"
-          Copy-Item "Asciiroids/x64/Release/music.ct" "upload-temp/"
-          Copy-Item "Asciiroids/x64/Release/asciiroids.tx" "upload-temp/"
-          if (Test-Path "Asciiroids/x64/Release/fonts") {
-              Copy-Item -Recurse "Asciiroids/x64/Release/fonts" "upload-temp/"
+          Copy-Item "Asciiroid_Belt/x64/Release/Asciiroid_Belt.exe" "upload-temp/"
+          Copy-Item "Asciiroid_Belt/x64/Release/music.ct" "upload-temp/"
+          Copy-Item "Asciiroid_Belt/x64/Release/asciiroid_belt.tx" "upload-temp/"
+          if (Test-Path "Asciiroid_Belt/x64/Release/fonts") {
+              Copy-Item -Recurse "Asciiroid_Belt/x64/Release/fonts" "upload-temp/"
           }
 
       # Step 4: Upload build artifact
       - name: Upload Windows build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: asciiroids-windows-build
+          name: asciiroid_belt-windows-build
           path: upload-temp/
           retention-days: 1
 
@@ -70,7 +70,7 @@ jobs:
       - name: Download Windows build artifact
         uses: actions/download-artifact@v4
         with:
-          name: asciiroids-windows-build
+          name: asciiroid_belt-windows-build
           path: windows-build
           
       - name: Debug - List downloaded files
@@ -83,23 +83,23 @@ jobs:
         run: |
           cd windows-build
           # Create a clean distribution folder
-          New-Item -ItemType Directory -Force -Path "asciiroids-${{ github.ref_name }}"
+          New-Item -ItemType Directory -Force -Path "asciiroid_belt-${{ github.ref_name }}"
           # Copy the executable and necessary files
-          Copy-Item "Asciiroids.exe" "asciiroids-${{ github.ref_name }}/"
-          Copy-Item "music.ct" "asciiroids-${{ github.ref_name }}/"
-          Copy-Item "asciiroids.tx" "asciiroids-${{ github.ref_name }}/"
+          Copy-Item "Asciiroid_Belt.exe" "asciiroid_belt-${{ github.ref_name }}/"
+          Copy-Item "music.ct" "asciiroid_belt-${{ github.ref_name }}/"
+          Copy-Item "asciiroid_belt.tx" "asciiroid_belt-${{ github.ref_name }}/"
           # Copy fonts directory (if it exists)
           if (Test-Path "fonts") {
-            Copy-Item -Recurse "fonts" "asciiroids-${{ github.ref_name }}/"
+            Copy-Item -Recurse "fonts" "asciiroid_belt-${{ github.ref_name }}/"
           }
-          echo "Unblock instructions:" > asciiroids-${{ github.ref_name }}/README.txt
-          echo "=====================" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "To tell Windows that this executable is fine" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo " you can unblock the executable by" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo " rightclicking the exe, then:" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "   Properties -> Unblock (check this)." >> asciiroids-${{ github.ref_name }}/README.txt
+          echo "Unblock instructions:" > asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "=====================" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "To tell Windows that this executable is fine" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo " you can unblock the executable by" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo " rightclicking the exe, then:" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "   Properties -> Unblock (check this)." >> asciiroid_belt-${{ github.ref_name }}/README.txt
           # Create zip archive
-          Compress-Archive -Path "asciiroids-${{ github.ref_name }}" -DestinationPath "asciiroids-${{ github.ref_name }}-windows.zip"
+          Compress-Archive -Path "asciiroid_belt-${{ github.ref_name }}" -DestinationPath "asciiroid_belt-${{ github.ref_name }}-windows.zip"
           
       - name: Extract tag annotation as release notes
         shell: bash
@@ -114,7 +114,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref_name }}
-          artifacts: windows-build/asciiroids-${{ github.ref_name }}-windows.zip
+          artifacts: windows-build/asciiroid_belt-${{ github.ref_name }}-windows.zip
           allowUpdates: true
           bodyFile: RELEASE_NOTES.txt
         env:

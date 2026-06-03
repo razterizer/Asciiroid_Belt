@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPO_DIR="Asciiroids"
+REPO_DIR="Asciiroid_Belt"
 
 # sudo apt install libopenal-dev
 

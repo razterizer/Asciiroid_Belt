@@ -32,15 +32,15 @@ jobs:
       
       - name: Build project
         run: |
-          cd Asciiroids
+          cd Asciiroid_Belt
           ./build.sh
         continue-on-error: false
 
       - name: Upload macOS build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: asciiroids-macos-build
-          path: Asciiroids/bin/
+          name: asciiroid_belt-macos-build
+          path: Asciiroid_Belt/bin/
           retention-days: 1
 
   create-macos-release:
@@ -54,32 +54,32 @@ jobs:
       - name: Download macOS build artifact
         uses: actions/download-artifact@v4
         with:
-          name: asciiroids-macos-build
+          name: asciiroid_belt-macos-build
           path: macos-build
           
       - name: Create macOS distribution package
         run: |
           cd macos-build
           # Create a clean distribution folder
-          mkdir -p asciiroids-${{ github.ref_name }}
+          mkdir -p asciiroid_belt-${{ github.ref_name }}
           # Copy the executable and necessary files
-          chmod ugo+x asciiroids
-          cp asciiroids asciiroids-${{ github.ref_name }}/
-          # cp hiscores.txt asciiroids-${{ github.ref_name }}/
-          cp music.ct asciiroids-${{ github.ref_name }}/
-          cp asciiroids.tx asciiroids-${{ github.ref_name }}/
+          chmod ugo+x asciiroid_belt
+          cp asciiroid_belt asciiroid_belt-${{ github.ref_name }}/
+          # cp hiscores.txt asciiroid_belt-${{ github.ref_name }}/
+          cp music.ct asciiroid_belt-${{ github.ref_name }}/
+          cp asciiroid_belt.tx asciiroid_belt-${{ github.ref_name }}/
           # Copy fonts directory (if it exists)
           if [ -d fonts ]; then
-            cp -r fonts asciiroids-${{ github.ref_name }}/
+            cp -r fonts asciiroid_belt-${{ github.ref_name }}/
           fi
-          echo "Unblock instructions:" > asciiroids-${{ github.ref_name }}/README.txt
-          echo "=====================" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "To tell the gatekeeper that this executable is fine" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo " you can unblock the executable with" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo " the following command:" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "   xattr -dr com.apple.quarantine asciiroids" >> asciiroids-${{ github.ref_name }}/README.txt
+          echo "Unblock instructions:" > asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "=====================" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "To tell the gatekeeper that this executable is fine" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo " you can unblock the executable with" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo " the following command:" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "   xattr -dr com.apple.quarantine asciiroid_belt" >> asciiroid_belt-${{ github.ref_name }}/README.txt
           # Create zip archive
-          zip -r asciiroids-${{ github.ref_name }}-macos.zip asciiroids-${{ github.ref_name }}/
+          zip -r asciiroid_belt-${{ github.ref_name }}-macos.zip asciiroid_belt-${{ github.ref_name }}/
           
       - name: Extract tag annotation as release notes
         id: notes
@@ -94,7 +94,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref_name }}
-          artifacts: macos-build/asciiroids-${{ github.ref_name }}-macos.zip
+          artifacts: macos-build/asciiroid_belt-${{ github.ref_name }}-macos.zip
           allowUpdates: true
           bodyFile: RELEASE_NOTES.txt
         env:

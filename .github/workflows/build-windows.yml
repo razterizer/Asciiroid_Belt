@@ -88,7 +88,7 @@ jobs:
       - name: Run build.bat
         continue-on-error: false # Ensure errors are not bypassed
         run: |
-          cd $env:GITHUB_WORKSPACE\Asciiroids
+          cd $env:GITHUB_WORKSPACE\Asciiroid_Belt
           ./build.bat
 
   build-program-with-locked-dependencies:
@@ -109,12 +109,12 @@ jobs:
       - name: Fetch dependencies
         run: |
           cd ..
-          python ./Asciiroids/fetch-dependencies.py Asciiroids/dependencies -y
+          python ./Asciiroid_Belt/fetch-dependencies.py Asciiroid_Belt/dependencies -y
 
       # Step 3: Change to the correct directory and build
       - name: Run build.bat
         continue-on-error: false # Ensure errors are not bypassed
         run: |
           pwd
-          cd $env:GITHUB_WORKSPACE\Asciiroids
+          cd $env:GITHUB_WORKSPACE\Asciiroid_Belt
           ./build.bat

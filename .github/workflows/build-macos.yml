@@ -39,7 +39,7 @@ jobs:
       # Step 3: Change to the correct directory and build
       - name: Build project
         run: |
-          cd Asciiroids
+          cd Asciiroid_Belt
           ./build.sh
         continue-on-error: false # Ensure errors are not bypassed
   
@@ -55,7 +55,7 @@ jobs:
       - name: Fetch dependencies
         run: |
           cd ..
-          ./Asciiroids/fetch-dependencies.py Asciiroids/dependencies -y
+          ./Asciiroid_Belt/fetch-dependencies.py Asciiroid_Belt/dependencies -y
 
       # Step 3: Install OpenAL
       - name: Install OpenAL
@@ -65,7 +65,7 @@ jobs:
       # Step 4: Change to the correct directory and build
       - name: Build project
         run: |
-          cd Asciiroids
+          cd Asciiroid_Belt
           ./build.sh
         continue-on-error: false # Ensure errors are not bypassed
 

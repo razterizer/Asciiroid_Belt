@@ -1,6 +1,6 @@
 @echo off
 
-set REPO_DIR=Asciiroids
+set REPO_DIR=Asciiroid_Belt
 
 REM Change directory
 cd ..

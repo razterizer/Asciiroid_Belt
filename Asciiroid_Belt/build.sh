@@ -25,7 +25,7 @@ else
   export BUILD_PKG_CONFIG_MODULES='alsa'
 fi
 
-../../lib/Core/build.sh asciiroids "$1" "${additional_flags[@]}"
+../../lib/Core/build.sh asciiroid_belt "$1" "${additional_flags[@]}"
 
 # Capture the exit code of Core/build.sh
 exit_code=$?
@@ -41,4 +41,4 @@ mkdir -p bin/fonts/
 cp ../../lib/Termin8or/include/Termin8or/title/fonts/* bin/fonts/
 
 cp music.ct bin/
-cp asciiroids.tx bin/
+cp asciiroid_belt.tx bin/

@@ -13,7 +13,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-        "ASCIIROIDS_FETCH_DEPENDENCIES": "OFF"
+        "ASCIIROID_BELT_FETCH_DEPENDENCIES": "OFF"
       }
     },
     {
@@ -23,7 +23,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-        "ASCIIROIDS_FETCH_DEPENDENCIES": "ON"
+        "ASCIIROID_BELT_FETCH_DEPENDENCIES": "ON"
       }
     }
   ],

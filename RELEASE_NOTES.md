@@ -1,7 +1,7 @@
 # Release Notes
 
 ## 1.3.1.9
-- Replaced the hard-coded title splash screen with an external asciiroids.tx texture asset.
+- Replaced the hard-coded title splash screen with an external asciiroid_belt.tx texture asset.
 - Included the new splash texture in local builds and Linux, macOS, and Windows release packages.
 
 ## 1.3.0.8

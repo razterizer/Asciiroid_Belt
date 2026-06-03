@@ -30,15 +30,15 @@ jobs:
 
       - name: Build project
         run: |
-          cd Asciiroids
+          cd Asciiroid_Belt
           ./build.sh
         continue-on-error: false
 
       - name: Upload Linux build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: asciiroids-glibc2.38
-          path: Asciiroids/bin/
+          name: asciiroid_belt-glibc2.38
+          path: Asciiroid_Belt/bin/
           retention-days: 1
 
   build-legacy-linux-release:
@@ -64,15 +64,15 @@ jobs:
 
       - name: Build project
         run: |
-          cd Asciiroids
+          cd Asciiroid_Belt
           ./build.sh
         continue-on-error: false
 
       - name: Upload Legacy Linux build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: asciiroids-glibc2.35
-          path: Asciiroids/bin/
+          name: asciiroid_belt-glibc2.35
+          path: Asciiroid_Belt/bin/
           retention-days: 1
 
   create-linux-release:
@@ -85,36 +85,36 @@ jobs:
       - name: Download GLIBC 2.38 build
         uses: actions/download-artifact@v4
         with:
-          name: asciiroids-glibc2.38
+          name: asciiroid_belt-glibc2.38
           path: glibc2.38
 
       - name: Download GLIBC 2.35 build
         uses: actions/download-artifact@v4
         with:
-          name: asciiroids-glibc2.35
+          name: asciiroid_belt-glibc2.35
           path: glibc2.35
 
       - name: Create combined Linux distribution package
         run: |
-          mkdir asciiroids-${{ github.ref_name }}
-          cp glibc2.38/asciiroids asciiroids-${{ github.ref_name }}/asciiroids-glibc2.38
-          cp glibc2.35/asciiroids asciiroids-${{ github.ref_name }}/asciiroids-glibc2.35
-          cp glibc2.38/music.ct asciiroids-${{ github.ref_name }}/
-          cp glibc2.38/asciiroids.tx asciiroids-${{ github.ref_name }}/
+          mkdir asciiroid_belt-${{ github.ref_name }}
+          cp glibc2.38/asciiroid_belt asciiroid_belt-${{ github.ref_name }}/asciiroid_belt-glibc2.38
+          cp glibc2.35/asciiroid_belt asciiroid_belt-${{ github.ref_name }}/asciiroid_belt-glibc2.35
+          cp glibc2.38/music.ct asciiroid_belt-${{ github.ref_name }}/
+          cp glibc2.38/asciiroid_belt.tx asciiroid_belt-${{ github.ref_name }}/
           if [ -d glibc2.38/fonts ]; then
-            cp -r glibc2.38/fonts asciiroids-${{ github.ref_name }}/
+            cp -r glibc2.38/fonts asciiroid_belt-${{ github.ref_name }}/
           fi
-          echo "This package contains two binaries:" > asciiroids-${{ github.ref_name }}/README.txt
-          echo "- asciiroids-glibc2.38: for modern systems (Ubuntu 24.04+, Arch Linux)" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "- asciiroids-glibc2.35: for legacy systems (WSL, Ubuntu 22.04)" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "Run the binary that matches your system's glibc version." >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "To run either executable, you might have to first do:" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "  chmod ugo+x asciiroids-glibc2.38" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo " or:" >> asciiroids-${{ github.ref_name }}/README.txt
-          echo "  chmod ugo+x asciiroids-glibc2.35" >> asciiroids-${{ github.ref_name }}/README.txt
-          tar -czf asciiroids-${{ github.ref_name }}-linux.tar.gz asciiroids-${{ github.ref_name }}/
+          echo "This package contains two binaries:" > asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "- asciiroid_belt-glibc2.38: for modern systems (Ubuntu 24.04+, Arch Linux)" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "- asciiroid_belt-glibc2.35: for legacy systems (WSL, Ubuntu 22.04)" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "Run the binary that matches your system's glibc version." >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "To run either executable, you might have to first do:" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "  chmod ugo+x asciiroid_belt-glibc2.38" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo " or:" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          echo "  chmod ugo+x asciiroid_belt-glibc2.35" >> asciiroid_belt-${{ github.ref_name }}/README.txt
+          tar -czf asciiroid_belt-${{ github.ref_name }}-linux.tar.gz asciiroid_belt-${{ github.ref_name }}/
 
       - name: Extract tag annotation as release notes
         id: notes
@@ -129,7 +129,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref_name }}
-          artifacts: asciiroids-${{ github.ref_name }}-linux.tar.gz
+          artifacts: asciiroid_belt-${{ github.ref_name }}-linux.tar.gz
           allowUpdates: true
           bodyFile: RELEASE_NOTES.txt
         env:

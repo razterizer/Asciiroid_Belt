@@ -1,22 +1,22 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(Asciiroids LANGUAGES CXX)
+project(Asciiroid_Belt LANGUAGES CXX)
 
 include(FetchContent)
 
-option(ASCIIROIDS_FETCH_DEPENDENCIES
+option(ASCIIROID_BELT_FETCH_DEPENDENCIES
        "Fetch the dependency revisions pinned by this CMakeLists.txt"
        OFF)
 
-set(ASCIIROIDS_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../lib"
+set(ASCIIROID_BELT_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../lib"
     CACHE PATH "Default parent directory for local dependency checkouts")
 
-function(asciiroids_resolve_dependency name repository revision)
+function(asciiroid_belt_resolve_dependency name repository revision)
   string(TOUPPER "${name}" dependency_upper)
   string(REPLACE "-" "_" dependency_upper "${dependency_upper}")
-  set(source_dir_var "ASCIIROIDS_${dependency_upper}_SOURCE_DIR")
+  set(source_dir_var "ASCIIROID_BELT_${dependency_upper}_SOURCE_DIR")
 
-  if(ASCIIROIDS_FETCH_DEPENDENCIES)
+  if(ASCIIROID_BELT_FETCH_DEPENDENCIES)
     string(TOLOWER "${name}" dependency_key)
     string(REPLACE "-" "_" dependency_key "${dependency_key}")
     FetchContent_Declare(
@@ -29,7 +29,7 @@ function(asciiroids_resolve_dependency name repository revision)
     FetchContent_MakeAvailable("${dependency_key}")
     set(source_dir "${${dependency_key}_SOURCE_DIR}")
   else()
-    set("${source_dir_var}" "${ASCIIROIDS_LIB_DIR}/${name}"
+    set("${source_dir_var}" "${ASCIIROID_BELT_LIB_DIR}/${name}"
         CACHE PATH "Path to the local ${name} checkout")
     set(source_dir "${${source_dir_var}}")
   endif()
@@ -37,26 +37,26 @@ function(asciiroids_resolve_dependency name repository revision)
   if(NOT EXISTS "${source_dir}/include")
     message(FATAL_ERROR
       "${name} was not found at '${source_dir}'. "
-      "Set ${source_dir_var}, set ASCIIROIDS_LIB_DIR, or configure with "
-      "-DASCIIROIDS_FETCH_DEPENDENCIES=ON.")
+      "Set ${source_dir_var}, set ASCIIROID_BELT_LIB_DIR, or configure with "
+      "-DASCIIROID_BELT_FETCH_DEPENDENCIES=ON.")
   endif()
 
   set("${name}_SOURCE_DIR" "${source_dir}" PARENT_SCOPE)
 endfunction()
 
-function(asciiroids_add_legacy_header_library name source_dir)
+function(asciiroid_belt_add_legacy_header_library name source_dir)
   add_library("${name}" INTERFACE)
   add_library("${name}::${name}" ALIAS "${name}")
   target_include_directories("${name}" INTERFACE "${source_dir}/include")
 endfunction()
 
-function(asciiroids_add_dependency name source_dir)
+function(asciiroid_belt_add_dependency name source_dir)
   if(EXISTS "${source_dir}/CMakeLists.txt")
     add_subdirectory("${source_dir}"
                      "${CMAKE_CURRENT_BINARY_DIR}/dependencies/${name}"
                      EXCLUDE_FROM_ALL)
   else()
-    asciiroids_add_legacy_header_library("${name}" "${source_dir}")
+    asciiroid_belt_add_legacy_header_library("${name}" "${source_dir}")
   endif()
 endfunction()
 
@@ -77,25 +77,25 @@ foreach(dependency_line IN LISTS dependency_lines)
   list(GET dependency_fields 1 dependency_repository)
   list(GET dependency_fields 2 dependency_revision)
   cmake_path(GET dependency_path FILENAME dependency_name)
-  asciiroids_resolve_dependency(
+  asciiroid_belt_resolve_dependency(
     "${dependency_name}"
     "${dependency_repository}"
     "${dependency_revision}"
   )
 endforeach()
 
-asciiroids_add_dependency(Core "${Core_SOURCE_DIR}")
-asciiroids_add_dependency(TrainOfThought "${TrainOfThought_SOURCE_DIR}")
+asciiroid_belt_add_dependency(Core "${Core_SOURCE_DIR}")
+asciiroid_belt_add_dependency(TrainOfThought "${TrainOfThought_SOURCE_DIR}")
 if(NOT EXISTS "${TrainOfThought_SOURCE_DIR}/CMakeLists.txt")
   target_link_libraries(TrainOfThought INTERFACE Core::Core)
 endif()
 
-asciiroids_add_dependency(Termin8or "${Termin8or_SOURCE_DIR}")
+asciiroid_belt_add_dependency(Termin8or "${Termin8or_SOURCE_DIR}")
 if(NOT EXISTS "${Termin8or_SOURCE_DIR}/CMakeLists.txt")
   target_link_libraries(Termin8or INTERFACE Core::Core)
 endif()
 
-asciiroids_add_dependency(applaudio "${applaudio_SOURCE_DIR}")
+asciiroid_belt_add_dependency(applaudio "${applaudio_SOURCE_DIR}")
 if(NOT EXISTS "${applaudio_SOURCE_DIR}/CMakeLists.txt")
   if(APPLE)
     find_library(AUDIOTOOLBOX_FRAMEWORK AudioToolbox REQUIRED)
@@ -115,7 +115,7 @@ if(NOT EXISTS "${applaudio_SOURCE_DIR}/CMakeLists.txt")
   endif()
 endif()
 
-asciiroids_add_dependency(
+asciiroid_belt_add_dependency(
   AudioLibSwitcher_applaudio "${AudioLibSwitcher_applaudio_SOURCE_DIR}"
 )
 if(NOT EXISTS "${AudioLibSwitcher_applaudio_SOURCE_DIR}/CMakeLists.txt")
@@ -127,7 +127,7 @@ if(NOT EXISTS "${AudioLibSwitcher_applaudio_SOURCE_DIR}/CMakeLists.txt")
   )
 endif()
 
-asciiroids_add_dependency(8Beat "${8Beat_SOURCE_DIR}")
+asciiroid_belt_add_dependency(8Beat "${8Beat_SOURCE_DIR}")
 if(NOT EXISTS "${8Beat_SOURCE_DIR}/CMakeLists.txt")
   target_compile_definitions(8Beat INTERFACE USE_APPLAUDIO)
   target_link_libraries(8Beat INTERFACE
@@ -137,24 +137,24 @@ if(NOT EXISTS "${8Beat_SOURCE_DIR}/CMakeLists.txt")
   )
 endif()
 
-add_executable(asciiroids Asciiroids/asciiroids.cpp)
-target_compile_features(asciiroids PRIVATE cxx_std_20)
-target_compile_options(asciiroids PRIVATE
+add_executable(asciiroid_belt Asciiroid_Belt/asciiroid_belt.cpp)
+target_compile_features(asciiroid_belt PRIVATE cxx_std_20)
+target_compile_options(asciiroid_belt PRIVATE
   $<$<CXX_COMPILER_ID:AppleClang,Clang,GNU>:-Wall>
 )
-target_link_libraries(asciiroids PRIVATE
+target_link_libraries(asciiroid_belt PRIVATE
   Termin8or::Termin8or
   8Beat::8Beat
 )
 
-add_custom_command(TARGET asciiroids POST_BUILD
+add_custom_command(TARGET asciiroid_belt POST_BUILD
   COMMAND "${CMAKE_COMMAND}" -E make_directory
-          "$<TARGET_FILE_DIR:asciiroids>/fonts"
+          "$<TARGET_FILE_DIR:asciiroid_belt>/fonts"
   COMMAND "${CMAKE_COMMAND}" -E copy_directory
           "${Termin8or_SOURCE_DIR}/include/Termin8or/title/fonts"
-          "$<TARGET_FILE_DIR:asciiroids>/fonts"
+          "$<TARGET_FILE_DIR:asciiroid_belt>/fonts"
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-          "${CMAKE_CURRENT_SOURCE_DIR}/Asciiroids/music.ct"
-          "${CMAKE_CURRENT_SOURCE_DIR}/Asciiroids/asciiroids.tx"
-          "$<TARGET_FILE_DIR:asciiroids>"
+          "${CMAKE_CURRENT_SOURCE_DIR}/Asciiroid_Belt/music.ct"
+          "${CMAKE_CURRENT_SOURCE_DIR}/Asciiroid_Belt/asciiroid_belt.tx"
+          "$<TARGET_FILE_DIR:asciiroid_belt>"
 )

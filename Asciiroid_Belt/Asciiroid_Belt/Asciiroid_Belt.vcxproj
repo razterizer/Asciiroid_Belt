@@ -25,14 +25,14 @@
     <ClInclude Include="..\TitleScreen.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\asciiroids.cpp" />
+    <ClCompile Include="..\asciiroid_belt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\build.sh" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\music.ct" />
-    <Text Include="..\asciiroids.tx" />
+    <Text Include="..\asciiroid_belt.tx" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -136,7 +136,7 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)\music.ct" "$(TargetDir)" /Y
-xcopy "$(SolutionDir)\asciiroids.tx" "$(TargetDir)" /Y
+xcopy "$(SolutionDir)\asciiroid_belt.tx" "$(TargetDir)" /Y
 xcopy "$(SolutionDir)\..\..\lib\Termin8or\include\Termin8or\title\fonts\*" "$(TargetDir)\fonts\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@ xcopy "$(SolutionDir)\..\..\lib\Termin8or\include\Termin8or\title\fonts\*" "$(Ta
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)\music.ct" "$(TargetDir)" /Y
-xcopy "$(SolutionDir)\asciiroids.tx" "$(TargetDir)" /Y
+xcopy "$(SolutionDir)\asciiroid_belt.tx" "$(TargetDir)" /Y
 xcopy "$(SolutionDir)\..\..\lib\Termin8or\include\Termin8or\title\fonts\*" "$(TargetDir)\fonts\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

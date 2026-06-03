@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Asciiroids", "Asciiroids\Asciiroids.vcxproj", "{3ABDD101-4FB2-404E-BC83-DEECC9FFD934}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Asciiroid_Belt", "Asciiroid_Belt\Asciiroid_Belt.vcxproj", "{3ABDD101-4FB2-404E-BC83-DEECC9FFD934}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

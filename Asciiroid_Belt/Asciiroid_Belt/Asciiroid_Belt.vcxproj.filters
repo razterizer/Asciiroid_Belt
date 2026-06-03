@@ -29,7 +29,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\asciiroids.cpp">
+    <ClCompile Include="..\asciiroid_belt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

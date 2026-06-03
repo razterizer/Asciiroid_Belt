@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPO_DIR="Asciiroids"
+REPO_DIR="Asciiroid_Belt"
 
 # brew install openal-soft
 

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		072E94D02E19373B0051F9AB /* asciiroids.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 072E94CB2E19373A0051F9AB /* asciiroids.cpp */; };
+		072E94D02E19373B0051F9AB /* asciiroid_belt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 072E94CB2E19373A0051F9AB /* asciiroid_belt.cpp */; };
 		0799EFEA2E78712100BAE112 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0799EFE82E7867D800BAE112 /* AudioToolbox.framework */; };
 		0799EFEB2E78712900BAE112 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0799EFE62E7865FF00BAE112 /* CoreAudio.framework */; };
 		0799EFED2E78713400BAE112 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0799EFEC2E78713400BAE112 /* CoreFoundation.framework */; };
@@ -26,7 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		072E943F2E18CCD00051F9AB /* Asciiroids */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Asciiroids; sourceTree = BUILT_PRODUCTS_DIR; };
+		072E943F2E18CCD00051F9AB /* Asciiroid_Belt */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Asciiroid_Belt; sourceTree = BUILT_PRODUCTS_DIR; };
 		072E94522E18DAC30051F9AB /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		072E94542E18DC4A0051F9AB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		072E946A2E1911010051F9AB /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		072E94B62E19323F0051F9AB /* setup_and_build.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = setup_and_build.bat; path = ../setup_and_build.bat; sourceTree = "<group>"; };
 		072E94B72E19323F0051F9AB /* setup_and_build_debian.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = setup_and_build_debian.sh; path = ../setup_and_build_debian.sh; sourceTree = "<group>"; };
 		072E94B82E19323F0051F9AB /* setup_and_build_macos.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = setup_and_build_macos.sh; path = ../setup_and_build_macos.sh; sourceTree = "<group>"; };
-		072E94CB2E19373A0051F9AB /* asciiroids.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = asciiroids.cpp; sourceTree = "<group>"; };
+		072E94CB2E19373A0051F9AB /* asciiroid_belt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = asciiroid_belt.cpp; sourceTree = "<group>"; };
 		072E94CC2E19373A0051F9AB /* Enums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
 		072E94CD2E19373A0051F9AB /* InstructionsScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstructionsScreen.h; sourceTree = "<group>"; };
 		072E94CE2E19373A0051F9AB /* Keyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keyboard.h; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 				072E946A2E1911010051F9AB /* LICENSE */,
 				072E94542E18DC4A0051F9AB /* README.md */,
 				0733A59F2EBEABB30045BCFD /* RELEASE_NOTES.md */,
-				07844E4028FDEBAA00B30C0D /* Asciiroids */,
+				07844E4028FDEBAA00B30C0D /* Asciiroid_Belt */,
 				072E94512E18DAC20051F9AB /* Frameworks */,
 				072E94402E18CCD00051F9AB /* Products */,
 			);
@@ -102,7 +102,7 @@
 		072E94402E18CCD00051F9AB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				072E943F2E18CCD00051F9AB /* Asciiroids */,
+				072E943F2E18CCD00051F9AB /* Asciiroid_Belt */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,27 +137,27 @@
 			name = scripts;
 			sourceTree = "<group>";
 		};
-		07844E4028FDEBAA00B30C0D /* Asciiroids */ = {
+		07844E4028FDEBAA00B30C0D /* Asciiroid_Belt */ = {
 			isa = PBXGroup;
 			children = (
 				076D86722D05CA96003BF28D /* scripts */,
 				0709B9C22C97111B00A43834 /* workflows */,
-				072E94CB2E19373A0051F9AB /* asciiroids.cpp */,
+				072E94CB2E19373A0051F9AB /* asciiroid_belt.cpp */,
 				072E94CC2E19373A0051F9AB /* Enums.h */,
 				072E94CD2E19373A0051F9AB /* InstructionsScreen.h */,
 				072E94CE2E19373A0051F9AB /* Keyboard.h */,
 				072E94CF2E19373A0051F9AB /* TitleScreen.h */,
 				072E94E32E1B6F750051F9AB /* music.ct */,
 			);
-			path = Asciiroids;
+			path = Asciiroid_Belt;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		072E943E2E18CCD00051F9AB /* Asciiroids */ = {
+		072E943E2E18CCD00051F9AB /* Asciiroid_Belt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 072E94462E18CCD00051F9AB /* Build configuration list for PBXNativeTarget "Asciiroids" */;
+			buildConfigurationList = 072E94462E18CCD00051F9AB /* Build configuration list for PBXNativeTarget "Asciiroid_Belt" */;
 			buildPhases = (
 				072E943B2E18CCD00051F9AB /* Sources */,
 				072E943C2E18CCD00051F9AB /* Frameworks */,
@@ -167,11 +167,11 @@
 			);
 			dependencies = (
 			);
-			name = Asciiroids;
+			name = Asciiroid_Belt;
 			packageProductDependencies = (
 			);
-			productName = Asciiroids;
-			productReference = 072E943F2E18CCD00051F9AB /* Asciiroids */;
+			productName = Asciiroid_Belt;
+			productReference = 072E943F2E18CCD00051F9AB /* Asciiroid_Belt */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -188,7 +188,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 072E943A2E18CCD00051F9AB /* Build configuration list for PBXProject "Asciiroids" */;
+			buildConfigurationList = 072E943A2E18CCD00051F9AB /* Build configuration list for PBXProject "Asciiroid_Belt" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -202,7 +202,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				072E943E2E18CCD00051F9AB /* Asciiroids */,
+				072E943E2E18CCD00051F9AB /* Asciiroid_Belt */,
 			);
 		};
 /* End PBXProject section */
@@ -212,7 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				072E94D02E19373B0051F9AB /* asciiroids.cpp in Sources */,
+				072E94D02E19373B0051F9AB /* asciiroid_belt.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,7 +385,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		072E943A2E18CCD00051F9AB /* Build configuration list for PBXProject "Asciiroids" */ = {
+		072E943A2E18CCD00051F9AB /* Build configuration list for PBXProject "Asciiroid_Belt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				072E94442E18CCD00051F9AB /* Debug */,
@@ -394,7 +394,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		072E94462E18CCD00051F9AB /* Build configuration list for PBXNativeTarget "Asciiroids" */ = {
+		072E94462E18CCD00051F9AB /* Build configuration list for PBXNativeTarget "Asciiroid_Belt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				072E94472E18CCD00051F9AB /* Debug */,

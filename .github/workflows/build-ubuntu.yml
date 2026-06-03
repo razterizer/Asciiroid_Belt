@@ -45,7 +45,7 @@ jobs:
       # Step 4: Change to the correct directory and build
       - name: Build project
         run: |
-          cd Asciiroids
+          cd Asciiroid_Belt
           ./build.sh
         continue-on-error: false # Ensure errors are not bypassed
   
@@ -53,15 +53,15 @@ jobs:
       - name: Run program
         if: false
         run: |
-             cd Asciiroids
-             ./bin/asciiroids
+             cd Asciiroid_Belt
+             ./bin/asciiroid_belt
              
       # Step 6: Upload executable for valgrind.
       - name: Upload binary artifact
         uses: actions/upload-artifact@v4
         with:
           name: program-binary
-          path: Asciiroids/bin
+          path: Asciiroid_Belt/bin
 
   build-program-with-locked-dependencies:
     runs-on: ubuntu-latest
@@ -75,7 +75,7 @@ jobs:
       - name: Fetch dependencies
         run: |
           cd ..
-          ./Asciiroids/fetch-dependencies.py Asciiroids/dependencies -y
+          ./Asciiroid_Belt/fetch-dependencies.py Asciiroid_Belt/dependencies -y
 
       # Step 3: Install OpenAL
       - name: Install OpenAL
@@ -91,7 +91,7 @@ jobs:
       # Step 4: Change to the correct directory and build
       - name: Build project
         run: |
-          cd Asciiroids
+          cd Asciiroid_Belt
           ./build.sh
         continue-on-error: false # Ensure errors are not bypassed
 
@@ -120,17 +120,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: program-binary
-          path: Asciiroids/bin
+          path: Asciiroid_Belt/bin
 
       - name: Run Valgrind
         run: |
           export ALSOFT_DRIVERS=null  # disables real audio output
           mkdir -p valgrind-output
-          cd Asciiroids
+          cd Asciiroid_Belt
           # rm rec.txt # remove if any checked in.
           cp rec_valgrind.txt bin/rec.txt
-          chmod +x bin/asciiroids
-          valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=../.valgrind/openal.supp ./bin/asciiroids --log_mode replay --suppress_tty_input --suppress_tty_output --disable_audio 2>&1 | tee ../valgrind-output/valgrind.log
+          chmod +x bin/asciiroid_belt
+          valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=../.valgrind/openal.supp ./bin/asciiroid_belt --log_mode replay --suppress_tty_input --suppress_tty_output --disable_audio 2>&1 | tee ../valgrind-output/valgrind.log
       
       - name: Generate Valgrind status
         run: |

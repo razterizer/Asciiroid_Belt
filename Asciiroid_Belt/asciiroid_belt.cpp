@@ -1,6 +1,6 @@
 //
-//  asciiroids.cpp
-//  Asciiroids
+//  asciiroid_belt.cpp
+//  Asciiroid_Belt
 //
 //  Created by Rasmus Anthin on 2025-07-05.
 //
@@ -70,7 +70,7 @@ public:
     GameEngine::set_real_fps(15);
     GameEngine::set_sim_delay_us(50'000);
     GameEngine::set_anim_rate(0, 4); // Explosion
-    GameEngine::set_anim_rate(1, 3); // Asteroids
+    GameEngine::set_anim_rate(1, 3); // Asteroid sprites.
     GameEngine::set_anim_rate(2, 5); // UFO AI
   //#endif
   
@@ -102,7 +102,7 @@ public:
 #ifndef _WIN32
       const char* xcode_env = std::getenv("RUNNING_FROM_XCODE");
       if (xcode_env != nullptr)
-        tune_path = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroids/"; // #FIXME: Find a better solution!
+        tune_path = "../../../../../../../../Documents/xcode/Asciiroid_Belt/Asciiroid_Belt/"; // #FIXME: Find a better solution!
 #endif
     
       if (enable_audio && chip_tune.load_tune(folder::join_path({ tune_path, "music.ct" })))
@@ -1579,7 +1579,7 @@ int main(int argc, char** argv)
         params.log_mode = LogMode::Record;
       else if (std::strcmp(argv[i + 1], "replay") == 0)
         params.log_mode = LogMode::Replay;
-      params.xcode_log_path = "../../../../../../../../Documents/xcode/Asciiroids/Asciiroids/bin/";
+      params.xcode_log_path = "../../../../../../../../Documents/xcode/Asciiroid_Belt/Asciiroid_Belt/bin/";
     }
     else if (std::strcmp(argv[i], "--disable_audio") == 0)
       use_audio = false;
@@ -1602,7 +1602,7 @@ int main(int argc, char** argv)
   
   if (show_help)
   {
-    std::cout << "asciiroids --help |" << std::endl;
+    std::cout << "asciiroid_belt --help |" << std::endl;
     std::cout << "   [--log_mode (record | replay)]" << std::endl;
     std::cout << "   [--suppress_tty_output]" << std::endl;
     std::cout << "   [--suppress_tty_input]" << std::endl;
