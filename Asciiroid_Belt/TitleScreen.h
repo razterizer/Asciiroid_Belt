@@ -69,10 +69,26 @@ void draw_title(t8::ScreenHandler<NR, NC, CharT>& sh, const t8x::FontDataColl& f
   
   sh.write_buffer(" (c) 2025 ", framed ? 38 : 39, framed ? 89 : 90, Color16::Black, Color16::White);
   
-  std::string title = "Asciiroid Belt";
   t8x::Font font = t8x::Font::Avatar;
-  auto text_width = calc_text_width(font_data, title, font);
-  t8x::draw_text(sh, font_data, font_colors, title, 32, (NC - text_width)/2, font);
+  auto f_draw_title = [&](const std::string& title)
+  {
+    auto text_width = calc_text_width(font_data, title, font);
+    t8x::draw_text(sh, font_data, font_colors, title, 32, (NC - text_width)/2, font);
+  };
+  std::vector<std::string> lines;
+  if (TextIO::read_file(folder::join_file_path({ exe_folder, "title.txt" }), lines) && !lines.empty())
+  {
+    if (lines.size() == 2)
+    {
+      const auto& font_str = lines[1];
+      auto ret = t8x::parse_font(font_str);
+      if (ret.has_value())
+        font = ret.value();
+    }
+    f_draw_title(lines[0]);
+  }
+  else
+    f_draw_title("Asciiroid Belt");
   
   sh.write_buffer("Press space-bar to continue...", 38, 33, Color16::Black, Color16::White);
   
