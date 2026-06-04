@@ -1537,7 +1537,7 @@ int main(int argc, char** argv)
   params.screen_bg_color_default = Color16::Black;
   params.screen_bg_color_title = Color16::Black;
   params.screen_bg_color_instructions = Color16::Black;
-  params.enable_title_screen = true;
+  params.enable_title_screen = false;
   params.enable_instructions_screen = false;
   params.pause_info_style = { Color16::White, Color16::Transparent };
   params.screen_bg_color_quit_confirm = std::nullopt;
@@ -1610,7 +1610,6 @@ int main(int argc, char** argv)
     std::cout << "   [--disable_3d_audio]" << std::endl;
     std::cout << "   [--music_volume <music_vol>]" << std::endl;
     std::cout << "   [--sfx_volume <sfx_vol>]" << std::endl;
-    std::cout << "   [--framed_splash_screen]" << std::endl;
     std::cout << std::endl;
     std::cout << "  default values:" << std::endl;
     std::cout << "    <fps>       : " << game.get_real_fps() << std::endl;

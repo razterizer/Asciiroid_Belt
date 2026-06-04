@@ -155,7 +155,6 @@ add_custom_command(TARGET asciiroid_belt POST_BUILD
           "$<TARGET_FILE_DIR:asciiroid_belt>/fonts"
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different
           "${CMAKE_CURRENT_SOURCE_DIR}/Asciiroid_Belt/music.ct"
-          "${CMAKE_CURRENT_SOURCE_DIR}/Asciiroid_Belt/asciiroid_belt.tx"
           "${CMAKE_CURRENT_SOURCE_DIR}/Asciiroid_Belt/title.txt"
           "$<TARGET_FILE_DIR:asciiroid_belt>"
 )

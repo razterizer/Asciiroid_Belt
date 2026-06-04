@@ -7,10 +7,10 @@
 
 #pragma once
 #include <Termin8or/title/ASCII_Fonts.h>
-#include <Termin8or/drawing/TextureFile.h>
 #include <Termin8or/drawing/Drawing.h>
 #include <Termin8or/screen/ScreenUtils.h>
 #include <Core/FolderHelper.h>
+#include <Core/TextIO.h>
 //40x100
 
 //    00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001
@@ -91,19 +91,6 @@ void draw_title(t8::ScreenHandler<NR, NC, CharT>& sh, const t8x::FontDataColl& f
     f_draw_title("Asciiroid Belt");
   
   sh.write_buffer("Press space-bar to continue...", 38, 33, Color16::Black, Color16::White);
-  
-  t8::Texture tex_splash;
-  
-  auto filepath_tex = folder::join_path({ exe_folder, "asciiroid_belt.tx" });
-  t8::TextureFile::load(tex_splash, filepath_tex);
-  
   if (framed)
     t8::draw_frame(sh, Color16::LightGray);
-  
-  t8x::draw_box_textured(sh,
-                         -1, -1, tex_splash.size.r, tex_splash.size.c,
-                         t8x::SolarDirection::Zenith,
-                         tex_splash);
-  
-  //sh.replace_bg_color(Color16::White, t8::Rectangle { 32, 23, 5, 51 });
 }

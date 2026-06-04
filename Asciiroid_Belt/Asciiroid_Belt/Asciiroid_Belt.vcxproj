@@ -32,7 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\music.ct" />
-    <Text Include="..\asciiroid_belt.tx" />
     <Text Include="..\title.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -137,7 +136,6 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)\music.ct" "$(TargetDir)" /Y
-xcopy "$(SolutionDir)\asciiroid_belt.tx" "$(TargetDir)" /Y
 xcopy "$(SolutionDir)\title.txt" "$(TargetDir)" /Y
 xcopy "$(SolutionDir)\..\..\lib\Termin8or\include\Termin8or\title\fonts\*" "$(TargetDir)\fonts\" /Y</Command>
     </PostBuildEvent>
@@ -162,7 +160,6 @@ xcopy "$(SolutionDir)\..\..\lib\Termin8or\include\Termin8or\title\fonts\*" "$(Ta
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)\music.ct" "$(TargetDir)" /Y
-xcopy "$(SolutionDir)\asciiroid_belt.tx" "$(TargetDir)" /Y
 xcopy "$(SolutionDir)\title.txt" "$(TargetDir)" /Y
 xcopy "$(SolutionDir)\..\..\lib\Termin8or\include\Termin8or\title\fonts\*" "$(TargetDir)\fonts\" /Y</Command>
     </PostBuildEvent>
