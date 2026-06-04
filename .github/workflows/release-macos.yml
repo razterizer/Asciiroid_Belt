@@ -67,7 +67,7 @@ jobs:
           cp asciiroid_belt asciiroid_belt-${{ github.ref_name }}/
           # cp hiscores.txt asciiroid_belt-${{ github.ref_name }}/
           cp music.ct asciiroid_belt-${{ github.ref_name }}/
-          cp asciiroid_belt.tx asciiroid_belt-${{ github.ref_name }}/
+          # cp asciiroid_belt.tx asciiroid_belt-${{ github.ref_name }}/
           cp title.txt asciiroid_belt-${{ github.ref_name }}/
           # Copy fonts directory (if it exists)
           if [ -d fonts ]; then
