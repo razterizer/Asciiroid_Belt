@@ -1,5 +1,8 @@
 # Release Notes
 
+## 1.3.2.10
+- Getting rid of now obsolete dependency to TrainOfThought.
+
 ## 1.3.1.9
 - Temporarily disabled the title screen while the splash artwork is redesigned.
 - Removed the title splash texture from local builds and Linux, macOS, and Windows release packages.
