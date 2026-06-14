@@ -24,7 +24,6 @@ jobs:
           git clone https://github.com/razterizer/8Beat.git
           git clone https://github.com/razterizer/AudioLibSwitcher_applaudio.git --recurse-submodules
           git clone https://github.com/razterizer/applaudio.git
-          git clone https://github.com/razterizer/TrainOfThought.git
 
       - name: Install OpenAL
         if: false  # Set to true if you need OpenAL

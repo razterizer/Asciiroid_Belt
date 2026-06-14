@@ -7,7 +7,6 @@ if [[ $os_name == *"Darwin"* ]]; then
     -I../../lib/Core/include \
     -I../../lib/Termin8or/include \
     -I../../lib/8Beat/include \
-    -I../../lib/TrainOfThought/include \
     -I../../lib/AudioLibSwitcher_applaudio/include \
     -I../../lib/applaudio/include -framework AudioToolbox -framework CoreAudio -framework CoreFoundation -DUSE_APPLAUDIO"
   # -I../../lib/AudioLibSwitcher_OpenAL/include \
@@ -17,7 +16,6 @@ else
     -I../../lib/Core/include \
     -I../../lib/Termin8or/include \
     -I../../lib/8Beat/include \
-    -I../../lib/TrainOfThought/include \
     -I../../lib/AudioLibSwitcher_applaudio/include \
     -I../../lib/applaudio/include -DUSE_APPLAUDIO"
   # -I../../lib/AudioLibSwitcher_OpenAL/include"

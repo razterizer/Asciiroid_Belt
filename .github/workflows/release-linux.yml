@@ -23,7 +23,6 @@ jobs:
           git clone https://github.com/razterizer/8Beat.git
           git clone https://github.com/razterizer/AudioLibSwitcher_applaudio.git --recurse-submodules
           git clone https://github.com/razterizer/applaudio.git
-          git clone https://github.com/razterizer/TrainOfThought.git
 
       - name: Install ALSA development packages
         run: sudo apt install libasound2-dev pkg-config
@@ -57,7 +56,6 @@ jobs:
           git clone https://github.com/razterizer/8Beat.git
           git clone https://github.com/razterizer/AudioLibSwitcher_applaudio.git --recurse-submodules
           git clone https://github.com/razterizer/applaudio.git
-          git clone https://github.com/razterizer/TrainOfThought.git
 
       - name: Install ALSA development packages
         run: sudo apt install libasound2-dev pkg-config

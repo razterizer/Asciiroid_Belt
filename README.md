@@ -129,7 +129,6 @@ You need the following header-only libraries:
 * https://github.com/razterizer/Termin8or
 * https://github.com/razterizer/8Beat
 * https://github.com/razterizer/AudioLibSwitcher_applaudio
-* https://github.com/razterizer/TrainOfThought
 * https://github.com/razterizer/applaudio
 
 Make sure the folder structure looks like this:
@@ -138,9 +137,8 @@ Make sure the folder structure looks like this:
 <my_source_code_dir>/lib/Termin8or/                 ; Termin8or repo workspace/checkout goes here.
 <my_source_code_dir>/lib/8Beat/                     ; 8Beat repo workspace/checkout goes here.
 <my_source_code_dir>/lib/AudioLibSwitcher_applaudio ; AudioLibSwitcher_applaudio repo workspace/checkout goes here.
-<my_source_code_dir>/lib/TrainOfThought             ; TrainOfThought repo workspace/checkout goes here.
 <my_source_code_dir>/lib/applaudio                  ; applaudio repo workspace/checkout goes here.
-<my_source_code_dir>/Asciiroid_Belt/                 ; Asciiroid Belt repo workspace/checkout goes here.
+<my_source_code_dir>/Asciiroid_Belt/                ; Asciiroid Belt repo workspace/checkout goes here.
 ```
 
 These repos are not guaranteed to all the time work with the latest version of `Asciiroid Belt`. If you want the more stable approach then look at Option 1 instead.

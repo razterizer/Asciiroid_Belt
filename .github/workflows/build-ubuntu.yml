@@ -29,7 +29,6 @@ jobs:
           # git clone https://github.com/razterizer/AudioLibSwitcher_OpenAL.git --recurse-submodules
           git clone https://github.com/razterizer/AudioLibSwitcher_applaudio.git --recurse-submodules
           git clone https://github.com/razterizer/applaudio.git
-          git clone https://github.com/razterizer/TrainOfThought.git
 
       # Step 3: Install OpenAL
       - name: Install OpenAL

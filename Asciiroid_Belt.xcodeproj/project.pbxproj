@@ -383,7 +383,6 @@
 					../lib/Core/include/,
 					../lib/Termin8or/include/,
 					../lib/8Beat/include/,
-					../lib/TrainOfThought/include/,
 					../lib/AudioLibSwitcher_applaudio/include/,
 					../lib/applaudio/include,
 				);
@@ -405,7 +404,6 @@
 					../lib/Core/include/,
 					../lib/Termin8or/include/,
 					../lib/8Beat/include/,
-					../lib/TrainOfThought/include/,
 					../lib/AudioLibSwitcher_applaudio/include/,
 					../lib/applaudio/include,
 				);

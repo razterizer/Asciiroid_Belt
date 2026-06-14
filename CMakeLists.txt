@@ -85,10 +85,6 @@ foreach(dependency_line IN LISTS dependency_lines)
 endforeach()
 
 asciiroid_belt_add_dependency(Core "${Core_SOURCE_DIR}")
-asciiroid_belt_add_dependency(TrainOfThought "${TrainOfThought_SOURCE_DIR}")
-if(NOT EXISTS "${TrainOfThought_SOURCE_DIR}/CMakeLists.txt")
-  target_link_libraries(TrainOfThought INTERFACE Core::Core)
-endif()
 
 asciiroid_belt_add_dependency(Termin8or "${Termin8or_SOURCE_DIR}")
 if(NOT EXISTS "${Termin8or_SOURCE_DIR}/CMakeLists.txt")
@@ -132,7 +128,6 @@ if(NOT EXISTS "${8Beat_SOURCE_DIR}/CMakeLists.txt")
   target_compile_definitions(8Beat INTERFACE USE_APPLAUDIO)
   target_link_libraries(8Beat INTERFACE
     Core::Core
-    TrainOfThought::TrainOfThought
     AudioLibSwitcher_applaudio::AudioLibSwitcher_applaudio
   )
 endif()
