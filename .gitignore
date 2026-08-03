@@ -20,6 +20,9 @@ build/
 # Ignore breakpoints list
 *.xcbkptlist
 
+# Misc MacOS
+.DS_Store
+
 ### Visual Studio ###
 
 .vs/
