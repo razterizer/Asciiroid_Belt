@@ -105,7 +105,6 @@ public:
           chip_tune.set_volume_slider(volume_music, min_dB, nl_taper);
           //chip_tune.play_tune();
           chip_tune.play_tune_async();
-          chip_tune.wait_for_completion();
       }
     }
     catch (const std::exception& e)
