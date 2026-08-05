@@ -1,0 +1,20 @@
+format = 2
+
+[[dependency]]
+name = "8Beat"
+github = "razterizer/8Beat"
+package = "8Beat"
+variant = "applaudio"
+version = "1.0.3+build.6"
+target = "any"
+url = "https://github.com/razterizer/8Beat/releases/download/release-1.0.3.6/8Beat-1.0.3+build.6-applaudio-ho.cbox"
+sha256 = "dfbe2426cf990370cf7c44bc685ebca9bab8c20401308af59b66bce7552d5fc7"
+
+[[dependency]]
+name = "Termin8or"
+github = "razterizer/Termin8or"
+package = "Termin8or"
+version = "3.0.3+build.9"
+target = "any"
+url = "https://github.com/razterizer/Termin8or/releases/download/release-3.0.3.9/Termin8or-3.0.3+build.9-ho.cbox"
+sha256 = "96db28b2275e173ed0aff714f5c605dfdcede934fa3a324b71f6ee250e3c8ef3"

@@ -21,6 +21,9 @@
 #include <8Beat/WaveformGeneration.h>
 #include <8Beat/SFX.h>
 
+#include <array>
+#include <cmath>
+
 using RC = t8::RC;
 using Color16 = t8::Color16;
 using CharT = char; // char32_t;
@@ -262,26 +265,35 @@ public:
 
       if (enable_3d_audio)
       {
-        la::Mtx4 trf_l;
         // World coordsys assumed to be:
         //   Z : up towards viewer, straight out of the screen.
         //   X : towards the right edge of the screen.
         //   Y : up towards the upper edge of the screen.
         //   origin at the center of the screen.
-        trf_l.set_column_vec(la::X, { -1.f, 0.f, 0.f }); // towards the left along the screen.
-        trf_l.set_column_vec(la::Y, { 0.f, 1.f, 0.f }); // upwards along the screen.
-        trf_l.set_column_vec(la::Z, { 0.f, 0.f, -1.f }); // towards the "inside" of the screen.
-        trf_l.set_column_vec(la::W, { sh.num_cols()*0.5f, sh.num_rows()*0.5f, 0.f }); // Source world position encoded here.
-        la::Vec3 pos_l_L_l { -0.12f, 0.05f, -0.05f }; // Channel Left emitter local position encoded here.
-        la::Vec3 pos_l_R_l { +0.12f, 0.05f, -0.05f }; // Channel Left emitter local position encoded here.
-        la::Vec3 vel_w_l = la::Vec3_Zero; // Lisitener world velocity encoded here.
-        //beat::la::Vec3 ang_vel_w_l = beat::la::Vec3_Zero;
-        audio.set_listener_3d_state_channel(0, trf_l.get_rot_matrix().to_arr(), trf_l.transform_pos(pos_l_L_l).to_arr(), vel_w_l.to_arr());
-        audio.set_listener_3d_state_channel(1, trf_l.get_rot_matrix().to_arr(), trf_l.transform_pos(pos_l_R_l).to_arr(), vel_w_l.to_arr());
+        const std::array<float, 9> rotation {
+          -1.f, 0.f,  0.f,
+           0.f, 1.f,  0.f,
+           0.f, 0.f, -1.f
+        };
+        const auto center_x = sh.num_cols()*0.5f;
+        const auto center_y = sh.num_rows()*0.5f;
+        const std::array<float, 3> velocity { 0.f, 0.f, 0.f };
+#ifdef USE_APPLAUDIO
+        const std::array<float, 3> left_position { center_x + 0.12f, center_y + 0.05f, 0.05f };
+        const std::array<float, 3> right_position { center_x - 0.12f, center_y + 0.05f, 0.05f };
+        audio.set_listener_3d_state_channel(0, rotation, left_position, velocity);
+        audio.set_listener_3d_state_channel(1, rotation, right_position, velocity);
+#else
+        const std::array<float, 3> position { center_x, center_y, 0.f };
+        audio.set_listener_3d_state_channel(1, rotation, position, velocity);
+#endif
       }
     }
     
-    std::string font_data_path = folder::join_path({ get_exe_folder(), "fonts" });
+    const auto exe_folder = get_exe_folder();
+    std::string font_data_path = folder::join_path({ exe_folder, "Termin8or", "fonts" });
+    if (!std::filesystem::is_directory(font_data_path))
+      font_data_path = folder::join_path({ exe_folder, "fonts" });
     std::cout << font_data_path << std::endl;
     
     auto& cs0 = color_schemes.emplace_back();
@@ -667,24 +679,32 @@ private:
 
   void set_sound_channel_state(beat::AudioSource* src, const Vec2& pos, const Vec2& dir, const Vec2& vel)
   {
-    using namespace applaudio;
     if (!enable_3d_audio)
       return;
-    la::Mtx4 trf_s;
-    la::Vec3 w;
-    la::Vec3 vel_3d;
-    auto z = la::Vec3 { dir.c, -dir.r, 0.f }; // +Z is forward by default in applaudio, but this is a derived property from z.
-    z = la::normalize(z);
-    auto y = la::Vec3 { 0.f, 0.f, 1.f };
-    auto x = la::normalize(la::cross(y, z)); // -X is right by default in applaudio, but this is a derived property from x.
-    w = la::Vec3 { pos.c, static_cast<float>(sh.num_rows()) - pos.r, -5.f };
-    trf_s.set_column_vec(la::Z, z);
-    trf_s.set_column_vec(la::Y, y);
-    trf_s.set_column_vec(la::X, x);
-    trf_s.set_column_vec(la::W, w);
-    vel_3d = { vel.c, -vel.r, 0.f };
-    
-    src->set_3d_state_channel(0, trf_s.get_rot_matrix().to_arr(), w.to_arr(), (vel_3d * vel_factor_3d).to_arr());
+
+    const auto length = std::hypot(dir.c, dir.r);
+    const auto inv_length = length > 0.f ? 1.f/length : 0.f;
+    const auto z_x = dir.c*inv_length;
+    const auto z_y = -dir.r*inv_length;
+    const auto x_x = dir.r*inv_length;
+    const auto x_y = dir.c*inv_length;
+    const std::array<float, 9> rotation {
+      x_x, 0.f, z_x,
+      x_y, 0.f, z_y,
+      0.f, 1.f, 0.f
+    };
+    const std::array<float, 3> position {
+      pos.c, static_cast<float>(sh.num_rows()) - pos.r, -5.f
+    };
+    const std::array<float, 3> velocity {
+      vel.c*vel_factor_3d, -vel.r*vel_factor_3d, 0.f
+    };
+#ifdef USE_APPLAUDIO
+    constexpr int audio_channel = 0;
+#else
+    constexpr int audio_channel = 1;
+#endif
+    src->set_3d_state_channel(audio_channel, rotation, position, velocity);
   }
 
   template<int NR, int NC>
