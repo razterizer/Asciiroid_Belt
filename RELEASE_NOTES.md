@@ -3,7 +3,7 @@
 ## Next
 - Adopted Forge with applaudio cboxes as the default dependency style and reproducible release locks.
 - Added an opt-in OpenAL build through `--style=git-source --profile=openal` without publishing OpenAL cboxes.
-- Pinned OpenAL source builds to the adapter fix that keeps background music non-spatial.
+- Pinned OpenAL source builds to adapter release 1.0.1.14 through 8Beat.
 - Made the 3D audio transforms backend-neutral and selected the backend-specific channel layout at the AudioLibSwitcher boundary.
 
 ## 1.3.2.10

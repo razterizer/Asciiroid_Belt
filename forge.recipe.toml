@@ -28,7 +28,7 @@ Core = { path = "../lib/Core" }
 Termin8or = { path = "../lib/Termin8or" }
 
 [dependencies.style.git-source]
-8Beat = { git = "https://github.com/razterizer/8Beat.git", commit = "27b9de666e5d583acc9a2c73085f504b7afbaa72" }
+8Beat = { git = "https://github.com/razterizer/8Beat.git", commit = "c157901cd62d742e35ee1748a592b966c647972f" }
 Core = { git = "https://github.com/razterizer/Core.git", commit = "3f9f712457427fddd5eb7c47960a4d7399477598" }
 Termin8or = { git = "https://github.com/razterizer/Termin8or.git", commit = "d741a3dcaaeca9241ff394c38c068aa7cfddc6b6" }
 
