@@ -1,8 +1,10 @@
 # Release Notes
 
-## Next
+## 1.3.3.11
+
 - Adopted Forge with applaudio cboxes as the default dependency style and reproducible release locks.
 - Added an opt-in OpenAL build through `--style=git-source --profile=openal` without publishing OpenAL cboxes.
+- Updated hosted applaudio builds to 8Beat 1.0.4.7 with asynchronous chiptune playback and shutdown fixes.
 - Pinned OpenAL source builds to adapter release 1.0.1.14 through 8Beat.
 - Documented Forge build modes for applaudio, OpenAL, Release, and local development.
 - Made the 3D audio transforms backend-neutral and selected the backend-specific channel layout at the AudioLibSwitcher boundary.

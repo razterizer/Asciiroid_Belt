@@ -2,7 +2,7 @@
 
 [project]
 name = "Asciiroid_Belt"
-version = "1.3.2"
+version = "1.3.3"
 type = "executable"
 cpp_std = 20
 
@@ -10,7 +10,7 @@ cpp_std = 20
 paths = ["Asciiroid_Belt/asciiroid_belt.cpp"]
 
 [build]
-number = 10
+number = 11
 
 [defaults]
 style = "github-package"
