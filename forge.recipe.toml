@@ -28,7 +28,7 @@ Core = { path = "../lib/Core" }
 Termin8or = { path = "../lib/Termin8or" }
 
 [dependencies.style.git-source]
-8Beat = { git = "https://github.com/razterizer/8Beat.git", commit = "c157901cd62d742e35ee1748a592b966c647972f" }
+8Beat = { git = "https://github.com/razterizer/8Beat.git", commit = "2f54c86428608203f2b61b56ab825b2badd1b33a" }
 Core = { git = "https://github.com/razterizer/Core.git", commit = "3f9f712457427fddd5eb7c47960a4d7399477598" }
 Termin8or = { git = "https://github.com/razterizer/Termin8or.git", commit = "d741a3dcaaeca9241ff394c38c068aa7cfddc6b6" }
 
@@ -36,10 +36,10 @@ Termin8or = { git = "https://github.com/razterizer/Termin8or.git", commit = "d74
 Termin8or = { github = "razterizer/Termin8or", version = "3.0.3+build.9" }
 
 [dependencies.style.github-package.profile.applaudio]
-8Beat = { github = "razterizer/8Beat", version = "1.0.3+build.6", variant = "applaudio" }
+8Beat = { github = "razterizer/8Beat", version = "1.0.4+build.7", variant = "applaudio" }
 
 [profile.workflow-release.dependencies]
-8Beat = { github = "razterizer/8Beat", version = "1.0.3+build.6", variant = "applaudio" }
+8Beat = { github = "razterizer/8Beat", version = "1.0.4+build.7", variant = "applaudio" }
 Termin8or = { github = "razterizer/Termin8or", version = "3.0.3+build.9" }
 
 [profile.workflow-release.build]
