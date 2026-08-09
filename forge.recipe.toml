@@ -33,6 +33,7 @@ Core = { git = "https://github.com/razterizer/Core.git", commit = "3f9f712457427
 Termin8or = { git = "https://github.com/razterizer/Termin8or.git", commit = "d741a3dcaaeca9241ff394c38c068aa7cfddc6b6" }
 
 [dependencies.style.github-package]
+Core = { github = "razterizer/Core", version = "1.5.0+build.8" }
 Termin8or = { github = "razterizer/Termin8or", version = "3.0.3+build.9" }
 
 [dependencies.style.github-package.profile.applaudio]
