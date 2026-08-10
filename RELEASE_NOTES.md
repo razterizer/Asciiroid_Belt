@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.3.4.12
+
+- Bumping dependencies Core, Termin8or and 8Beat.
+
 ## 1.3.3.11
 
 - Adopted Forge with applaudio cboxes as the default dependency style and reproducible release locks.
